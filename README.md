@@ -1,6 +1,6 @@
 # Ledger Centrifuge app
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![CircleCI](https://circleci.com/gh/Zondax/ledger-centrifuge.svg?style=shield)](https://circleci.com/gh/Zondax/ledger-centrifuge)
+[![CircleCI](https://circleci.com/gh/Zondax/ledger-centrifuge.svg?style=shield&circle-token=758e00f3c11b1f8eda2ff48159a858580bc8fd9a)](https://circleci.com/gh/Zondax/ledger-centrifuge)
 
 >NOTE: The minor value in the version number indicates runtime compatibility. For instance: 0.1042.1, Indicates that the app is compatible with runtime 1042*
 
