@@ -18,7 +18,6 @@ import jest, {expect} from "jest";
 import Zemu from "@zondax/zemu";
 
 const {newCentrifugeApp} = require("@zondax/ledger-polkadot");
-const ed25519 = require("ed25519-supercop");
 import {blake2bFinal, blake2bInit, blake2bUpdate} from "blakejs";
 var addon = require('../../tests_tools/neon/native');
 
@@ -26,13 +25,12 @@ const Resolve = require("path").resolve;
 
 const APP_PATH = Resolve("../app/output/app_sr25519.elf");
 const APP_SEED = "equip will roof matter pink blind book anxiety banner elbow sun young"
-let enableX11 = null;
 
 const simOptions = {
     logging: true,
     start_delay: 3000,
     custom: `-s "${APP_SEED}"`,
-    X11: enableX11 !== null ? enableX11 : !!process.env["$DISPLAY"]
+    X11: true
 };
 
 jest.setTimeout(60000)
@@ -205,60 +203,6 @@ describe('SR25519', function () {
         }
     });
 
-    test('sign basic expert - accept shortcut', async function () {
-        const sim = new Zemu(APP_PATH);
-        try {
-            await sim.start(simOptions);
-            const app = newCentrifugeApp(sim.getTransport());
-            const pathAccount = 0x80000000;
-            const pathChange = 0x80000000;
-            const pathIndex = 0x80000000;
-
-            // Change to expert mode so we can skip fields
-            await sim.clickRight();
-            await sim.clickBoth();
-            await sim.clickLeft();
-
-            let txBlobStr = "0400d401b48506d4de473a04f40ad8114add5eda886068a71efdf95eee616ee4909e33158139ae28a3dfaac5fe1560a5e9e05cd503ae1103006d0fe707000003000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
-
-            const txBlob = Buffer.from(txBlobStr, "hex");
-
-            const responseAddr = await app.getAddress(pathAccount, pathChange, pathIndex, false, 1);
-            const pubKey = Buffer.from(responseAddr.pubKey, "hex");
-
-            // do not wait here.. we need to navigate
-            const signatureRequest = app.sign(pathAccount, pathChange, pathIndex, txBlob, 1);
-
-            // Wait until we are not in the main menu
-            await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
-
-            // Shortcut to accept menu
-            await sim.clickBoth();
-
-            // Accept tx
-            await sim.clickBoth();
-
-            let signatureResponse = await signatureRequest;
-            console.log(signatureResponse);
-
-            expect(signatureResponse.return_code).toEqual(0x9000);
-            expect(signatureResponse.error_message).toEqual("No errors");
-
-            // Now verify the signature
-            let prehash = txBlob;
-            if (txBlob.length > 256) {
-                const context = blake2bInit(32, null);
-                blake2bUpdate(context, txBlob);
-                prehash = Buffer.from(blake2bFinal(context));
-            }
-            let signingcontext = Buffer.from([]);
-            const valid = addon.schnorrkel_verify(pubKey,signingcontext,prehash, signatureResponse.signature.slice(1));
-            expect(valid).toEqual(true);
-        } finally {
-            await sim.close();
-        }
-    });
-
     test('sign basic - forward/backward', async function () {
         const sim = new Zemu(APP_PATH);
         try {
@@ -379,4 +323,5 @@ describe('SR25519', function () {
             await sim.close();
         }
     });
+
 });

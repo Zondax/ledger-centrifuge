@@ -82,13 +82,11 @@ parser_error_t _readCompactBlockNumber(parser_context_t* c, pd_CompactBlockNumbe
 }
 
 parser_error_t _readBalance(parser_context_t* c, pd_Balance_t* v) {
-
     GEN_DEF_READARRAY(16)
 }
 
 parser_error_t _readData(parser_context_t* c, pd_Data_t* v)
 {
-
     CHECK_INPUT();
     MEMZERO(v, sizeof(pd_Data_t));
     CHECK_ERROR(_readUInt8(c, (uint8_t*)&v->type))
@@ -123,24 +121,20 @@ parser_error_t _readData(parser_context_t* c, pd_Data_t* v)
 }
 
 parser_error_t _readHash(parser_context_t* c, pd_Hash_t* v) {
-
     GEN_DEF_READARRAY(32)
 }
 
 parser_error_t _readu128(parser_context_t* c, pd_u128_t* v) {
-
     GEN_DEF_READARRAY(16)
 }
 
 parser_error_t _readBalanceOf(parser_context_t* c, pd_BalanceOf_t* v)
 {
-
     return _readBalance(c, &v->value);
 }
 
 parser_error_t _readBytes(parser_context_t* c, pd_Bytes_t* v)
 {
-
     CHECK_INPUT()
 
     compactInt_t clen;
@@ -154,7 +148,6 @@ parser_error_t _readBytes(parser_context_t* c, pd_Bytes_t* v)
 
 parser_error_t _readTupleDataData(parser_context_t* c, pd_TupleDataData_t* v)
 {
-
     CHECK_INPUT();
     CHECK_ERROR(_readData(c, &v->data1))
     CHECK_ERROR(_readData(c, &v->data2))
@@ -162,13 +155,11 @@ parser_error_t _readTupleDataData(parser_context_t* c, pd_TupleDataData_t* v)
 }
 
 parser_error_t _readu8_array_20(parser_context_t* c, pd_u8_array_20_t* v) {
-
     GEN_DEF_READARRAY(20)
 }
 
 parser_error_t _readCall(parser_context_t* c, pd_Call_t* v)
 {
-
     pd_Method_t _method;
     CHECK_ERROR(_readCallImpl(c, v, &_method))
     zb_check_canary();
@@ -177,30 +168,30 @@ parser_error_t _readCall(parser_context_t* c, pd_Call_t* v)
 
 parser_error_t _readHeader(parser_context_t* c, pd_Header_t* v)
 {
-
     return parser_not_supported;
 }
 
 parser_error_t _readu256(parser_context_t* c, pd_u256_t* v) {
-
     GEN_DEF_READARRAY(32)
 }
 
 parser_error_t _readProposal(parser_context_t* c, pd_Proposal_t* v)
 {
-
     return _readCall(c, &v->call);
 }
 
 parser_error_t _readVecCall(parser_context_t* c, pd_VecCall_t* v)
 {
-
     compactInt_t clen;
     pd_Call_t dummy;
     CHECK_PARSER_ERR(_readCompactInt(c, &clen));
     CHECK_PARSER_ERR(_getValue(&clen, &v->_len));
     v->_ptr = c->buffer + c->offset;
     v->_lenBuffer = c->offset;
+    if (v->_len == 0) {
+        return parser_unexpected_buffer_end;
+    }
+
     for (uint64_t i = 0; i < v->_len; i++) {
         CHECK_ERROR(_readCall(c, &dummy))
     }
@@ -212,7 +203,6 @@ parser_error_t _readVecCall(parser_context_t* c, pd_VecCall_t* v)
 
 parser_error_t _readCompactBalanceOf(parser_context_t* c, pd_CompactBalanceOf_t* v)
 {
-
     CHECK_INPUT();
     CHECK_ERROR(_readCompactInt(c, &v->value));
     return parser_ok;
@@ -220,12 +210,10 @@ parser_error_t _readCompactBalanceOf(parser_context_t* c, pd_CompactBalanceOf_t*
 
 parser_error_t _readHeartbeat(parser_context_t* c, pd_Heartbeat_t* v)
 {
-
     return parser_not_supported;
 }
 
 parser_error_t _readVecHeader(parser_context_t* c, pd_VecHeader_t* v) {
-
     GEN_DEF_READVECTOR(Header)
 }
 
@@ -366,7 +354,6 @@ parser_error_t _toStringBalance(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-
     CLEAN_AND_CHECK()
 
     char bufferUI[200];
@@ -409,7 +396,6 @@ parser_error_t _toStringData(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-
     CLEAN_AND_CHECK()
 
     if (v->_ptr == NULL || v->_len == 0) {
@@ -446,7 +432,6 @@ parser_error_t _toStringHash(
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t* pageCount) {
-
     GEN_DEF_TOSTRING_ARRAY(32)
 }
 
@@ -457,7 +442,6 @@ parser_error_t _toStringu128(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-
     CLEAN_AND_CHECK()
 
     char bufferUI[200];
@@ -488,7 +472,6 @@ parser_error_t _toStringBalanceOf(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-
     return _toStringBalance(&v->value, outValue, outValueLen, pageIdx, pageCount);
 }
 
@@ -499,7 +482,6 @@ parser_error_t _toStringBytes(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-
     GEN_DEF_TOSTRING_ARRAY(v->_len);
 }
 
@@ -510,7 +492,6 @@ parser_error_t _toStringTupleDataData(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-
     CLEAN_AND_CHECK()
 
     uint8_t pages[2];
@@ -550,7 +531,6 @@ parser_error_t _toStringu8_array_20(
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t* pageCount) {
-
     GEN_DEF_TOSTRING_ARRAY(20)
 }
 
@@ -561,7 +541,6 @@ parser_error_t _toStringCall(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-
     CLEAN_AND_CHECK()
     uint8_t callNumItems = _getMethod_NumItems(*v->_txVerPtr, v->callIndex.moduleIdx, v->callIndex.idx, (pd_Method_t*)v->_methodPtr);
 
@@ -609,7 +588,6 @@ parser_error_t _toStringHeader(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-
     CLEAN_AND_CHECK()
     return parser_print_not_supported;
 }
@@ -621,7 +599,6 @@ parser_error_t _toStringu256(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-
     CLEAN_AND_CHECK()
 
     char bufferUI[200];
@@ -652,7 +629,6 @@ parser_error_t _toStringProposal(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-
     return _toStringCall(&v->call, outValue, outValueLen, pageIdx, pageCount);
 }
 
@@ -663,7 +639,6 @@ parser_error_t _toStringVecCall(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-
     CLEAN_AND_CHECK()
     /* count number of pages, then output specific */
     *pageCount = 0;
@@ -714,7 +689,6 @@ parser_error_t _toStringCompactBalanceOf(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-
     CHECK_ERROR(_toStringCompactInt(&v->value, COIN_AMOUNT_DECIMAL_PLACES, 0, COIN_TICKER, outValue, outValueLen, pageIdx, pageCount))
     number_inplace_trimming(outValue);
     return parser_ok;
@@ -727,7 +701,6 @@ parser_error_t _toStringHeartbeat(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-
     CLEAN_AND_CHECK()
     return parser_print_not_supported;
 }
@@ -738,7 +711,6 @@ parser_error_t _toStringVecHeader(
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t* pageCount) {
-
     GEN_DEF_TOSTRING_VECTOR(Header)
 }
 

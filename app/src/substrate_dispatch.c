@@ -26,7 +26,6 @@ parser_error_t _readMethod(
     uint8_t callIdx,
     pd_Method_t* method)
 {
-
     switch (c->tx_obj->transactionVersion) {
     case 1:
         return _readMethod_V1(c, moduleIdx, callIdx, &method->V1);

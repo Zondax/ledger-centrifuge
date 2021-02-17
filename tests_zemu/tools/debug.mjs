@@ -1,6 +1,6 @@
 import Zemu from "@zondax/zemu";
 import path from "path";
-import newKusamaApp from "@zondax/ledger-polkadot";
+import newCentrifugeApp from "@zondax/ledger-polkadot";
 
 const APP_PATH = path.resolve(`./../../app/output/app_X.elf`);
 import pkg from 'blakejs';
@@ -109,7 +109,7 @@ async function main() {
 
     try {
         await sim.start(SIM_OPTIONS);
-        const app = newKusamaApp.newKusamaApp(sim.getTransport());
+        const app = newCentrifugeApp.newCentrifugeApp(sim.getTransport());
 
         ////////////
         /// TIP you can use zemu commands here to take the app to the point where you trigger a breakpoint
