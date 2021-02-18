@@ -12,13 +12,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Zondax/ledger-kusama"
+    "url": "git+https://github.com/Zondax/ledger-centrifuge"
   },
   "keywords": [
     "zondax"
   ],
   "dependencies": {
-    "@zondax/ledger-polkadot": "^0.13.1",
+    "@zondax/ledger-polkadot": "^0.13.4",
     "@zondax/zemu": "^0.11.5"
   },
   "devDependencies": {

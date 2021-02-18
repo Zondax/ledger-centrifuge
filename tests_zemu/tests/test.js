@@ -30,12 +30,12 @@ var simOptions = {
     logging: true,
     start_delay: 3000,
     custom: `-s "${APP_SEED}"`,
-    X11: true
+    X11: false
 };
 
 let models = [
-  ['S', { model:'nanos', prefix: 'S', path: APP_PATH_S}],
-  ['X', {model: 'nanox', prefix: 'X', path: APP_PATH_X}]
+    ['S', {model: 'nanos', prefix: 'S', path: APP_PATH_S}],
+    ['X', {model: 'nanox', prefix: 'X', path: APP_PATH_X}]
 ]
 
 jest.setTimeout(60000)
@@ -93,8 +93,8 @@ describe('Standard', function () {
             expect(resp.return_code).toEqual(0x9000);
             expect(resp.error_message).toEqual("No errors");
 
-            const expected_address = "JMdbWK5cy3Bm4oCyhWNLQJoC4cczNgJsyk7nLZHMqFT7z7R";
-            const expected_pk = "ffbc10f71d63e0da1b9e7ee2eb4037466551dc32b9d4641aafd73a65970fae42";
+            const expected_address = "4dTWk5RN3BB5M1yoY8SuZsvNPRamdHgshe4TVNBpmWaMjvgr";
+            const expected_pk = "5da18749c8443cddf9dcd5b6ba4330c1ab8f218b44fcdb9ef91b884e35e0be1f";
 
             expect(resp.address).toEqual(expected_address);
             expect(resp.pubKey).toEqual(expected_pk);
@@ -121,8 +121,8 @@ describe('Standard', function () {
             expect(resp.return_code).toEqual(0x9000);
             expect(resp.error_message).toEqual("No errors");
 
-            const expected_address = "JMdbWK5cy3Bm4oCyhWNLQJoC4cczNgJsyk7nLZHMqFT7z7R";
-            const expected_pk = "ffbc10f71d63e0da1b9e7ee2eb4037466551dc32b9d4641aafd73a65970fae42";
+            const expected_address = "4dTWk5RN3BB5M1yoY8SuZsvNPRamdHgshe4TVNBpmWaMjvgr";
+            const expected_pk = "5da18749c8443cddf9dcd5b6ba4330c1ab8f218b44fcdb9ef91b884e35e0be1f";
 
             expect(resp.address).toEqual(expected_address);
             expect(resp.pubKey).toEqual(expected_pk);
@@ -174,7 +174,7 @@ describe('Standard', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_normal`, 6);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_normal`, model === "nanos" ? 6 : 7);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
@@ -223,7 +223,7 @@ describe('Standard', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_expert`, 12);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_expert`, model === "nanos" ? 12 : 13);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
@@ -266,7 +266,7 @@ describe('Standard', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_FB`, 6, 1);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_FB`, model === "nanos" ? 6 : 7, 1);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
@@ -309,7 +309,7 @@ describe('Standard', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_FB_reject`, 7, 1);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_FB_reject`, model === "nanos" ? 7 : 8, 1);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);

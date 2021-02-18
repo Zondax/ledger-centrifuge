@@ -179,6 +179,7 @@ __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, u
     zxerr_t zxerr = app_fill_address(key_type);
     if(zxerr != zxerr_ok){
         *tx = 0;
+        zemu_log("Hi1!");
         THROW(APDU_CODE_DATA_INVALID);
     }
     if (requireConfirmation) {

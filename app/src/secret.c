@@ -33,7 +33,7 @@ static char *secret_message =
         "USE AT YOUR OWN RISK!! "
         "You are about to enable the KSM recovery mode."
         "If you are not sure why you are here, reject or unplug your device immediately."
-        "Activating this mode will temporarily allow you to sign Kusama transactions using Polkadot keys";
+        "Activating this mode will temporarily allow you to sign Centrifuge transactions using Polkadot keys";
 
 zxerr_t secret_getNumItems(uint8_t *num_items) {
     zemu_log_stack("secret_getNumItems");

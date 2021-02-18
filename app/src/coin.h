@@ -23,13 +23,14 @@ extern "C" {
 
 #define HDPATH_LEN_DEFAULT   5
 #define HDPATH_0_DEFAULT     (0x80000000 | 0x2c)
-#define HDPATH_1_DEFAULT     (0x80000000 | 0x1b2)       // FIXME: Review
+#define HDPATH_1_DEFAULT     (0x80000000 | 0x2eb)
+#define HDPATH_1_RECOVERY    (0x80000000 | 0x162)       // 354 - Polkadot
 
 #define SK_LEN_25519         64u
 #define SCALAR_LEN_ED25519   32u
 #define SIG_PLUS_TYPE_LEN    65u
 
-#define PK_LEN_25519           32u
+#define PK_LEN_25519         32u
 #define MAX_SIGN_SIZE        256u
 #define BLAKE2B_DIGEST_SIZE  32u
 

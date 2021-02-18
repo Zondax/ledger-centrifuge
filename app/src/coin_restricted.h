@@ -28,10 +28,10 @@ extern "C" {
 #define HDPATH_3_DEFAULT     (0x80000000u)
 #define HDPATH_4_DEFAULT     (0x80000000u)
 
-#define MENU_MAIN_APP_LINE1                 "Kusama | sec"
+#define MENU_MAIN_APP_LINE1                 "Centrifuge | sec"
 #define MENU_MAIN_APP_LINE2                 "Ledgeracio"
-#define MENU_MAIN_APP_LINE2_SECRET          "Ledgeracio"
-#define APPVERSION_LINE1                    "Kusama | sec"
+#define MENU_MAIN_APP_LINE2_SECRET          "??????????"
+#define APPVERSION_LINE1                    "Centrifuge | sec"
 #define APPVERSION_LINE2                    "v" APPVERSION
 
 #ifdef __cplusplus
