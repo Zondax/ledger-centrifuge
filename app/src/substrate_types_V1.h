@@ -178,12 +178,6 @@ typedef struct {
 } pd_RegistryInfo_V1_t;
 
 typedef struct {
-    pd_bool_t isMember;
-    pd_bool_t isRunnerUp;
-    compactInt_t candidate;
-} pd_Renouncing_V1_t;
-
-typedef struct {
     pd_u256_t value;
 } pd_TokenId_V1_t;
 
@@ -221,7 +215,7 @@ typedef struct {
 } pd_Address_V1_t;
 
 typedef struct {
-    uint16_t value;
+    uint8_t value;
 } pd_ChainId_V1_t;
 
 typedef compactInt_t pd_CompactAssignments_V1_t;
@@ -324,6 +318,11 @@ typedef struct {
 typedef struct {
     uint32_t value;
 } pd_RegistryId_V1_t;
+
+typedef struct {
+    uint8_t value;
+    compactInt_t candidate;
+} pd_Renouncing_V1_t;
 
 typedef struct {
     const uint8_t* _ptr;

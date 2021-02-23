@@ -63,13 +63,13 @@ $(info COIN  = [$(COIN)])
 ifeq ($(COIN),RAD)
 # Main app configuration
 DEFINES += APP_STANDARD
-APPNAME = "Kusama"
-APPPATH = "44'/434'"
+APPNAME = "Centrifuge"
+APPPATH = "44'/747'"
 
 else ifeq ($(COIN),Ledgeracio)
 DEFINES += APP_RESTRICTED
-APPNAME = "Kusama_sec"
-APPPATH = "44'/434'"
+APPNAME = "Centrifuge_sec"
+APPPATH = "44'/747'"
 
 else
 define error_message

@@ -30,12 +30,12 @@ var simOptions = {
     logging: true,
     start_delay: 3000,
     custom: `-s "${APP_SEED}"`,
-    X11: true
+    X11: false
 };
 
 let models = [
-  ['S', { model:'nanos', prefix: 'S', path: APP_PATH_S}],
-  ['X', {model: 'nanox', prefix: 'X', path: APP_PATH_X}]
+    ['S', {model: 'nanos', prefix: 'S', path: APP_PATH_S}],
+    ['X', {model: 'nanox', prefix: 'X', path: APP_PATH_X}]
 ]
 
 jest.setTimeout(60000)
@@ -93,8 +93,8 @@ describe('Standard', function () {
             expect(resp.return_code).toEqual(0x9000);
             expect(resp.error_message).toEqual("No errors");
 
-            const expected_address = "JMdbWK5cy3Bm4oCyhWNLQJoC4cczNgJsyk7nLZHMqFT7z7R";
-            const expected_pk = "ffbc10f71d63e0da1b9e7ee2eb4037466551dc32b9d4641aafd73a65970fae42";
+            const expected_address = "4dTWk5RN3BB5M1yoY8SuZsvNPRamdHgshe4TVNBpmWaMjvgr";
+            const expected_pk = "5da18749c8443cddf9dcd5b6ba4330c1ab8f218b44fcdb9ef91b884e35e0be1f";
 
             expect(resp.address).toEqual(expected_address);
             expect(resp.pubKey).toEqual(expected_pk);
@@ -121,8 +121,8 @@ describe('Standard', function () {
             expect(resp.return_code).toEqual(0x9000);
             expect(resp.error_message).toEqual("No errors");
 
-            const expected_address = "JMdbWK5cy3Bm4oCyhWNLQJoC4cczNgJsyk7nLZHMqFT7z7R";
-            const expected_pk = "ffbc10f71d63e0da1b9e7ee2eb4037466551dc32b9d4641aafd73a65970fae42";
+            const expected_address = "4dTWk5RN3BB5M1yoY8SuZsvNPRamdHgshe4TVNBpmWaMjvgr";
+            const expected_pk = "5da18749c8443cddf9dcd5b6ba4330c1ab8f218b44fcdb9ef91b884e35e0be1f";
 
             expect(resp.address).toEqual(expected_address);
             expect(resp.pubKey).toEqual(expected_pk);
@@ -162,7 +162,7 @@ describe('Standard', function () {
             const pathChange = 0x80000000;
             const pathIndex = 0x80000000;
 
-            let txBlobStr = "0400a03c31b64722c0852992e65493764f31ca55a86a8fa3262ba54381698bcc066133158139ae28a3dfaac5fe1560a5e9e05cd503ae1103008ed73e0dea07000003000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
+            let txBlobStr = "0000419dfc0dd5038d2403d2029649f000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
 
             const txBlob = Buffer.from(txBlobStr, "hex");
 
@@ -174,7 +174,7 @@ describe('Standard', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_normal`, 6);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_normal`, model === "nanos" ? 3 : 4);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
@@ -210,7 +210,7 @@ describe('Standard', function () {
             await sim.clickBoth();
             await sim.clickLeft();
 
-            let txBlobStr = "0400a03c31b64722c0852992e65493764f31ca55a86a8fa3262ba54381698bcc066133158139ae28a3dfaac5fe1560a5e9e05cd503ae1103008ed73e0dea07000003000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
+            let txBlobStr = "0000419dfc0dd5038d2403d2029649f000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
 
             const txBlob = Buffer.from(txBlobStr, "hex");
 
@@ -223,7 +223,7 @@ describe('Standard', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_expert`, 12);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_expert`, model === "nanos" ? 9 : 10);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
@@ -254,7 +254,7 @@ describe('Standard', function () {
             const pathChange = 0x80000000;
             const pathIndex = 0x80000000;
 
-            let txBlobStr = "0400d401b48506d4de473a04f40ad8114add5eda886068a71efdf95eee616ee4909e33158139ae28a3dfaac5fe1560a5e9e05cd503ae1103006d0fe707000003000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
+            let txBlobStr = "0000419dfc0dd5038d2403d2029649f000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
 
             const txBlob = Buffer.from(txBlobStr, "hex");
 
@@ -266,7 +266,7 @@ describe('Standard', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_FB`, 6, 1);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_FB`, model === "nanos" ? 3 : 4, 1);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
@@ -297,7 +297,7 @@ describe('Standard', function () {
             const pathChange = 0x80000000;
             const pathIndex = 0x80000000;
 
-            let txBlobStr = "0400d401b48506d4de473a04f40ad8114add5eda886068a71efdf95eee616ee4909e33158139ae28a3dfaac5fe1560a5e9e05cd503ae1103006d0fe707000003000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
+            let txBlobStr = "0000419dfc0dd5038d2403d2029649f000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
 
             const txBlob = Buffer.from(txBlobStr, "hex");
 
@@ -309,7 +309,7 @@ describe('Standard', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_FB_reject`, 7, 1);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_FB_reject`, model === "nanos" ? 4 : 5, 1);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
@@ -330,8 +330,7 @@ describe('Standard', function () {
             const pathChange = 0x80000000;
             const pathIndex = 0x80000000;
 
-            let txBlobStr = "060540632751e57bd704b9d0e1a016f35e86df929bac522e6cfc4eae03eb2a4411862ff768f8cd08f228b69a8bd71da4caa9611fcfc1be95df68cc1a28e45d7f8e4e38b80d7731115479b1bd9918a1294bd9d22c62f7de1bbe2553525dd52a779b3110ff28e16b81b22bbc3d3163b3ba1fefb9438cea8560cb0711308ab398351c89464eb2015e9a9082ac9eecd9d08868b7c38a1ed3eee6625ac027c83c49c3d57064de8952adef2e842465ec59eca2c83574a158640b294e539eae2b64c3fe86b1c7432f90c11bde3958ed8cfe29e26cd6d951d4047a4245e608743be02e7cca6c28d7d91d06e16880c2dc29b7d6d79255048a78212c76436b1fbfe96e9a61be9f0438131d928b065389b2c7eacf4ba6d3599ea01f7e142e48391e784e5603a88c53f1559a8bac1a6969efb9d30b3fad16b8d361a286072b443167a588363bd1146177d8eb34473d68f27d638321d6c35942057253842d9b9770c574dbb7b0a9ce6cac2bd27d0692ebf2d661f587354b41a8b47bce6240dc76a0f802a22930ca77814b79a4c8b3a02ae3b6bffed9ae90b186ceb8976f65dba2cd278c80170d447f49eab42ba84f4f319580c8e5dd0561df82f00d6178fc0661a12033eccdafae1a98c755a79b7622993005a2877a797c968ebd895fa9fab4e5e6bb88e87fb9ebfc0674741994dd6f5c40fb06adc78b9f53ae1cdcb369c77a528ea6ee2a140064783fd50391018ed73e0de707000003000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
-
+            let txBlobStr = "060540ff44b5d2eea05aee033e61ae3dc4b5fa5bc84c6e81a2320037f52bd1695998fe39ff4e9681fe22184b1989420ee5ef8f9ea5bf488b33e7e33c5cfba5b0ba7774a766ff1671d88131ecd52bfa3bcde246a9063a2de895878ea4dfccb5f9c91d1c14f435ffac1156362d74c9964a877ba0d2eced7f81fc1d9e72b4a28de461df92b0fa3140ff7c71020c7a19319f748a272ea8f6e1b2fbd87ebde83225a754bf2edc021c140cffecd729f00f09ff4e301de0b5aeaf717d955630dd1a5ece233755e3b0be7ebe11ff3aefdb1db2603d7ba4f259b81cd832f6f900b290a514e6f09d7b9071811e9e69ffa47bafe7cd25b6fc30523cc08f0a396895b99677ae03b54905fb5979d3538b6cffaa6f1fae766e30138c75c7cd102d45729a48ec29f0f49235f90db05d8bb0c648ff2c7d26191b827d57523585614a95b1ecd30f307a03ab5694ad7c6cf1f3845c1bffcaa3181634d3952efb925c5aaf0a8699b972864b620757347d1414d50678ec2bff82ec006b0cb4442b4ed23b0e74191e1b72e84813c32b32f1f6eb68385c215e03ffda9098e62c9d1a0bccbd74754108a6de9dcc667b8a37d836db347ea851c9642effda87dde348c26d14afade327d442a1837f902a85dbbb5276d543233c8d77346fff5ad7cc8977c23e06b3b795c6f1d652113cadaf2929484df1ec68d5cec291ef68ff223adf1784a64a4a650446dbbe9fe6553302aa19c07a7d731da0e152b0e3a07ad50391018ed73e0df000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
             const txBlob = Buffer.from(txBlobStr, "hex");
 
             const responseAddr = await app.getAddress(pathAccount, pathChange, pathIndex);

@@ -181,7 +181,7 @@ parser_error_t _readAssetInfo_V1(parser_context_t* c, pd_AssetInfo_V1_t* v)
 parser_error_t _readChainId_V1(parser_context_t* c, pd_ChainId_V1_t* v)
 {
     CHECK_INPUT()
-    CHECK_ERROR(_readUInt16(c, &v->value))
+    CHECK_ERROR(_readUInt8(c, &v->value))
     return parser_ok;
 }
 
@@ -316,11 +316,14 @@ parser_error_t _readKey_V1(parser_context_t* c, pd_Key_V1_t* v) {
 
 parser_error_t _readKeys_V1(parser_context_t* c, pd_Keys_V1_t* v)
 {
-    return parser_not_supported;
+    GEN_DEF_READARRAY(4 * 32)
+    return parser_ok;
 }
 
-parser_error_t _readLookupSource_V1(parser_context_t* c, pd_LookupSource_V1_t* v) {
-
+parser_error_t _readLookupSource_V1(parser_context_t* c, pd_LookupSource_V1_t* v)
+{
+    uint8_t dummy;
+    CHECK_ERROR(_readUInt8(c, &dummy))
     GEN_DEF_READARRAY(32)
 }
 
@@ -417,13 +420,22 @@ parser_error_t _readRegistryInfo_V1(parser_context_t* c, pd_RegistryInfo_V1_t* v
 parser_error_t _readRenouncing_V1(parser_context_t* c, pd_Renouncing_V1_t* v)
 {
     CHECK_INPUT()
-    CHECK_ERROR(_readUInt8(c, &v->isMember))
-    CHECK_ERROR(_readUInt8(c, &v->isRunnerUp))
-    CHECK_ERROR(_readCompactInt(c, &v->candidate));
+    CHECK_ERROR(_readUInt8(c, &v->value))
+
+    switch (v->value) {
+    case 0: // Member
+    case 1: // RunnerUp
+        break;
+    case 2: // Candidate
+        CHECK_ERROR(_readCompactInt(c, &v->candidate))
+        break;
+    default:
+        return parser_unexpected_value;
+    }
     return parser_ok;
 }
 
-parser_error_t _readResourceId_V1(parser_context_t* c, pd_ResourceId_V1_t* v) {
+parser_error_t _readResourceId_V1(parser_context_t* c, pd_ResourceId_V1_t* v){
     GEN_DEF_READARRAY(32)
 }
 
@@ -880,7 +892,7 @@ parser_error_t _toStringChainId_V1(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringu16(&v->value, outValue, outValueLen, pageIdx, pageCount);
+    return _toStringu16((const pd_u16_t *) &v->value, outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringChangesTrieConfiguration_V1(
@@ -1335,10 +1347,8 @@ parser_error_t _toStringKeys_V1(
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+    uint8_t* pageCount){
+    GEN_DEF_TOSTRING_ARRAY(4 * 32)
 }
 
 parser_error_t _toStringLookupSource_V1(
@@ -1618,9 +1628,21 @@ parser_error_t _toStringRenouncing_V1(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
-    CHECK_PARSER_ERR(_toStringbool(&v->isMember, outValue, outValueLen, pageIdx, pageCount));
-    CHECK_PARSER_ERR(_toStringbool(&v->isRunnerUp, outValue, outValueLen, pageIdx, pageCount));
-    CHECK_PARSER_ERR(_toStringCompactu32(&v->candidate, outValue, outValueLen, pageIdx, pageCount));
+    switch (v->value) {
+    case 0:
+        snprintf(outValue, outValueLen, "Member");
+        *pageCount = 1;
+        break;
+    case 1:
+        snprintf(outValue, outValueLen, "RunnerUp");
+        *pageCount = 1;
+        break;
+    case 2:
+        CHECK_PARSER_ERR(_toStringCompactu32(&v->candidate, outValue, outValueLen, pageIdx, pageCount));
+        break;
+    default:
+        return parser_unexpected_value;
+    }
     return parser_ok;
 }
 
