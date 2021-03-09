@@ -106,7 +106,7 @@ __Z_INLINE parser_error_t _readMethod_utility_as_derivative_V1(
 __Z_INLINE parser_error_t _readMethod_babe_report_equivocation_V1(
     parser_context_t* c, pd_babe_report_equivocation_V1_t* m)
 {
-    CHECK_ERROR(_readEquivocationProof_V1(c, &m->equivocation_proof))
+    CHECK_ERROR(_readBabeEquivocationProof_V1(c, &m->equivocation_proof))
     CHECK_ERROR(_readKeyOwnerProof_V1(c, &m->key_owner_proof))
     return parser_ok;
 }
@@ -114,7 +114,7 @@ __Z_INLINE parser_error_t _readMethod_babe_report_equivocation_V1(
 __Z_INLINE parser_error_t _readMethod_babe_report_equivocation_unsigned_V1(
     parser_context_t* c, pd_babe_report_equivocation_unsigned_V1_t* m)
 {
-    CHECK_ERROR(_readEquivocationProof_V1(c, &m->equivocation_proof))
+    CHECK_ERROR(_readBabeEquivocationProof_V1(c, &m->equivocation_proof))
     CHECK_ERROR(_readKeyOwnerProof_V1(c, &m->key_owner_proof))
     return parser_ok;
 }
@@ -634,7 +634,7 @@ __Z_INLINE parser_error_t _readMethod_finalitytracker_final_hint_V1(
 __Z_INLINE parser_error_t _readMethod_grandpa_report_equivocation_V1(
     parser_context_t* c, pd_grandpa_report_equivocation_V1_t* m)
 {
-    CHECK_ERROR(_readEquivocationProof_V1(c, &m->equivocation_proof))
+    CHECK_ERROR(_readGrandpaEquivocationProof_V1(c, &m->equivocation_proof))
     CHECK_ERROR(_readKeyOwnerProof_V1(c, &m->key_owner_proof))
     return parser_ok;
 }
@@ -642,7 +642,7 @@ __Z_INLINE parser_error_t _readMethod_grandpa_report_equivocation_V1(
 __Z_INLINE parser_error_t _readMethod_grandpa_report_equivocation_unsigned_V1(
     parser_context_t* c, pd_grandpa_report_equivocation_unsigned_V1_t* m)
 {
-    CHECK_ERROR(_readEquivocationProof_V1(c, &m->equivocation_proof))
+    CHECK_ERROR(_readGrandpaEquivocationProof_V1(c, &m->equivocation_proof))
     CHECK_ERROR(_readKeyOwnerProof_V1(c, &m->key_owner_proof))
     return parser_ok;
 }
@@ -833,7 +833,7 @@ __Z_INLINE parser_error_t _readMethod_identity_provide_judgement_V1(
 {
     CHECK_ERROR(_readCompactRegistrarIndex_V1(c, &m->reg_index))
     CHECK_ERROR(_readLookupSource_V1(c, &m->target))
-    CHECK_ERROR(_readJudgement_V1(c, &m->judgement))
+    CHECK_ERROR(_readIdentityJudgement_V1(c, &m->judgement))
     return parser_ok;
 }
 
@@ -4050,7 +4050,7 @@ parser_error_t _getMethod_ItemValue_V1(
     case 512: /* module 2 call 0 */
         switch (itemIdx) {
         case 0: /* babe_report_equivocation_V1 - equivocation_proof */;
-            return _toStringEquivocationProof_V1(
+            return _toStringBabeEquivocationProof_V1(
                 &m->basic.babe_report_equivocation_V1.equivocation_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -4065,7 +4065,7 @@ parser_error_t _getMethod_ItemValue_V1(
     case 513: /* module 2 call 1 */
         switch (itemIdx) {
         case 0: /* babe_report_equivocation_unsigned_V1 - equivocation_proof */;
-            return _toStringEquivocationProof_V1(
+            return _toStringBabeEquivocationProof_V1(
                 &m->basic.babe_report_equivocation_unsigned_V1.equivocation_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -4940,7 +4940,7 @@ parser_error_t _getMethod_ItemValue_V1(
     case 3072: /* module 12 call 0 */
         switch (itemIdx) {
         case 0: /* grandpa_report_equivocation_V1 - equivocation_proof */;
-            return _toStringEquivocationProof_V1(
+            return _toStringGrandpaEquivocationProof_V1(
                 &m->basic.grandpa_report_equivocation_V1.equivocation_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -4955,7 +4955,7 @@ parser_error_t _getMethod_ItemValue_V1(
     case 3073: /* module 12 call 1 */
         switch (itemIdx) {
         case 0: /* grandpa_report_equivocation_unsigned_V1 - equivocation_proof */;
-            return _toStringEquivocationProof_V1(
+            return _toStringGrandpaEquivocationProof_V1(
                 &m->basic.grandpa_report_equivocation_unsigned_V1.equivocation_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -5310,7 +5310,7 @@ parser_error_t _getMethod_ItemValue_V1(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* identity_provide_judgement_V1 - judgement */;
-            return _toStringJudgement_V1(
+            return _toStringIdentityJudgement_V1(
                 &m->basic.identity_provide_judgement_V1.judgement,
                 outValue, outValueLen,
                 pageIdx, pageCount);

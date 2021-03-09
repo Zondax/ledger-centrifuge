@@ -71,7 +71,11 @@ typedef struct {
 } pd_Key_V1_t;
 
 typedef struct {
-    const uint8_t* _ptr;
+    uint8_t value;
+    union {
+        pd_AccountId_V1_t id;
+        uint64_t index;
+    };
 } pd_LookupSource_V1_t;
 
 typedef struct {
@@ -149,11 +153,6 @@ typedef struct {
 } pd_IdentityInfo_V1_t;
 
 typedef struct {
-    uint8_t value;
-    pd_Balance_t balance;
-} pd_Judgement_V1_t;
-
-typedef struct {
     pd_Call_t call;
 } pd_OpaqueCall_V1_t;
 
@@ -183,8 +182,13 @@ typedef struct {
 
 typedef struct {
     pd_CompactPerBill_V1_t commission;
-    pd_bool_t blocked;
 } pd_ValidatorPrefs_V1_t;
+
+typedef struct {
+    uint64_t _len;
+    const uint8_t* _ptr;
+    uint64_t _lenBuffer;
+} pd_VecLookupSource_V1_t;
 
 typedef struct {
     uint64_t _len;
@@ -213,6 +217,11 @@ typedef struct {
     uint64_t idx;
     const uint8_t* idPtr;
 } pd_Address_V1_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_BabeEquivocationProof_V1_t;
 
 typedef struct {
     uint8_t value;
@@ -246,13 +255,13 @@ typedef struct {
 } pd_ElectionSize_V1_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_EquivocationProof_V1_t;
-
-typedef struct {
     uint32_t value;
 } pd_EraIndex_V1_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_GrandpaEquivocationProof_V1_t;
 
 typedef struct {
     const uint8_t* _ptr;
@@ -261,6 +270,11 @@ typedef struct {
 typedef struct {
     uint8_t value;
 } pd_IdentityFields_V1_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_IdentityJudgement_V1_t;
 
 typedef struct {
     // TODO: Not implemented
@@ -353,12 +367,6 @@ typedef struct {
     const uint8_t* _ptr;
     uint64_t _lenBuffer;
 } pd_VecKey_V1_t;
-
-typedef struct {
-    uint64_t _len;
-    const uint8_t* _ptr;
-    uint64_t _lenBuffer;
-} pd_VecLookupSource_V1_t;
 
 typedef struct {
     uint64_t _len;
