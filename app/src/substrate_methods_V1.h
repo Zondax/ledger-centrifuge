@@ -123,13 +123,13 @@ typedef struct {
 
 #define PD_CALL_BABE_REPORT_EQUIVOCATION_V1 0
 typedef struct {
-    pd_EquivocationProof_V1_t equivocation_proof;
+    pd_BabeEquivocationProof_V1_t equivocation_proof;
     pd_KeyOwnerProof_V1_t key_owner_proof;
 } pd_babe_report_equivocation_V1_t;
 
 #define PD_CALL_BABE_REPORT_EQUIVOCATION_UNSIGNED_V1 1
 typedef struct {
-    pd_EquivocationProof_V1_t equivocation_proof;
+    pd_BabeEquivocationProof_V1_t equivocation_proof;
     pd_KeyOwnerProof_V1_t key_owner_proof;
 } pd_babe_report_equivocation_unsigned_V1_t;
 
@@ -511,13 +511,13 @@ typedef struct {
 
 #define PD_CALL_GRANDPA_REPORT_EQUIVOCATION_V1 0
 typedef struct {
-    pd_EquivocationProof_V1_t equivocation_proof;
+    pd_GrandpaEquivocationProof_V1_t equivocation_proof;
     pd_KeyOwnerProof_V1_t key_owner_proof;
 } pd_grandpa_report_equivocation_V1_t;
 
 #define PD_CALL_GRANDPA_REPORT_EQUIVOCATION_UNSIGNED_V1 1
 typedef struct {
-    pd_EquivocationProof_V1_t equivocation_proof;
+    pd_GrandpaEquivocationProof_V1_t equivocation_proof;
     pd_KeyOwnerProof_V1_t key_owner_proof;
 } pd_grandpa_report_equivocation_unsigned_V1_t;
 
@@ -660,7 +660,7 @@ typedef struct {
 typedef struct {
     pd_CompactRegistrarIndex_V1_t reg_index;
     pd_LookupSource_V1_t target;
-    pd_Judgement_V1_t judgement;
+    pd_IdentityJudgement_V1_t judgement;
 } pd_identity_provide_judgement_V1_t;
 
 #define PD_CALL_IDENTITY_KILL_IDENTITY_V1 10
