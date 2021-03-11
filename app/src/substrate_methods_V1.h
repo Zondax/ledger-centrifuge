@@ -60,11 +60,157 @@ extern "C" {
 #define PD_CALL_NFT_V1 31
 #define PD_CALL_BRIDGEMAPPING_V1 32
 
-#define PD_CALL_SYSTEM_FILL_BLOCK_V1 0
+#define PD_CALL_UTILITY_BATCH_V1 0
 typedef struct {
-    pd_Perbill_V1_t _ratio;
-} pd_system_fill_block_V1_t;
+    pd_VecCall_t calls;
+} pd_utility_batch_V1_t;
 
+#define PD_CALL_STAKING_BOND_V1 0
+typedef struct {
+    pd_LookupSource_V1_t controller;
+    pd_CompactBalanceOf_t value;
+    pd_RewardDestination_V1_t payee;
+} pd_staking_bond_V1_t;
+
+#define PD_CALL_STAKING_BOND_EXTRA_V1 1
+typedef struct {
+    pd_CompactBalanceOf_t max_additional;
+} pd_staking_bond_extra_V1_t;
+
+#define PD_CALL_STAKING_UNBOND_V1 2
+typedef struct {
+    pd_CompactBalanceOf_t value;
+} pd_staking_unbond_V1_t;
+
+#define PD_CALL_STAKING_VALIDATE_V1 4
+typedef struct {
+    pd_ValidatorPrefs_V1_t prefs;
+} pd_staking_validate_V1_t;
+
+#define PD_CALL_STAKING_NOMINATE_V1 5
+typedef struct {
+    pd_VecLookupSource_V1_t targets;
+} pd_staking_nominate_V1_t;
+
+#define PD_CALL_STAKING_CHILL_V1 6
+typedef struct {
+} pd_staking_chill_V1_t;
+
+#define PD_CALL_STAKING_SET_PAYEE_V1 7
+typedef struct {
+    pd_RewardDestination_V1_t payee;
+} pd_staking_set_payee_V1_t;
+
+#define PD_CALL_STAKING_SET_CONTROLLER_V1 8
+typedef struct {
+    pd_LookupSource_V1_t controller;
+} pd_staking_set_controller_V1_t;
+
+#define PD_CALL_SESSION_SET_KEYS_V1 0
+typedef struct {
+    pd_Keys_V1_t keys;
+    pd_Bytes_t proof;
+} pd_session_set_keys_V1_t;
+
+#define PD_CALL_SESSION_PURGE_KEYS_V1 1
+typedef struct {
+} pd_session_purge_keys_V1_t;
+
+#define PD_CALL_DEMOCRACY_PROPOSE_V1 0
+typedef struct {
+    pd_Hash_t proposal_hash;
+    pd_CompactBalanceOf_t value;
+} pd_democracy_propose_V1_t;
+
+#define PD_CALL_DEMOCRACY_SECOND_V1 1
+typedef struct {
+    pd_CompactPropIndex_V1_t proposal;
+    pd_Compactu32_t seconds_upper_bound;
+} pd_democracy_second_V1_t;
+
+#define PD_CALL_DEMOCRACY_VOTE_V1 2
+typedef struct {
+    pd_CompactReferendumIndex_V1_t ref_index;
+    pd_AccountVote_V1_t vote;
+} pd_democracy_vote_V1_t;
+
+#define PD_CALL_DEMOCRACY_EXTERNAL_PROPOSE_V1 4
+typedef struct {
+    pd_Hash_t proposal_hash;
+} pd_democracy_external_propose_V1_t;
+
+#define PD_CALL_DEMOCRACY_EXTERNAL_PROPOSE_MAJORITY_V1 5
+typedef struct {
+    pd_Hash_t proposal_hash;
+} pd_democracy_external_propose_majority_V1_t;
+
+#define PD_CALL_DEMOCRACY_EXTERNAL_PROPOSE_DEFAULT_V1 6
+typedef struct {
+    pd_Hash_t proposal_hash;
+} pd_democracy_external_propose_default_V1_t;
+
+#define PD_CALL_DEMOCRACY_FAST_TRACK_V1 7
+typedef struct {
+    pd_Hash_t proposal_hash;
+    pd_BlockNumber_t voting_period;
+    pd_BlockNumber_t delay;
+} pd_democracy_fast_track_V1_t;
+
+#define PD_CALL_DEMOCRACY_UNLOCK_V1 19
+typedef struct {
+    pd_AccountId_V1_t target;
+} pd_democracy_unlock_V1_t;
+
+#define PD_CALL_COUNCIL_EXECUTE_V1 1
+typedef struct {
+    pd_Proposal_t proposal;
+    pd_Compactu32_t length_bound;
+} pd_council_execute_V1_t;
+
+#define PD_CALL_COUNCIL_PROPOSE_V1 2
+typedef struct {
+    pd_CompactMemberCount_V1_t threshold;
+    pd_Proposal_t proposal;
+    pd_Compactu32_t length_bound;
+} pd_council_propose_V1_t;
+
+#define PD_CALL_COUNCIL_VOTE_V1 3
+typedef struct {
+    pd_Hash_t proposal;
+    pd_CompactProposalIndex_V1_t index;
+    pd_bool_t approve;
+} pd_council_vote_V1_t;
+
+#define PD_CALL_COUNCIL_CLOSE_V1 4
+typedef struct {
+    pd_Hash_t proposal_hash;
+    pd_CompactProposalIndex_V1_t index;
+    pd_CompactWeight_V1_t proposal_weight_bound;
+    pd_Compactu32_t length_bound;
+} pd_council_close_V1_t;
+
+#define PD_CALL_COUNCIL_DISAPPROVE_PROPOSAL_V1 5
+typedef struct {
+    pd_Hash_t proposal_hash;
+} pd_council_disapprove_proposal_V1_t;
+
+#define PD_CALL_ELECTIONS_VOTE_V1 0
+typedef struct {
+    pd_VecAccountId_V1_t votes;
+    pd_CompactBalanceOf_t value;
+} pd_elections_vote_V1_t;
+
+#define PD_CALL_ELECTIONS_SUBMIT_CANDIDACY_V1 3
+typedef struct {
+    pd_Compactu32_t candidate_count;
+} pd_elections_submit_candidacy_V1_t;
+
+#define PD_CALL_ELECTIONS_RENOUNCE_CANDIDACY_V1 4
+typedef struct {
+    pd_Renouncing_V1_t renouncing;
+} pd_elections_renounce_candidacy_V1_t;
+
+#ifdef SUBSTRATE_PARSER_FULL
 #define PD_CALL_SYSTEM_REMARK_V1 1
 typedef struct {
     pd_Bytes_t _remark;
@@ -110,11 +256,6 @@ typedef struct {
 typedef struct {
 } pd_system_suicide_V1_t;
 
-#define PD_CALL_UTILITY_BATCH_V1 0
-typedef struct {
-    pd_VecCall_t calls;
-} pd_utility_batch_V1_t;
-
 #define PD_CALL_UTILITY_AS_DERIVATIVE_V1 1
 typedef struct {
     pd_u16_t index;
@@ -143,12 +284,6 @@ typedef struct {
     pd_VecHeader_t new_uncles;
 } pd_authorship_set_uncles_V1_t;
 
-#define PD_CALL_BALANCES_TRANSFER_V1 0
-typedef struct {
-    pd_LookupSource_V1_t dest;
-    pd_CompactBalance_t value;
-} pd_balances_transfer_V1_t;
-
 #define PD_CALL_BALANCES_SET_BALANCE_V1 1
 typedef struct {
     pd_LookupSource_V1_t who;
@@ -163,57 +298,10 @@ typedef struct {
     pd_CompactBalance_t value;
 } pd_balances_force_transfer_V1_t;
 
-#define PD_CALL_BALANCES_TRANSFER_KEEP_ALIVE_V1 3
-typedef struct {
-    pd_LookupSource_V1_t dest;
-    pd_CompactBalance_t value;
-} pd_balances_transfer_keep_alive_V1_t;
-
-#define PD_CALL_STAKING_BOND_V1 0
-typedef struct {
-    pd_LookupSource_V1_t controller;
-    pd_CompactBalanceOf_t value;
-    pd_RewardDestination_V1_t payee;
-} pd_staking_bond_V1_t;
-
-#define PD_CALL_STAKING_BOND_EXTRA_V1 1
-typedef struct {
-    pd_CompactBalanceOf_t max_additional;
-} pd_staking_bond_extra_V1_t;
-
-#define PD_CALL_STAKING_UNBOND_V1 2
-typedef struct {
-    pd_CompactBalanceOf_t value;
-} pd_staking_unbond_V1_t;
-
 #define PD_CALL_STAKING_WITHDRAW_UNBONDED_V1 3
 typedef struct {
     pd_u32_t num_slashing_spans;
 } pd_staking_withdraw_unbonded_V1_t;
-
-#define PD_CALL_STAKING_VALIDATE_V1 4
-typedef struct {
-    pd_ValidatorPrefs_V1_t prefs;
-} pd_staking_validate_V1_t;
-
-#define PD_CALL_STAKING_NOMINATE_V1 5
-typedef struct {
-    pd_VecLookupSource_V1_t targets;
-} pd_staking_nominate_V1_t;
-
-#define PD_CALL_STAKING_CHILL_V1 6
-typedef struct {
-} pd_staking_chill_V1_t;
-
-#define PD_CALL_STAKING_SET_PAYEE_V1 7
-typedef struct {
-    pd_RewardDestination_V1_t payee;
-} pd_staking_set_payee_V1_t;
-
-#define PD_CALL_STAKING_SET_CONTROLLER_V1 8
-typedef struct {
-    pd_LookupSource_V1_t controller;
-} pd_staking_set_controller_V1_t;
 
 #define PD_CALL_STAKING_SET_VALIDATOR_COUNT_V1 9
 typedef struct {
@@ -300,60 +388,10 @@ typedef struct {
     pd_ElectionSize_V1_t size;
 } pd_staking_submit_election_solution_unsigned_V1_t;
 
-#define PD_CALL_SESSION_SET_KEYS_V1 0
-typedef struct {
-    pd_Keys_V1_t keys;
-    pd_Bytes_t proof;
-} pd_session_set_keys_V1_t;
-
-#define PD_CALL_SESSION_PURGE_KEYS_V1 1
-typedef struct {
-} pd_session_purge_keys_V1_t;
-
-#define PD_CALL_DEMOCRACY_PROPOSE_V1 0
-typedef struct {
-    pd_Hash_t proposal_hash;
-    pd_CompactBalanceOf_t value;
-} pd_democracy_propose_V1_t;
-
-#define PD_CALL_DEMOCRACY_SECOND_V1 1
-typedef struct {
-    pd_CompactPropIndex_V1_t proposal;
-    pd_Compactu32_t seconds_upper_bound;
-} pd_democracy_second_V1_t;
-
-#define PD_CALL_DEMOCRACY_VOTE_V1 2
-typedef struct {
-    pd_CompactReferendumIndex_V1_t ref_index;
-    pd_AccountVote_V1_t vote;
-} pd_democracy_vote_V1_t;
-
 #define PD_CALL_DEMOCRACY_EMERGENCY_CANCEL_V1 3
 typedef struct {
     pd_ReferendumIndex_V1_t ref_index;
 } pd_democracy_emergency_cancel_V1_t;
-
-#define PD_CALL_DEMOCRACY_EXTERNAL_PROPOSE_V1 4
-typedef struct {
-    pd_Hash_t proposal_hash;
-} pd_democracy_external_propose_V1_t;
-
-#define PD_CALL_DEMOCRACY_EXTERNAL_PROPOSE_MAJORITY_V1 5
-typedef struct {
-    pd_Hash_t proposal_hash;
-} pd_democracy_external_propose_majority_V1_t;
-
-#define PD_CALL_DEMOCRACY_EXTERNAL_PROPOSE_DEFAULT_V1 6
-typedef struct {
-    pd_Hash_t proposal_hash;
-} pd_democracy_external_propose_default_V1_t;
-
-#define PD_CALL_DEMOCRACY_FAST_TRACK_V1 7
-typedef struct {
-    pd_Hash_t proposal_hash;
-    pd_BlockNumber_t voting_period;
-    pd_BlockNumber_t delay;
-} pd_democracy_fast_track_V1_t;
 
 #define PD_CALL_DEMOCRACY_VETO_EXTERNAL_V1 8
 typedef struct {
@@ -411,11 +449,6 @@ typedef struct {
     pd_Compactu32_t proposal_len_upper_bound;
 } pd_democracy_reap_preimage_V1_t;
 
-#define PD_CALL_DEMOCRACY_UNLOCK_V1 19
-typedef struct {
-    pd_AccountId_V1_t target;
-} pd_democracy_unlock_V1_t;
-
 #define PD_CALL_DEMOCRACY_REMOVE_VOTE_V1 20
 typedef struct {
     pd_ReferendumIndex_V1_t index;
@@ -440,45 +473,6 @@ typedef struct {
     pd_MemberCount_V1_t old_count;
 } pd_council_set_members_V1_t;
 
-#define PD_CALL_COUNCIL_EXECUTE_V1 1
-typedef struct {
-    pd_Proposal_t proposal;
-    pd_Compactu32_t length_bound;
-} pd_council_execute_V1_t;
-
-#define PD_CALL_COUNCIL_PROPOSE_V1 2
-typedef struct {
-    pd_CompactMemberCount_V1_t threshold;
-    pd_Proposal_t proposal;
-    pd_Compactu32_t length_bound;
-} pd_council_propose_V1_t;
-
-#define PD_CALL_COUNCIL_VOTE_V1 3
-typedef struct {
-    pd_Hash_t proposal;
-    pd_CompactProposalIndex_V1_t index;
-    pd_bool_t approve;
-} pd_council_vote_V1_t;
-
-#define PD_CALL_COUNCIL_CLOSE_V1 4
-typedef struct {
-    pd_Hash_t proposal_hash;
-    pd_CompactProposalIndex_V1_t index;
-    pd_CompactWeight_V1_t proposal_weight_bound;
-    pd_Compactu32_t length_bound;
-} pd_council_close_V1_t;
-
-#define PD_CALL_COUNCIL_DISAPPROVE_PROPOSAL_V1 5
-typedef struct {
-    pd_Hash_t proposal_hash;
-} pd_council_disapprove_proposal_V1_t;
-
-#define PD_CALL_ELECTIONS_VOTE_V1 0
-typedef struct {
-    pd_VecAccountId_V1_t votes;
-    pd_CompactBalanceOf_t value;
-} pd_elections_vote_V1_t;
-
 #define PD_CALL_ELECTIONS_REMOVE_VOTER_V1 1
 typedef struct {
 } pd_elections_remove_voter_V1_t;
@@ -487,16 +481,6 @@ typedef struct {
 typedef struct {
     pd_DefunctVoter_V1_t defunct;
 } pd_elections_report_defunct_voter_V1_t;
-
-#define PD_CALL_ELECTIONS_SUBMIT_CANDIDACY_V1 3
-typedef struct {
-    pd_Compactu32_t candidate_count;
-} pd_elections_submit_candidacy_V1_t;
-
-#define PD_CALL_ELECTIONS_RENOUNCE_CANDIDACY_V1 4
-typedef struct {
-    pd_Renouncing_V1_t renouncing;
-} pd_elections_renounce_candidacy_V1_t;
 
 #define PD_CALL_ELECTIONS_REMOVE_MEMBER_V1 5
 typedef struct {
@@ -994,8 +978,37 @@ typedef struct {
     pd_ResourceId_V1_t rid;
 } pd_bridgemapping_remove_V1_t;
 
+#endif
+
 typedef union {
-    pd_system_fill_block_V1_t system_fill_block_V1;
+    pd_utility_batch_V1_t utility_batch_V1;
+    pd_staking_bond_V1_t staking_bond_V1;
+    pd_staking_bond_extra_V1_t staking_bond_extra_V1;
+    pd_staking_unbond_V1_t staking_unbond_V1;
+    pd_staking_validate_V1_t staking_validate_V1;
+    pd_staking_nominate_V1_t staking_nominate_V1;
+    pd_staking_chill_V1_t staking_chill_V1;
+    pd_staking_set_payee_V1_t staking_set_payee_V1;
+    pd_staking_set_controller_V1_t staking_set_controller_V1;
+    pd_session_set_keys_V1_t session_set_keys_V1;
+    pd_session_purge_keys_V1_t session_purge_keys_V1;
+    pd_democracy_propose_V1_t democracy_propose_V1;
+    pd_democracy_second_V1_t democracy_second_V1;
+    pd_democracy_vote_V1_t democracy_vote_V1;
+    pd_democracy_external_propose_V1_t democracy_external_propose_V1;
+    pd_democracy_external_propose_majority_V1_t democracy_external_propose_majority_V1;
+    pd_democracy_external_propose_default_V1_t democracy_external_propose_default_V1;
+    pd_democracy_fast_track_V1_t democracy_fast_track_V1;
+    pd_democracy_unlock_V1_t democracy_unlock_V1;
+    pd_council_execute_V1_t council_execute_V1;
+    pd_council_propose_V1_t council_propose_V1;
+    pd_council_vote_V1_t council_vote_V1;
+    pd_council_close_V1_t council_close_V1;
+    pd_council_disapprove_proposal_V1_t council_disapprove_proposal_V1;
+    pd_elections_vote_V1_t elections_vote_V1;
+    pd_elections_submit_candidacy_V1_t elections_submit_candidacy_V1;
+    pd_elections_renounce_candidacy_V1_t elections_renounce_candidacy_V1;
+#ifdef SUBSTRATE_PARSER_FULL
     pd_system_remark_V1_t system_remark_V1;
     pd_system_set_heap_pages_V1_t system_set_heap_pages_V1;
     pd_system_set_code_V1_t system_set_code_V1;
@@ -1005,25 +1018,14 @@ typedef union {
     pd_system_kill_storage_V1_t system_kill_storage_V1;
     pd_system_kill_prefix_V1_t system_kill_prefix_V1;
     pd_system_suicide_V1_t system_suicide_V1;
-    pd_utility_batch_V1_t utility_batch_V1;
     pd_utility_as_derivative_V1_t utility_as_derivative_V1;
     pd_babe_report_equivocation_V1_t babe_report_equivocation_V1;
     pd_babe_report_equivocation_unsigned_V1_t babe_report_equivocation_unsigned_V1;
     pd_timestamp_set_V1_t timestamp_set_V1;
     pd_authorship_set_uncles_V1_t authorship_set_uncles_V1;
-    pd_balances_transfer_V1_t balances_transfer_V1;
     pd_balances_set_balance_V1_t balances_set_balance_V1;
     pd_balances_force_transfer_V1_t balances_force_transfer_V1;
-    pd_balances_transfer_keep_alive_V1_t balances_transfer_keep_alive_V1;
-    pd_staking_bond_V1_t staking_bond_V1;
-    pd_staking_bond_extra_V1_t staking_bond_extra_V1;
-    pd_staking_unbond_V1_t staking_unbond_V1;
     pd_staking_withdraw_unbonded_V1_t staking_withdraw_unbonded_V1;
-    pd_staking_validate_V1_t staking_validate_V1;
-    pd_staking_nominate_V1_t staking_nominate_V1;
-    pd_staking_chill_V1_t staking_chill_V1;
-    pd_staking_set_payee_V1_t staking_set_payee_V1;
-    pd_staking_set_controller_V1_t staking_set_controller_V1;
     pd_staking_set_validator_count_V1_t staking_set_validator_count_V1;
     pd_staking_increase_validator_count_V1_t staking_increase_validator_count_V1;
     pd_staking_scale_validator_count_V1_t staking_scale_validator_count_V1;
@@ -1039,16 +1041,7 @@ typedef union {
     pd_staking_reap_stash_V1_t staking_reap_stash_V1;
     pd_staking_submit_election_solution_V1_t staking_submit_election_solution_V1;
     pd_staking_submit_election_solution_unsigned_V1_t staking_submit_election_solution_unsigned_V1;
-    pd_session_set_keys_V1_t session_set_keys_V1;
-    pd_session_purge_keys_V1_t session_purge_keys_V1;
-    pd_democracy_propose_V1_t democracy_propose_V1;
-    pd_democracy_second_V1_t democracy_second_V1;
-    pd_democracy_vote_V1_t democracy_vote_V1;
     pd_democracy_emergency_cancel_V1_t democracy_emergency_cancel_V1;
-    pd_democracy_external_propose_V1_t democracy_external_propose_V1;
-    pd_democracy_external_propose_majority_V1_t democracy_external_propose_majority_V1;
-    pd_democracy_external_propose_default_V1_t democracy_external_propose_default_V1;
-    pd_democracy_fast_track_V1_t democracy_fast_track_V1;
     pd_democracy_veto_external_V1_t democracy_veto_external_V1;
     pd_democracy_cancel_referendum_V1_t democracy_cancel_referendum_V1;
     pd_democracy_cancel_queued_V1_t democracy_cancel_queued_V1;
@@ -1060,21 +1053,12 @@ typedef union {
     pd_democracy_note_imminent_preimage_V1_t democracy_note_imminent_preimage_V1;
     pd_democracy_note_imminent_preimage_operational_V1_t democracy_note_imminent_preimage_operational_V1;
     pd_democracy_reap_preimage_V1_t democracy_reap_preimage_V1;
-    pd_democracy_unlock_V1_t democracy_unlock_V1;
     pd_democracy_remove_vote_V1_t democracy_remove_vote_V1;
     pd_democracy_remove_other_vote_V1_t democracy_remove_other_vote_V1;
     pd_democracy_enact_proposal_V1_t democracy_enact_proposal_V1;
     pd_council_set_members_V1_t council_set_members_V1;
-    pd_council_execute_V1_t council_execute_V1;
-    pd_council_propose_V1_t council_propose_V1;
-    pd_council_vote_V1_t council_vote_V1;
-    pd_council_close_V1_t council_close_V1;
-    pd_council_disapprove_proposal_V1_t council_disapprove_proposal_V1;
-    pd_elections_vote_V1_t elections_vote_V1;
     pd_elections_remove_voter_V1_t elections_remove_voter_V1;
     pd_elections_report_defunct_voter_V1_t elections_report_defunct_voter_V1;
-    pd_elections_submit_candidacy_V1_t elections_submit_candidacy_V1;
-    pd_elections_renounce_candidacy_V1_t elections_renounce_candidacy_V1;
     pd_elections_remove_member_V1_t elections_remove_member_V1;
     pd_finalitytracker_final_hint_V1_t finalitytracker_final_hint_V1;
     pd_grandpa_report_equivocation_V1_t grandpa_report_equivocation_V1;
@@ -1155,9 +1139,35 @@ typedef union {
     pd_nft_transfer_V1_t nft_transfer_V1;
     pd_bridgemapping_set_V1_t bridgemapping_set_V1;
     pd_bridgemapping_remove_V1_t bridgemapping_remove_V1;
+#endif
 } pd_MethodBasic_V1_t;
 
+#define PD_CALL_BALANCES_TRANSFER_V1 0
+typedef struct {
+    pd_LookupSource_V1_t dest;
+    pd_CompactBalance_t value;
+} pd_balances_transfer_V1_t;
+
+#define PD_CALL_BALANCES_TRANSFER_KEEP_ALIVE_V1 3
+typedef struct {
+    pd_LookupSource_V1_t dest;
+    pd_CompactBalance_t value;
+} pd_balances_transfer_keep_alive_V1_t;
+
+#ifdef SUBSTRATE_PARSER_FULL
+#define PD_CALL_SYSTEM_FILL_BLOCK_V1 0
+typedef struct {
+    pd_Perbill_V1_t _ratio;
+} pd_system_fill_block_V1_t;
+
+#endif
+
 typedef union {
+    pd_balances_transfer_V1_t balances_transfer_V1;
+    pd_balances_transfer_keep_alive_V1_t balances_transfer_keep_alive_V1;
+#ifdef SUBSTRATE_PARSER_FULL
+    pd_system_fill_block_V1_t system_fill_block_V1;
+#endif
 } pd_MethodNested_V1_t;
 
 typedef union {
