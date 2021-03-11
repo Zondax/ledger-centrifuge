@@ -62,10 +62,10 @@ jobs:
             source /home/zondax/.cargo/env
             SUBSTRATE_PARSER_FULL=1 make
       - run:
-          name: Build Ledgeracio
+          name: Build SR25519 app
           command: |
             source /home/zondax/.cargo/env
-            COIN=Ledgeracio make
+            SUPPORT_SR25519=1 make
 
   test_zemu:
     machine:
