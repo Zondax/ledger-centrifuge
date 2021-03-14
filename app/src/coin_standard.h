@@ -30,7 +30,7 @@ extern "C" {
 
 #define MENU_MAIN_APP_LINE1                 "Centrifuge"
 #define MENU_MAIN_APP_LINE2                 "Ready"
-#define MENU_MAIN_APP_LINE2_SECRET          "RAD RECOVERY"
+#define MENU_MAIN_APP_LINE2_SECRET          "RECOVERY"
 #define APPVERSION_LINE1                    "Centrifuge"
 #define APPVERSION_LINE2                    "v" APPVERSION
 

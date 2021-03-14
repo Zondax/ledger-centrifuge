@@ -47,24 +47,17 @@ typedef enum {
 #define PK_ADDRESS_TYPE                     COIN_ADDR_TYPE_CENTRIFUGE
 #define SUPPORTED_TX_VERSION_CURRENT        LEDGER_MAJOR_VERSION
 #define SUPPORTED_TX_VERSION_PREVIOUS       (LEDGER_MAJOR_VERSION - 1)
-#define SUPPORTED_SPEC_VERSION              (LEDGER_MINOR_VERSION + 2000)
 #define SUPPORTED_MINIMUM_SPEC_VERSION      240
 
 #define COIN_AMOUNT_DECIMAL_PLACES          12
 
 #define COIN_GENESIS_HASH                   "d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716"   // FIXME: Review
 #define COIN_NAME                           "Centrifuge"
-#define COIN_TICKER                         "RAD"
+#define COIN_TICKER                         "CFG"
 
 #define COIN_SECRET_REQUIRED_CLICKS         10
 
-#if defined(APP_STANDARD)
 #include "coin_standard.h"
-#elif defined(APP_RESTRICTED)
-#include "coin_restricted.h"
-#else
-#error "APP VARIANT IS NOT SUPPORTED"
-#endif
 
 #ifdef __cplusplus
 }

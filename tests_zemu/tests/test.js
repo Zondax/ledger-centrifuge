@@ -30,7 +30,7 @@ var simOptions = {
     logging: true,
     start_delay: 3000,
     custom: `-s "${APP_SEED}"`,
-    X11: false
+    X11: true
 };
 
 let models = [
@@ -162,7 +162,7 @@ describe('Standard', function () {
             const pathChange = 0x80000000;
             const pathIndex = 0x80000000;
 
-            let txBlobStr = "0000419dfc0dd5038d2403d2029649f000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
+            let txBlobStr = "0500268ed73e0dd5030033158139ae28a3dfaac5fe1560a5e9e05cf000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
 
             const txBlob = Buffer.from(txBlobStr, "hex");
 
@@ -174,7 +174,7 @@ describe('Standard', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_normal`, model === "nanos" ? 3 : 4);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_normal`, model === "nanos" ? 5 : 6);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
@@ -210,7 +210,7 @@ describe('Standard', function () {
             await sim.clickBoth();
             await sim.clickLeft();
 
-            let txBlobStr = "0000419dfc0dd5038d2403d2029649f000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
+            let txBlobStr = "0500268ed73e0dd5030033158139ae28a3dfaac5fe1560a5e9e05cf000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
 
             const txBlob = Buffer.from(txBlobStr, "hex");
 
@@ -223,7 +223,7 @@ describe('Standard', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_expert`, model === "nanos" ? 9 : 10);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_expert`, model === "nanos" ? 11 : 12);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
@@ -240,82 +240,6 @@ describe('Standard', function () {
             }
             const valid = ed25519.verify(signatureResponse.signature.slice(1), prehash, pubKey);
             expect(valid).toEqual(true);
-        } finally {
-            await sim.close();
-        }
-    });
-
-    test.each(models)('sign basic - forward/backward (%s)', async function (_, {model, prefix, path}) {
-        const sim = new Zemu(path);
-        try {
-            await sim.start({model, ...simOptions});
-            const app = newCentrifugeApp(sim.getTransport());
-            const pathAccount = 0x80000000;
-            const pathChange = 0x80000000;
-            const pathIndex = 0x80000000;
-
-            let txBlobStr = "0000419dfc0dd5038d2403d2029649f000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
-
-            const txBlob = Buffer.from(txBlobStr, "hex");
-
-            const responseAddr = await app.getAddress(pathAccount, pathChange, pathIndex);
-            const pubKey = Buffer.from(responseAddr.pubKey, "hex");
-
-            // do not wait here.. we need to navigate
-            const signatureRequest = app.sign(pathAccount, pathChange, pathIndex, txBlob);
-            // Wait until we are not in the main menu
-            await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
-
-            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_FB`, model === "nanos" ? 3 : 4, 1);
-
-            let signatureResponse = await signatureRequest;
-            console.log(signatureResponse);
-
-            expect(signatureResponse.return_code).toEqual(0x9000);
-            expect(signatureResponse.error_message).toEqual("No errors");
-
-            // Now verify the signature
-            let prehash = txBlob;
-            if (txBlob.length > 256) {
-                const context = blake2bInit(32, null);
-                blake2bUpdate(context, txBlob);
-                prehash = Buffer.from(blake2bFinal(context));
-            }
-            const valid = ed25519.verify(signatureResponse.signature.slice(1), prehash, pubKey);
-            expect(valid).toEqual(true);
-        } finally {
-            await sim.close();
-        }
-    });
-
-    test.each(models)('sign basic - forward/backward-reject (%s)', async function (_, {model, prefix, path}) {
-        const sim = new Zemu(path);
-        try {
-            await sim.start({model, ...simOptions});
-            const app = newCentrifugeApp(sim.getTransport());
-            const pathAccount = 0x80000000;
-            const pathChange = 0x80000000;
-            const pathIndex = 0x80000000;
-
-            let txBlobStr = "0000419dfc0dd5038d2403d2029649f000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
-
-            const txBlob = Buffer.from(txBlobStr, "hex");
-
-            const responseAddr = await app.getAddress(pathAccount, pathChange, pathIndex);
-            const pubKey = Buffer.from(responseAddr.pubKey, "hex");
-
-            // do not wait here.. we need to navigate
-            const signatureRequest = app.sign(pathAccount, pathChange, pathIndex, txBlob);
-            // Wait until we are not in the main menu
-            await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
-
-            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_FB_reject`, model === "nanos" ? 4 : 5, 1);
-
-            let signatureResponse = await signatureRequest;
-            console.log(signatureResponse);
-
-            expect(signatureResponse.return_code).toEqual(0x6986);
-            expect(signatureResponse.error_message).toEqual("Transaction rejected");
         } finally {
             await sim.close();
         }
@@ -362,5 +286,4 @@ describe('Standard', function () {
             await sim.close();
         }
     });
-
 });
