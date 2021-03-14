@@ -59,23 +59,17 @@ $(info ************ FULL PARSER ENABLED ************)
 endif
 
 ifndef COIN
-COIN=RAD
+COIN=CFG
 endif
 
 include $(CURDIR)/Makefile.version
 
 $(info COIN  = [$(COIN)])
-ifeq ($(COIN),RAD)
+ifeq ($(COIN),CFG)
 # Main app configuration
 DEFINES += APP_STANDARD
 APPNAME = "Centrifuge"
 APPPATH = "44'/747'"
-
-else ifeq ($(COIN),Ledgeracio)
-DEFINES += APP_RESTRICTED
-APPNAME = "Centrifuge_sec"
-APPPATH = "44'/747'"
-
 else
 define error_message
 
@@ -233,4 +227,4 @@ dep/%.d: %.c Makefile
 
 .PHONY: listvariants
 listvariants:
-	@echo VARIANTS COIN RAD Ledgeracio
+	@echo VARIANTS COIN CFG
