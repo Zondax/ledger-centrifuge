@@ -56,7 +56,8 @@ bool _getMethod_ItemIsExpert(uint32_t transactionVersion, uint8_t moduleIdx, uin
 bool _getMethod_IsNestingSupported(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx);
 
 //Special getters
-
+#if defined(APP_RESTRICTED)
+parser_error_t parser_validate_staking_targets(parser_context_t* c);
 GEN_DEC_GETCALL(STAKING);
 GEN_DEC_GETCALL(STAKING_VALIDATE);
 GEN_DEC_GETCALL(STAKING_SET_PAYEE);
@@ -65,6 +66,7 @@ GEN_DEC_GETCALL(STAKING_NOMINATE);
 GEN_DEC_GETCALL(SESSION);
 GEN_DEC_GETCALL(SESSION_SET_KEYS);
 GEN_DEC_GETCALL(SESSION_PURGE_KEYS);
+#endif
 
 #ifdef __cplusplus
 }

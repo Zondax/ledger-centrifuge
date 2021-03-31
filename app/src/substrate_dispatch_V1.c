@@ -13,8 +13,9 @@
 *  See the License for the specific language governing permissions and
 *  limitations under the License.
 ********************************************************************************/
-#include "substrate_dispatch_V1.h"
 
+#include "substrate_dispatch_V1.h"
+#include "substrate_strings.h"
 #include "zxmacros.h"
 #include <stdint.h>
 
@@ -1783,72 +1784,74 @@ parser_error_t _readMethod_V1(
 const char* _getMethod_ModuleName_V1(uint8_t moduleIdx)
 {
     switch (moduleIdx) {
-    case 0:
-        return "System";
     case 1:
-        return "Utility";
-    case 2:
-        return "Babe";
-    case 3:
-        return "Timestamp";
-    case 4:
-        return "Authorship";
+        return STR_MO_UTILITY;
     case 5:
-        return "Balances";
+        return STR_MO_BALANCES;
     case 6:
-        return "Staking";
+        return STR_MO_STAKING;
     case 7:
-        return "Session";
+        return STR_MO_SESSION;
     case 8:
-        return "Democracy";
+        return STR_MO_DEMOCRACY;
     case 9:
-        return "Council";
+        return STR_MO_COUNCIL;
     case 10:
-        return "Elections";
+        return STR_MO_ELECTIONS;
+#ifdef SUBSTRATE_PARSER_FULL
+    case 0:
+        return STR_MO_SYSTEM;
+    case 2:
+        return STR_MO_BABE;
+    case 3:
+        return STR_MO_TIMESTAMP;
+    case 4:
+        return STR_MO_AUTHORSHIP;
     case 11:
-        return "Finalitytracker";
+        return STR_MO_FINALITYTRACKER;
     case 12:
-        return "Grandpa";
+        return STR_MO_GRANDPA;
     case 13:
-        return "Imonline";
+        return STR_MO_IMONLINE;
     case 14:
-        return "Authoritydiscovery";
+        return STR_MO_AUTHORITYDISCOVERY;
     case 15:
-        return "Offences";
+        return STR_MO_OFFENCES;
     case 16:
-        return "Randomnesscollectiveflip";
+        return STR_MO_RANDOMNESSCOLLECTIVEFLIP;
     case 17:
-        return "Anchor";
+        return STR_MO_ANCHOR;
     case 18:
-        return "Fees";
+        return STR_MO_FEES;
     case 19:
-        return "Nfts";
+        return STR_MO_NFTS;
     case 20:
-        return "Multiaccount";
+        return STR_MO_MULTIACCOUNT;
     case 21:
-        return "Identity";
+        return STR_MO_IDENTITY;
     case 22:
-        return "Palletbridge";
+        return STR_MO_PALLETBRIDGE;
     case 23:
-        return "Chainbridge";
+        return STR_MO_CHAINBRIDGE;
     case 24:
-        return "Indices";
+        return STR_MO_INDICES;
     case 25:
-        return "Scheduler";
+        return STR_MO_SCHEDULER;
     case 26:
-        return "Proxy";
+        return STR_MO_PROXY;
     case 27:
-        return "Multisig";
+        return STR_MO_MULTISIG;
     case 28:
-        return "Radclaims";
+        return STR_MO_RADCLAIMS;
     case 29:
-        return "Vesting";
+        return STR_MO_VESTING;
     case 30:
-        return "Registry";
+        return STR_MO_REGISTRY;
     case 31:
-        return "Nft";
+        return STR_MO_NFT;
     case 32:
-        return "Bridgemapping";
+        return STR_MO_BRIDGEMAPPING;
+#endif
     default:
         return NULL;
     }
@@ -1862,326 +1865,326 @@ const char* _getMethod_Name_V1(uint8_t moduleIdx, uint8_t callIdx)
 
     switch (callPrivIdx) {
     case 256: /* module 1 call 0 */
-        return "Batch";
+        return STR_ME_BATCH;
     case 1280: /* module 5 call 0 */
-        return "Transfer";
+        return STR_ME_TRANSFER;
     case 1283: /* module 5 call 3 */
-        return "Transfer keep alive";
+        return STR_ME_TRANSFER_KEEP_ALIVE;
     case 1536: /* module 6 call 0 */
-        return "Bond";
+        return STR_ME_BOND;
     case 1537: /* module 6 call 1 */
-        return "Bond extra";
+        return STR_ME_BOND_EXTRA;
     case 1538: /* module 6 call 2 */
-        return "Unbond";
+        return STR_ME_UNBOND;
     case 1540: /* module 6 call 4 */
-        return "Validate";
+        return STR_ME_VALIDATE;
     case 1541: /* module 6 call 5 */
-        return "Nominate";
+        return STR_ME_NOMINATE;
     case 1542: /* module 6 call 6 */
-        return "Chill";
+        return STR_ME_CHILL;
     case 1543: /* module 6 call 7 */
-        return "Set payee";
+        return STR_ME_SET_PAYEE;
     case 1544: /* module 6 call 8 */
-        return "Set controller";
+        return STR_ME_SET_CONTROLLER;
     case 1792: /* module 7 call 0 */
-        return "Set keys";
+        return STR_ME_SET_KEYS;
     case 1793: /* module 7 call 1 */
-        return "Purge keys";
+        return STR_ME_PURGE_KEYS;
     case 2048: /* module 8 call 0 */
-        return "Propose";
+        return STR_ME_PROPOSE;
     case 2049: /* module 8 call 1 */
-        return "Second";
+        return STR_ME_SECOND;
     case 2050: /* module 8 call 2 */
-        return "Vote";
+        return STR_ME_VOTE;
     case 2052: /* module 8 call 4 */
-        return "External propose";
+        return STR_ME_EXTERNAL_PROPOSE;
     case 2053: /* module 8 call 5 */
-        return "External propose majority";
+        return STR_ME_EXTERNAL_PROPOSE_MAJORITY;
     case 2054: /* module 8 call 6 */
-        return "External propose default";
+        return STR_ME_EXTERNAL_PROPOSE_DEFAULT;
     case 2055: /* module 8 call 7 */
-        return "Fast track";
+        return STR_ME_FAST_TRACK;
     case 2067: /* module 8 call 19 */
-        return "Unlock";
+        return STR_ME_UNLOCK;
     case 2305: /* module 9 call 1 */
-        return "Execute";
+        return STR_ME_EXECUTE;
     case 2306: /* module 9 call 2 */
-        return "Propose";
+        return STR_ME_PROPOSE;
     case 2307: /* module 9 call 3 */
-        return "Vote";
+        return STR_ME_VOTE;
     case 2308: /* module 9 call 4 */
-        return "Close";
+        return STR_ME_CLOSE;
     case 2309: /* module 9 call 5 */
-        return "Disapprove proposal";
+        return STR_ME_DISAPPROVE_PROPOSAL;
     case 2560: /* module 10 call 0 */
-        return "Vote";
+        return STR_ME_VOTE;
     case 2563: /* module 10 call 3 */
-        return "Submit candidacy";
+        return STR_ME_SUBMIT_CANDIDACY;
     case 2564: /* module 10 call 4 */
-        return "Renounce candidacy";
+        return STR_ME_RENOUNCE_CANDIDACY;
 #ifdef SUBSTRATE_PARSER_FULL
     case 0: /* module 0 call 0 */
-        return "Fill block";
+        return STR_ME_FILL_BLOCK;
     case 1: /* module 0 call 1 */
-        return "Remark";
+        return STR_ME_REMARK;
     case 2: /* module 0 call 2 */
-        return "Set heap pages";
+        return STR_ME_SET_HEAP_PAGES;
     case 3: /* module 0 call 3 */
-        return "Set code";
+        return STR_ME_SET_CODE;
     case 4: /* module 0 call 4 */
-        return "Set code without checks";
+        return STR_ME_SET_CODE_WITHOUT_CHECKS;
     case 5: /* module 0 call 5 */
-        return "Set changes trie config";
+        return STR_ME_SET_CHANGES_TRIE_CONFIG;
     case 6: /* module 0 call 6 */
-        return "Set storage";
+        return STR_ME_SET_STORAGE;
     case 7: /* module 0 call 7 */
-        return "Kill storage";
+        return STR_ME_KILL_STORAGE;
     case 8: /* module 0 call 8 */
-        return "Kill prefix";
+        return STR_ME_KILL_PREFIX;
     case 9: /* module 0 call 9 */
-        return "Suicide";
+        return STR_ME_SUICIDE;
     case 257: /* module 1 call 1 */
-        return "As derivative";
+        return STR_ME_AS_DERIVATIVE;
     case 512: /* module 2 call 0 */
-        return "Report equivocation";
+        return STR_ME_REPORT_EQUIVOCATION;
     case 513: /* module 2 call 1 */
-        return "Report equivocation unsigned";
+        return STR_ME_REPORT_EQUIVOCATION_UNSIGNED;
     case 768: /* module 3 call 0 */
-        return "Set";
+        return STR_ME_SET;
     case 1024: /* module 4 call 0 */
-        return "Set uncles";
+        return STR_ME_SET_UNCLES;
     case 1281: /* module 5 call 1 */
-        return "Set balance";
+        return STR_ME_SET_BALANCE;
     case 1282: /* module 5 call 2 */
-        return "Force transfer";
+        return STR_ME_FORCE_TRANSFER;
     case 1539: /* module 6 call 3 */
-        return "Withdraw Unbonded";
+        return STR_ME_WITHDRAW_UNBONDED;
     case 1545: /* module 6 call 9 */
-        return "Set validator count";
+        return STR_ME_SET_VALIDATOR_COUNT;
     case 1546: /* module 6 call 10 */
-        return "Increase validator count";
+        return STR_ME_INCREASE_VALIDATOR_COUNT;
     case 1547: /* module 6 call 11 */
-        return "Scale validator count";
+        return STR_ME_SCALE_VALIDATOR_COUNT;
     case 1548: /* module 6 call 12 */
-        return "Force no eras";
+        return STR_ME_FORCE_NO_ERAS;
     case 1549: /* module 6 call 13 */
-        return "Force new era";
+        return STR_ME_FORCE_NEW_ERA;
     case 1550: /* module 6 call 14 */
-        return "Set invulnerables";
+        return STR_ME_SET_INVULNERABLES;
     case 1551: /* module 6 call 15 */
-        return "Force unstake";
+        return STR_ME_FORCE_UNSTAKE;
     case 1552: /* module 6 call 16 */
-        return "Force new era always";
+        return STR_ME_FORCE_NEW_ERA_ALWAYS;
     case 1553: /* module 6 call 17 */
-        return "Cancel deferred slash";
+        return STR_ME_CANCEL_DEFERRED_SLASH;
     case 1554: /* module 6 call 18 */
-        return "Payout stakers";
+        return STR_ME_PAYOUT_STAKERS;
     case 1555: /* module 6 call 19 */
-        return "Rebond";
+        return STR_ME_REBOND;
     case 1556: /* module 6 call 20 */
-        return "Set history depth";
+        return STR_ME_SET_HISTORY_DEPTH;
     case 1557: /* module 6 call 21 */
-        return "Reap stash";
+        return STR_ME_REAP_STASH;
     case 1558: /* module 6 call 22 */
-        return "Submit election solution";
+        return STR_ME_SUBMIT_ELECTION_SOLUTION;
     case 1559: /* module 6 call 23 */
-        return "Submit election solution unsigned";
+        return STR_ME_SUBMIT_ELECTION_SOLUTION_UNSIGNED;
     case 2051: /* module 8 call 3 */
-        return "Emergency cancel";
+        return STR_ME_EMERGENCY_CANCEL;
     case 2056: /* module 8 call 8 */
-        return "Veto external";
+        return STR_ME_VETO_EXTERNAL;
     case 2057: /* module 8 call 9 */
-        return "Cancel referendum";
+        return STR_ME_CANCEL_REFERENDUM;
     case 2058: /* module 8 call 10 */
-        return "Cancel queued";
+        return STR_ME_CANCEL_QUEUED;
     case 2059: /* module 8 call 11 */
-        return "Delegate";
+        return STR_ME_DELEGATE;
     case 2060: /* module 8 call 12 */
-        return "Undelegate";
+        return STR_ME_UNDELEGATE;
     case 2061: /* module 8 call 13 */
-        return "Clear public proposals";
+        return STR_ME_CLEAR_PUBLIC_PROPOSALS;
     case 2062: /* module 8 call 14 */
-        return "Note preimage";
+        return STR_ME_NOTE_PREIMAGE;
     case 2063: /* module 8 call 15 */
-        return "Note preimage operational";
+        return STR_ME_NOTE_PREIMAGE_OPERATIONAL;
     case 2064: /* module 8 call 16 */
-        return "Note imminent preimage";
+        return STR_ME_NOTE_IMMINENT_PREIMAGE;
     case 2065: /* module 8 call 17 */
-        return "Note imminent preimage operational";
+        return STR_ME_NOTE_IMMINENT_PREIMAGE_OPERATIONAL;
     case 2066: /* module 8 call 18 */
-        return "Reap preimage";
+        return STR_ME_REAP_PREIMAGE;
     case 2068: /* module 8 call 20 */
-        return "Remove vote";
+        return STR_ME_REMOVE_VOTE;
     case 2069: /* module 8 call 21 */
-        return "Remove other vote";
+        return STR_ME_REMOVE_OTHER_VOTE;
     case 2070: /* module 8 call 22 */
-        return "Enact proposal";
+        return STR_ME_ENACT_PROPOSAL;
     case 2304: /* module 9 call 0 */
-        return "Set members";
+        return STR_ME_SET_MEMBERS;
     case 2561: /* module 10 call 1 */
-        return "Remove voter";
+        return STR_ME_REMOVE_VOTER;
     case 2562: /* module 10 call 2 */
-        return "Report defunct voter";
+        return STR_ME_REPORT_DEFUNCT_VOTER;
     case 2565: /* module 10 call 5 */
-        return "Remove member";
+        return STR_ME_REMOVE_MEMBER;
     case 2816: /* module 11 call 0 */
-        return "Final hint";
+        return STR_ME_FINAL_HINT;
     case 3072: /* module 12 call 0 */
-        return "Report equivocation";
+        return STR_ME_REPORT_EQUIVOCATION;
     case 3073: /* module 12 call 1 */
-        return "Report equivocation unsigned";
+        return STR_ME_REPORT_EQUIVOCATION_UNSIGNED;
     case 3074: /* module 12 call 2 */
-        return "Note stalled";
+        return STR_ME_NOTE_STALLED;
     case 3328: /* module 13 call 0 */
-        return "Heartbeat";
+        return STR_ME_HEARTBEAT;
     case 4352: /* module 17 call 0 */
-        return "Pre commit";
+        return STR_ME_PRE_COMMIT;
     case 4353: /* module 17 call 1 */
-        return "Commit";
+        return STR_ME_COMMIT;
     case 4354: /* module 17 call 2 */
-        return "Evict pre commits";
+        return STR_ME_EVICT_PRE_COMMITS;
     case 4355: /* module 17 call 3 */
-        return "Evict anchors";
+        return STR_ME_EVICT_ANCHORS;
     case 4608: /* module 18 call 0 */
-        return "Set fee";
+        return STR_ME_SET_FEE;
     case 4864: /* module 19 call 0 */
-        return "Validate mint";
+        return STR_ME_VALIDATE_MINT;
     case 5120: /* module 20 call 0 */
-        return "Create";
+        return STR_ME_CREATE;
     case 5121: /* module 20 call 1 */
-        return "Update";
+        return STR_ME_UPDATE;
     case 5122: /* module 20 call 2 */
-        return "Remove";
+        return STR_ME_REMOVE;
     case 5123: /* module 20 call 3 */
-        return "Call";
+        return STR_ME_CALL;
     case 5124: /* module 20 call 4 */
-        return "Approve";
+        return STR_ME_APPROVE;
     case 5125: /* module 20 call 5 */
-        return "Cancel";
+        return STR_ME_CANCEL;
     case 5376: /* module 21 call 0 */
-        return "Add registrar";
+        return STR_ME_ADD_REGISTRAR;
     case 5377: /* module 21 call 1 */
-        return "Set identity";
+        return STR_ME_SET_IDENTITY;
     case 5378: /* module 21 call 2 */
-        return "Set subs";
+        return STR_ME_SET_SUBS;
     case 5379: /* module 21 call 3 */
-        return "Clear identity";
+        return STR_ME_CLEAR_IDENTITY;
     case 5380: /* module 21 call 4 */
-        return "Request judgement";
+        return STR_ME_REQUEST_JUDGEMENT;
     case 5381: /* module 21 call 5 */
-        return "Cancel request";
+        return STR_ME_CANCEL_REQUEST;
     case 5382: /* module 21 call 6 */
-        return "Set fee";
+        return STR_ME_SET_FEE;
     case 5383: /* module 21 call 7 */
-        return "Set account id";
+        return STR_ME_SET_ACCOUNT_ID;
     case 5384: /* module 21 call 8 */
-        return "Set fields";
+        return STR_ME_SET_FIELDS;
     case 5385: /* module 21 call 9 */
-        return "Provide judgement";
+        return STR_ME_PROVIDE_JUDGEMENT;
     case 5386: /* module 21 call 10 */
-        return "Kill identity";
+        return STR_ME_KILL_IDENTITY;
     case 5387: /* module 21 call 11 */
-        return "Add sub";
+        return STR_ME_ADD_SUB;
     case 5388: /* module 21 call 12 */
-        return "Rename sub";
+        return STR_ME_RENAME_SUB;
     case 5389: /* module 21 call 13 */
-        return "Remove sub";
+        return STR_ME_REMOVE_SUB;
     case 5390: /* module 21 call 14 */
-        return "Quit sub";
+        return STR_ME_QUIT_SUB;
     case 5632: /* module 22 call 0 */
-        return "Transfer native";
+        return STR_ME_TRANSFER_NATIVE;
     case 5633: /* module 22 call 1 */
-        return "Transfer asset";
+        return STR_ME_TRANSFER_ASSET;
     case 5634: /* module 22 call 2 */
-        return "Transfer";
+        return STR_ME_TRANSFER;
     case 5635: /* module 22 call 3 */
-        return "Receive nonfungible";
+        return STR_ME_RECEIVE_NONFUNGIBLE;
     case 5636: /* module 22 call 4 */
-        return "Remark";
+        return STR_ME_REMARK;
     case 5888: /* module 23 call 0 */
-        return "Set threshold";
+        return STR_ME_SET_THRESHOLD;
     case 5889: /* module 23 call 1 */
-        return "Set resource";
+        return STR_ME_SET_RESOURCE;
     case 5890: /* module 23 call 2 */
-        return "Remove resource";
+        return STR_ME_REMOVE_RESOURCE;
     case 5891: /* module 23 call 3 */
-        return "Whitelist chain";
+        return STR_ME_WHITELIST_CHAIN;
     case 5892: /* module 23 call 4 */
-        return "Add relayer";
+        return STR_ME_ADD_RELAYER;
     case 5893: /* module 23 call 5 */
-        return "Remove relayer";
+        return STR_ME_REMOVE_RELAYER;
     case 5894: /* module 23 call 6 */
-        return "Acknowledge proposal";
+        return STR_ME_ACKNOWLEDGE_PROPOSAL;
     case 5895: /* module 23 call 7 */
-        return "Reject proposal";
+        return STR_ME_REJECT_PROPOSAL;
     case 5896: /* module 23 call 8 */
-        return "Eval vote state";
+        return STR_ME_EVAL_VOTE_STATE;
     case 6144: /* module 24 call 0 */
-        return "Claim";
+        return STR_ME_CLAIM;
     case 6145: /* module 24 call 1 */
-        return "Transfer";
+        return STR_ME_TRANSFER;
     case 6146: /* module 24 call 2 */
-        return "Free";
+        return STR_ME_FREE;
     case 6147: /* module 24 call 3 */
-        return "Force transfer";
+        return STR_ME_FORCE_TRANSFER;
     case 6148: /* module 24 call 4 */
-        return "Freeze";
+        return STR_ME_FREEZE;
     case 6400: /* module 25 call 0 */
-        return "Schedule";
+        return STR_ME_SCHEDULE;
     case 6401: /* module 25 call 1 */
-        return "Cancel";
+        return STR_ME_CANCEL;
     case 6402: /* module 25 call 2 */
-        return "Schedule named";
+        return STR_ME_SCHEDULE_NAMED;
     case 6403: /* module 25 call 3 */
-        return "Cancel named";
+        return STR_ME_CANCEL_NAMED;
     case 6404: /* module 25 call 4 */
-        return "Schedule after";
+        return STR_ME_SCHEDULE_AFTER;
     case 6405: /* module 25 call 5 */
-        return "Schedule named after";
+        return STR_ME_SCHEDULE_NAMED_AFTER;
     case 6656: /* module 26 call 0 */
-        return "Proxy";
+        return STR_ME_PROXY;
     case 6657: /* module 26 call 1 */
-        return "Add proxy";
+        return STR_ME_ADD_PROXY;
     case 6658: /* module 26 call 2 */
-        return "Remove proxy";
+        return STR_ME_REMOVE_PROXY;
     case 6659: /* module 26 call 3 */
-        return "Remove proxies";
+        return STR_ME_REMOVE_PROXIES;
     case 6660: /* module 26 call 4 */
-        return "Anonymous";
+        return STR_ME_ANONYMOUS;
     case 6661: /* module 26 call 5 */
-        return "Kill anonymous";
+        return STR_ME_KILL_ANONYMOUS;
     case 6912: /* module 27 call 0 */
-        return "As multi threshold 1";
+        return STR_ME_AS_MULTI_THRESHOLD_1;
     case 6913: /* module 27 call 1 */
-        return "As multi";
+        return STR_ME_AS_MULTI;
     case 6914: /* module 27 call 2 */
-        return "Approve as multi";
+        return STR_ME_APPROVE_AS_MULTI;
     case 6915: /* module 27 call 3 */
-        return "Cancel as multi";
+        return STR_ME_CANCEL_AS_MULTI;
     case 7168: /* module 28 call 0 */
-        return "Claim";
+        return STR_ME_CLAIM;
     case 7169: /* module 28 call 1 */
-        return "Set upload account";
+        return STR_ME_SET_UPLOAD_ACCOUNT;
     case 7170: /* module 28 call 2 */
-        return "Store root hash";
+        return STR_ME_STORE_ROOT_HASH;
     case 7424: /* module 29 call 0 */
-        return "Vest";
+        return STR_ME_VEST;
     case 7425: /* module 29 call 1 */
-        return "Vest other";
+        return STR_ME_VEST_OTHER;
     case 7426: /* module 29 call 2 */
-        return "Vested transfer";
+        return STR_ME_VESTED_TRANSFER;
     case 7427: /* module 29 call 3 */
-        return "Force vested transfer";
+        return STR_ME_FORCE_VESTED_TRANSFER;
     case 7680: /* module 30 call 0 */
-        return "Create registry";
+        return STR_ME_CREATE_REGISTRY;
     case 7681: /* module 30 call 1 */
-        return "Mint";
+        return STR_ME_MINT;
     case 7936: /* module 31 call 0 */
-        return "Transfer";
+        return STR_ME_TRANSFER;
     case 8192: /* module 32 call 0 */
-        return "Set";
+        return STR_ME_SET;
     case 8193: /* module 32 call 1 */
-        return "Remove";
+        return STR_ME_REMOVE;
 #endif
     default:
         return NULL;
@@ -2532,64 +2535,64 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 256: /* module 1 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Calls";
+            return STR_IT_calls;
         default:
             return NULL;
         }
     case 1280: /* module 5 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Dest";
+            return STR_IT_dest;
         case 1:
-            return "Amount";
+            return STR_IT_value;
         default:
             return NULL;
         }
     case 1283: /* module 5 call 3 */
         switch (itemIdx) {
         case 0:
-            return "Dest";
+            return STR_IT_dest;
         case 1:
-            return "Amount";
+            return STR_IT_value;
         default:
             return NULL;
         }
     case 1536: /* module 6 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Controller";
+            return STR_IT_controller;
         case 1:
-            return "Amount";
+            return STR_IT_value;
         case 2:
-            return "Payee";
+            return STR_IT_payee;
         default:
             return NULL;
         }
     case 1537: /* module 6 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Amount";
+            return STR_IT_max_additional;
         default:
             return NULL;
         }
     case 1538: /* module 6 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Amount";
+            return STR_IT_value;
         default:
             return NULL;
         }
     case 1540: /* module 6 call 4 */
         switch (itemIdx) {
         case 0:
-            return "Prefs";
+            return STR_IT_prefs;
         default:
             return NULL;
         }
     case 1541: /* module 6 call 5 */
         switch (itemIdx) {
         case 0:
-            return "Targets";
+            return STR_IT_targets;
         default:
             return NULL;
         }
@@ -2601,23 +2604,23 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 1543: /* module 6 call 7 */
         switch (itemIdx) {
         case 0:
-            return "Payee";
+            return STR_IT_payee;
         default:
             return NULL;
         }
     case 1544: /* module 6 call 8 */
         switch (itemIdx) {
         case 0:
-            return "Controller";
+            return STR_IT_controller;
         default:
             return NULL;
         }
     case 1792: /* module 7 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Keys";
+            return STR_IT_keys;
         case 1:
-            return "Proof";
+            return STR_IT_proof;
         default:
             return NULL;
         }
@@ -2629,140 +2632,140 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 2048: /* module 8 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Proposal hash";
+            return STR_IT_proposal_hash;
         case 1:
-            return "Amount";
+            return STR_IT_value;
         default:
             return NULL;
         }
     case 2049: /* module 8 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Proposal";
+            return STR_IT_proposal;
         case 1:
-            return "Seconds upper bound";
+            return STR_IT_seconds_upper_bound;
         default:
             return NULL;
         }
     case 2050: /* module 8 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Ref index";
+            return STR_IT_ref_index;
         case 1:
-            return "Vote";
+            return STR_IT_vote;
         default:
             return NULL;
         }
     case 2052: /* module 8 call 4 */
         switch (itemIdx) {
         case 0:
-            return "Proposal hash";
+            return STR_IT_proposal_hash;
         default:
             return NULL;
         }
     case 2053: /* module 8 call 5 */
         switch (itemIdx) {
         case 0:
-            return "Proposal hash";
+            return STR_IT_proposal_hash;
         default:
             return NULL;
         }
     case 2054: /* module 8 call 6 */
         switch (itemIdx) {
         case 0:
-            return "Proposal hash";
+            return STR_IT_proposal_hash;
         default:
             return NULL;
         }
     case 2055: /* module 8 call 7 */
         switch (itemIdx) {
         case 0:
-            return "Proposal hash";
+            return STR_IT_proposal_hash;
         case 1:
-            return "Voting period";
+            return STR_IT_voting_period;
         case 2:
-            return "Delay";
+            return STR_IT_delay;
         default:
             return NULL;
         }
     case 2067: /* module 8 call 19 */
         switch (itemIdx) {
         case 0:
-            return "Target";
+            return STR_IT_target;
         default:
             return NULL;
         }
     case 2305: /* module 9 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Proposal";
+            return STR_IT_proposal;
         case 1:
-            return "Length bound";
+            return STR_IT_length_bound;
         default:
             return NULL;
         }
     case 2306: /* module 9 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Threshold";
+            return STR_IT_threshold;
         case 1:
-            return "Proposal";
+            return STR_IT_proposal;
         case 2:
-            return "Length bound";
+            return STR_IT_length_bound;
         default:
             return NULL;
         }
     case 2307: /* module 9 call 3 */
         switch (itemIdx) {
         case 0:
-            return "Proposal";
+            return STR_IT_proposal;
         case 1:
-            return "Index";
+            return STR_IT_index;
         case 2:
-            return "Approve";
+            return STR_IT_approve;
         default:
             return NULL;
         }
     case 2308: /* module 9 call 4 */
         switch (itemIdx) {
         case 0:
-            return "Proposal hash";
+            return STR_IT_proposal_hash;
         case 1:
-            return "Index";
+            return STR_IT_index;
         case 2:
-            return "Proposal weight bound";
+            return STR_IT_proposal_weight_bound;
         case 3:
-            return "Length bound";
+            return STR_IT_length_bound;
         default:
             return NULL;
         }
     case 2309: /* module 9 call 5 */
         switch (itemIdx) {
         case 0:
-            return "Proposal hash";
+            return STR_IT_proposal_hash;
         default:
             return NULL;
         }
     case 2560: /* module 10 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Votes";
+            return STR_IT_votes;
         case 1:
-            return "Amount";
+            return STR_IT_value;
         default:
             return NULL;
         }
     case 2563: /* module 10 call 3 */
         switch (itemIdx) {
         case 0:
-            return "Candidate count";
+            return STR_IT_candidate_count;
         default:
             return NULL;
         }
     case 2564: /* module 10 call 4 */
         switch (itemIdx) {
         case 0:
-            return "Renouncing";
+            return STR_IT_renouncing;
         default:
             return NULL;
         }
@@ -2770,65 +2773,65 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 0: /* module 0 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Ratio";
+            return STR_IT__ratio;
         default:
             return NULL;
         }
     case 1: /* module 0 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Remark";
+            return STR_IT__remark;
         default:
             return NULL;
         }
     case 2: /* module 0 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Pages";
+            return STR_IT_pages;
         default:
             return NULL;
         }
     case 3: /* module 0 call 3 */
         switch (itemIdx) {
         case 0:
-            return "Code";
+            return STR_IT_code;
         default:
             return NULL;
         }
     case 4: /* module 0 call 4 */
         switch (itemIdx) {
         case 0:
-            return "Code";
+            return STR_IT_code;
         default:
             return NULL;
         }
     case 5: /* module 0 call 5 */
         switch (itemIdx) {
         case 0:
-            return "Changes trie config";
+            return STR_IT_changes_trie_config;
         default:
             return NULL;
         }
     case 6: /* module 0 call 6 */
         switch (itemIdx) {
         case 0:
-            return "Items";
+            return STR_IT_items;
         default:
             return NULL;
         }
     case 7: /* module 0 call 7 */
         switch (itemIdx) {
         case 0:
-            return "Keys";
+            return STR_IT_keys;
         default:
             return NULL;
         }
     case 8: /* module 0 call 8 */
         switch (itemIdx) {
         case 0:
-            return "Prefix";
+            return STR_IT_prefix;
         case 1:
-            return "Subkeys";
+            return STR_IT__subkeys;
         default:
             return NULL;
         }
@@ -2840,91 +2843,91 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 257: /* module 1 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Index";
+            return STR_IT_index;
         case 1:
-            return "Call";
+            return STR_IT_call;
         default:
             return NULL;
         }
     case 512: /* module 2 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Equivocation proof";
+            return STR_IT_equivocation_proof;
         case 1:
-            return "Key owner proof";
+            return STR_IT_key_owner_proof;
         default:
             return NULL;
         }
     case 513: /* module 2 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Equivocation proof";
+            return STR_IT_equivocation_proof;
         case 1:
-            return "Key owner proof";
+            return STR_IT_key_owner_proof;
         default:
             return NULL;
         }
     case 768: /* module 3 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Now";
+            return STR_IT_now;
         default:
             return NULL;
         }
     case 1024: /* module 4 call 0 */
         switch (itemIdx) {
         case 0:
-            return "New uncles";
+            return STR_IT_new_uncles;
         default:
             return NULL;
         }
     case 1281: /* module 5 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Who";
+            return STR_IT_who;
         case 1:
-            return "New free";
+            return STR_IT_new_free;
         case 2:
-            return "New reserved";
+            return STR_IT_new_reserved;
         default:
             return NULL;
         }
     case 1282: /* module 5 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Source";
+            return STR_IT_source;
         case 1:
-            return "Dest";
+            return STR_IT_dest;
         case 2:
-            return "Amount";
+            return STR_IT_value;
         default:
             return NULL;
         }
     case 1539: /* module 6 call 3 */
         switch (itemIdx) {
         case 0:
-            return "Num slashing spans";
+            return STR_IT_num_slashing_spans;
         default:
             return NULL;
         }
     case 1545: /* module 6 call 9 */
         switch (itemIdx) {
         case 0:
-            return "New";
+            return STR_IT_new_;
         default:
             return NULL;
         }
     case 1546: /* module 6 call 10 */
         switch (itemIdx) {
         case 0:
-            return "Additional";
+            return STR_IT_additional;
         default:
             return NULL;
         }
     case 1547: /* module 6 call 11 */
         switch (itemIdx) {
         case 0:
-            return "Factor";
+            return STR_IT_factor;
         default:
             return NULL;
         }
@@ -2941,16 +2944,16 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 1550: /* module 6 call 14 */
         switch (itemIdx) {
         case 0:
-            return "Validators";
+            return STR_IT_validators;
         default:
             return NULL;
         }
     case 1551: /* module 6 call 15 */
         switch (itemIdx) {
         case 0:
-            return "Stash";
+            return STR_IT_stash;
         case 1:
-            return "Num slashing spans";
+            return STR_IT_num_slashing_spans;
         default:
             return NULL;
         }
@@ -2962,112 +2965,112 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 1553: /* module 6 call 17 */
         switch (itemIdx) {
         case 0:
-            return "Era";
+            return STR_IT_era;
         case 1:
-            return "Slash indices";
+            return STR_IT_slash_indices;
         default:
             return NULL;
         }
     case 1554: /* module 6 call 18 */
         switch (itemIdx) {
         case 0:
-            return "Validator stash";
+            return STR_IT_validator_stash;
         case 1:
-            return "Era";
+            return STR_IT_era;
         default:
             return NULL;
         }
     case 1555: /* module 6 call 19 */
         switch (itemIdx) {
         case 0:
-            return "Amount";
+            return STR_IT_value;
         default:
             return NULL;
         }
     case 1556: /* module 6 call 20 */
         switch (itemIdx) {
         case 0:
-            return "New history depth";
+            return STR_IT_new_history_depth;
         case 1:
-            return "Era items deleted";
+            return STR_IT__era_items_deleted;
         default:
             return NULL;
         }
     case 1557: /* module 6 call 21 */
         switch (itemIdx) {
         case 0:
-            return "Stash";
+            return STR_IT_stash;
         case 1:
-            return "Num slashing spans";
+            return STR_IT_num_slashing_spans;
         default:
             return NULL;
         }
     case 1558: /* module 6 call 22 */
         switch (itemIdx) {
         case 0:
-            return "Winners";
+            return STR_IT_winners;
         case 1:
-            return "Compact";
+            return STR_IT_compact;
         case 2:
-            return "Score";
+            return STR_IT_score;
         case 3:
-            return "Era";
+            return STR_IT_era;
         case 4:
-            return "Size";
+            return STR_IT_size;
         default:
             return NULL;
         }
     case 1559: /* module 6 call 23 */
         switch (itemIdx) {
         case 0:
-            return "Winners";
+            return STR_IT_winners;
         case 1:
-            return "Compact";
+            return STR_IT_compact;
         case 2:
-            return "Score";
+            return STR_IT_score;
         case 3:
-            return "Era";
+            return STR_IT_era;
         case 4:
-            return "Size";
+            return STR_IT_size;
         default:
             return NULL;
         }
     case 2051: /* module 8 call 3 */
         switch (itemIdx) {
         case 0:
-            return "Ref index";
+            return STR_IT_ref_index;
         default:
             return NULL;
         }
     case 2056: /* module 8 call 8 */
         switch (itemIdx) {
         case 0:
-            return "Proposal hash";
+            return STR_IT_proposal_hash;
         default:
             return NULL;
         }
     case 2057: /* module 8 call 9 */
         switch (itemIdx) {
         case 0:
-            return "Ref index";
+            return STR_IT_ref_index;
         default:
             return NULL;
         }
     case 2058: /* module 8 call 10 */
         switch (itemIdx) {
         case 0:
-            return "Which";
+            return STR_IT_which;
         default:
             return NULL;
         }
     case 2059: /* module 8 call 11 */
         switch (itemIdx) {
         case 0:
-            return "To";
+            return STR_IT_to;
         case 1:
-            return "Conviction";
+            return STR_IT_conviction;
         case 2:
-            return "Balance";
+            return STR_IT_balance;
         default:
             return NULL;
         }
@@ -3084,73 +3087,73 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 2062: /* module 8 call 14 */
         switch (itemIdx) {
         case 0:
-            return "Encoded proposal";
+            return STR_IT_encoded_proposal;
         default:
             return NULL;
         }
     case 2063: /* module 8 call 15 */
         switch (itemIdx) {
         case 0:
-            return "Encoded proposal";
+            return STR_IT_encoded_proposal;
         default:
             return NULL;
         }
     case 2064: /* module 8 call 16 */
         switch (itemIdx) {
         case 0:
-            return "Encoded proposal";
+            return STR_IT_encoded_proposal;
         default:
             return NULL;
         }
     case 2065: /* module 8 call 17 */
         switch (itemIdx) {
         case 0:
-            return "Encoded proposal";
+            return STR_IT_encoded_proposal;
         default:
             return NULL;
         }
     case 2066: /* module 8 call 18 */
         switch (itemIdx) {
         case 0:
-            return "Proposal hash";
+            return STR_IT_proposal_hash;
         case 1:
-            return "Proposal len upper bound";
+            return STR_IT_proposal_len_upper_bound;
         default:
             return NULL;
         }
     case 2068: /* module 8 call 20 */
         switch (itemIdx) {
         case 0:
-            return "Index";
+            return STR_IT_index;
         default:
             return NULL;
         }
     case 2069: /* module 8 call 21 */
         switch (itemIdx) {
         case 0:
-            return "Target";
+            return STR_IT_target;
         case 1:
-            return "Index";
+            return STR_IT_index;
         default:
             return NULL;
         }
     case 2070: /* module 8 call 22 */
         switch (itemIdx) {
         case 0:
-            return "Proposal hash";
+            return STR_IT_proposal_hash;
         case 1:
-            return "Index";
+            return STR_IT_index;
         default:
             return NULL;
         }
     case 2304: /* module 9 call 0 */
         switch (itemIdx) {
         case 0:
-            return "New members";
+            return STR_IT_new_members;
         case 1:
-            return "Prime";
+            return STR_IT_prime;
         case 2:
-            return "Old count";
+            return STR_IT_old_count;
         default:
             return NULL;
         }
@@ -3162,88 +3165,88 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 2562: /* module 10 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Defunct";
+            return STR_IT_defunct;
         default:
             return NULL;
         }
     case 2565: /* module 10 call 5 */
         switch (itemIdx) {
         case 0:
-            return "Who";
+            return STR_IT_who;
         case 1:
-            return "Has replacement";
+            return STR_IT_has_replacement;
         default:
             return NULL;
         }
     case 2816: /* module 11 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Hint";
+            return STR_IT_hint;
         default:
             return NULL;
         }
     case 3072: /* module 12 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Equivocation proof";
+            return STR_IT_equivocation_proof;
         case 1:
-            return "Key owner proof";
+            return STR_IT_key_owner_proof;
         default:
             return NULL;
         }
     case 3073: /* module 12 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Equivocation proof";
+            return STR_IT_equivocation_proof;
         case 1:
-            return "Key owner proof";
+            return STR_IT_key_owner_proof;
         default:
             return NULL;
         }
     case 3074: /* module 12 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Delay";
+            return STR_IT_delay;
         case 1:
-            return "Best finalized block number";
+            return STR_IT_best_finalized_block_number;
         default:
             return NULL;
         }
     case 3328: /* module 13 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Heartbeat";
+            return STR_IT_heartbeat;
         case 1:
-            return "Signature";
+            return STR_IT__signature;
         default:
             return NULL;
         }
     case 4352: /* module 17 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Anchor id";
+            return STR_IT_anchor_id;
         case 1:
-            return "Signing root";
+            return STR_IT_signing_root;
         default:
             return NULL;
         }
     case 4353: /* module 17 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Anchor id preimage";
+            return STR_IT_anchor_id_preimage;
         case 1:
-            return "Doc root";
+            return STR_IT_doc_root;
         case 2:
-            return "Proof";
+            return STR_IT_proof;
         case 3:
-            return "Stored until date";
+            return STR_IT_stored_until_date;
         default:
             return NULL;
         }
     case 4354: /* module 17 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Evict bucket";
+            return STR_IT_evict_bucket;
         default:
             return NULL;
         }
@@ -3255,42 +3258,42 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 4608: /* module 18 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Key";
+            return STR_IT_key;
         case 1:
-            return "New price";
+            return STR_IT_new_price;
         default:
             return NULL;
         }
     case 4864: /* module 19 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Anchor id";
+            return STR_IT_anchor_id;
         case 1:
-            return "Deposit address";
+            return STR_IT_deposit_address;
         case 2:
-            return "Pfs";
+            return STR_IT_pfs;
         case 3:
-            return "Static proofs";
+            return STR_IT_static_proofs;
         case 4:
-            return "Dest id";
+            return STR_IT_dest_id;
         default:
             return NULL;
         }
     case 5120: /* module 20 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Threshold";
+            return STR_IT_threshold;
         case 1:
-            return "Other signatories";
+            return STR_IT_other_signatories;
         default:
             return NULL;
         }
     case 5121: /* module 20 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Threshold";
+            return STR_IT_threshold;
         case 1:
-            return "Signatories";
+            return STR_IT_signatories;
         default:
             return NULL;
         }
@@ -3302,54 +3305,54 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 5123: /* module 20 call 3 */
         switch (itemIdx) {
         case 0:
-            return "Multi account id";
+            return STR_IT_multi_account_id;
         case 1:
-            return "Maybe timepoint";
+            return STR_IT_maybe_timepoint;
         case 2:
-            return "Call";
+            return STR_IT_call;
         default:
             return NULL;
         }
     case 5124: /* module 20 call 4 */
         switch (itemIdx) {
         case 0:
-            return "Multi account id";
+            return STR_IT_multi_account_id;
         case 1:
-            return "Maybe timepoint";
+            return STR_IT_maybe_timepoint;
         case 2:
-            return "Call hash";
+            return STR_IT_call_hash;
         default:
             return NULL;
         }
     case 5125: /* module 20 call 5 */
         switch (itemIdx) {
         case 0:
-            return "Multi account id";
+            return STR_IT_multi_account_id;
         case 1:
-            return "Timepoint";
+            return STR_IT_timepoint;
         case 2:
-            return "Call hash";
+            return STR_IT_call_hash;
         default:
             return NULL;
         }
     case 5376: /* module 21 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Account";
+            return STR_IT_account;
         default:
             return NULL;
         }
     case 5377: /* module 21 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Info";
+            return STR_IT_info;
         default:
             return NULL;
         }
     case 5378: /* module 21 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Subs";
+            return STR_IT_subs;
         default:
             return NULL;
         }
@@ -3361,86 +3364,86 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 5380: /* module 21 call 4 */
         switch (itemIdx) {
         case 0:
-            return "Reg index";
+            return STR_IT_reg_index;
         case 1:
-            return "Max fee";
+            return STR_IT_max_fee;
         default:
             return NULL;
         }
     case 5381: /* module 21 call 5 */
         switch (itemIdx) {
         case 0:
-            return "Reg index";
+            return STR_IT_reg_index;
         default:
             return NULL;
         }
     case 5382: /* module 21 call 6 */
         switch (itemIdx) {
         case 0:
-            return "Index";
+            return STR_IT_index;
         case 1:
-            return "Fee";
+            return STR_IT_fee;
         default:
             return NULL;
         }
     case 5383: /* module 21 call 7 */
         switch (itemIdx) {
         case 0:
-            return "Index";
+            return STR_IT_index;
         case 1:
-            return "New";
+            return STR_IT_new_;
         default:
             return NULL;
         }
     case 5384: /* module 21 call 8 */
         switch (itemIdx) {
         case 0:
-            return "Index";
+            return STR_IT_index;
         case 1:
-            return "Fields";
+            return STR_IT_fields;
         default:
             return NULL;
         }
     case 5385: /* module 21 call 9 */
         switch (itemIdx) {
         case 0:
-            return "Reg index";
+            return STR_IT_reg_index;
         case 1:
-            return "Target";
+            return STR_IT_target;
         case 2:
-            return "Judgement";
+            return STR_IT_judgement;
         default:
             return NULL;
         }
     case 5386: /* module 21 call 10 */
         switch (itemIdx) {
         case 0:
-            return "Target";
+            return STR_IT_target;
         default:
             return NULL;
         }
     case 5387: /* module 21 call 11 */
         switch (itemIdx) {
         case 0:
-            return "Sub";
+            return STR_IT_sub;
         case 1:
-            return "Data";
+            return STR_IT_data;
         default:
             return NULL;
         }
     case 5388: /* module 21 call 12 */
         switch (itemIdx) {
         case 0:
-            return "Sub";
+            return STR_IT_sub;
         case 1:
-            return "Data";
+            return STR_IT_data;
         default:
             return NULL;
         }
     case 5389: /* module 21 call 13 */
         switch (itemIdx) {
         case 0:
-            return "Sub";
+            return STR_IT_sub;
         default:
             return NULL;
         }
@@ -3452,280 +3455,280 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 5632: /* module 22 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Amount";
+            return STR_IT_amount;
         case 1:
-            return "Recipient";
+            return STR_IT_recipient;
         case 2:
-            return "Dest id";
+            return STR_IT_dest_id;
         default:
             return NULL;
         }
     case 5633: /* module 22 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Recipient";
+            return STR_IT_recipient;
         case 1:
-            return "From registry";
+            return STR_IT_from_registry;
         case 2:
-            return "Token id";
+            return STR_IT_token_id;
         case 3:
-            return "Dest id";
+            return STR_IT_dest_id;
         default:
             return NULL;
         }
     case 5634: /* module 22 call 2 */
         switch (itemIdx) {
         case 0:
-            return "To";
+            return STR_IT_to;
         case 1:
-            return "Amount";
+            return STR_IT_amount;
         case 2:
-            return "R id";
+            return STR_IT_r_id;
         default:
             return NULL;
         }
     case 5635: /* module 22 call 3 */
         switch (itemIdx) {
         case 0:
-            return "To";
+            return STR_IT_to;
         case 1:
-            return "Token id";
+            return STR_IT_token_id;
         case 2:
-            return "Metadata";
+            return STR_IT__metadata;
         case 3:
-            return "Resource id";
+            return STR_IT_resource_id;
         default:
             return NULL;
         }
     case 5636: /* module 22 call 4 */
         switch (itemIdx) {
         case 0:
-            return "Hash";
+            return STR_IT_hash;
         case 1:
-            return "R id";
+            return STR_IT_r_id;
         default:
             return NULL;
         }
     case 5888: /* module 23 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Threshold";
+            return STR_IT_threshold;
         default:
             return NULL;
         }
     case 5889: /* module 23 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Id";
+            return STR_IT_id;
         case 1:
-            return "Method";
+            return STR_IT_method;
         default:
             return NULL;
         }
     case 5890: /* module 23 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Id";
+            return STR_IT_id;
         default:
             return NULL;
         }
     case 5891: /* module 23 call 3 */
         switch (itemIdx) {
         case 0:
-            return "Id";
+            return STR_IT_id;
         default:
             return NULL;
         }
     case 5892: /* module 23 call 4 */
         switch (itemIdx) {
         case 0:
-            return "V";
+            return STR_IT_v;
         default:
             return NULL;
         }
     case 5893: /* module 23 call 5 */
         switch (itemIdx) {
         case 0:
-            return "V";
+            return STR_IT_v;
         default:
             return NULL;
         }
     case 5894: /* module 23 call 6 */
         switch (itemIdx) {
         case 0:
-            return "Nonce";
+            return STR_IT_nonce;
         case 1:
-            return "Src id";
+            return STR_IT_src_id;
         case 2:
-            return "R id";
+            return STR_IT_r_id;
         case 3:
-            return "Call";
+            return STR_IT_call;
         default:
             return NULL;
         }
     case 5895: /* module 23 call 7 */
         switch (itemIdx) {
         case 0:
-            return "Nonce";
+            return STR_IT_nonce;
         case 1:
-            return "Src id";
+            return STR_IT_src_id;
         case 2:
-            return "R id";
+            return STR_IT_r_id;
         case 3:
-            return "Call";
+            return STR_IT_call;
         default:
             return NULL;
         }
     case 5896: /* module 23 call 8 */
         switch (itemIdx) {
         case 0:
-            return "Nonce";
+            return STR_IT_nonce;
         case 1:
-            return "Src id";
+            return STR_IT_src_id;
         case 2:
-            return "Prop";
+            return STR_IT_prop;
         default:
             return NULL;
         }
     case 6144: /* module 24 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Index";
+            return STR_IT_index;
         default:
             return NULL;
         }
     case 6145: /* module 24 call 1 */
         switch (itemIdx) {
         case 0:
-            return "New";
+            return STR_IT_new_;
         case 1:
-            return "Index";
+            return STR_IT_index;
         default:
             return NULL;
         }
     case 6146: /* module 24 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Index";
+            return STR_IT_index;
         default:
             return NULL;
         }
     case 6147: /* module 24 call 3 */
         switch (itemIdx) {
         case 0:
-            return "New";
+            return STR_IT_new_;
         case 1:
-            return "Index";
+            return STR_IT_index;
         case 2:
-            return "Freeze";
+            return STR_IT_freeze;
         default:
             return NULL;
         }
     case 6148: /* module 24 call 4 */
         switch (itemIdx) {
         case 0:
-            return "Index";
+            return STR_IT_index;
         default:
             return NULL;
         }
     case 6400: /* module 25 call 0 */
         switch (itemIdx) {
         case 0:
-            return "When";
+            return STR_IT_when;
         case 1:
-            return "Maybe periodic";
+            return STR_IT_maybe_periodic;
         case 2:
-            return "Priority";
+            return STR_IT_priority;
         case 3:
-            return "Call";
+            return STR_IT_call;
         default:
             return NULL;
         }
     case 6401: /* module 25 call 1 */
         switch (itemIdx) {
         case 0:
-            return "When";
+            return STR_IT_when;
         case 1:
-            return "Index";
+            return STR_IT_index;
         default:
             return NULL;
         }
     case 6402: /* module 25 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Id";
+            return STR_IT_id;
         case 1:
-            return "When";
+            return STR_IT_when;
         case 2:
-            return "Maybe periodic";
+            return STR_IT_maybe_periodic;
         case 3:
-            return "Priority";
+            return STR_IT_priority;
         case 4:
-            return "Call";
+            return STR_IT_call;
         default:
             return NULL;
         }
     case 6403: /* module 25 call 3 */
         switch (itemIdx) {
         case 0:
-            return "Id";
+            return STR_IT_id;
         default:
             return NULL;
         }
     case 6404: /* module 25 call 4 */
         switch (itemIdx) {
         case 0:
-            return "After";
+            return STR_IT_after;
         case 1:
-            return "Maybe periodic";
+            return STR_IT_maybe_periodic;
         case 2:
-            return "Priority";
+            return STR_IT_priority;
         case 3:
-            return "Call";
+            return STR_IT_call;
         default:
             return NULL;
         }
     case 6405: /* module 25 call 5 */
         switch (itemIdx) {
         case 0:
-            return "Id";
+            return STR_IT_id;
         case 1:
-            return "After";
+            return STR_IT_after;
         case 2:
-            return "Maybe periodic";
+            return STR_IT_maybe_periodic;
         case 3:
-            return "Priority";
+            return STR_IT_priority;
         case 4:
-            return "Call";
+            return STR_IT_call;
         default:
             return NULL;
         }
     case 6656: /* module 26 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Real";
+            return STR_IT_real;
         case 1:
-            return "Force proxy type";
+            return STR_IT_force_proxy_type;
         case 2:
-            return "Call";
+            return STR_IT_call;
         default:
             return NULL;
         }
     case 6657: /* module 26 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Proxy";
+            return STR_IT_proxy;
         case 1:
-            return "Proxy type";
+            return STR_IT_proxy_type;
         default:
             return NULL;
         }
     case 6658: /* module 26 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Proxy";
+            return STR_IT_proxy;
         case 1:
-            return "Proxy type";
+            return STR_IT_proxy_type;
         default:
             return NULL;
         }
@@ -3737,103 +3740,103 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 6660: /* module 26 call 4 */
         switch (itemIdx) {
         case 0:
-            return "Proxy type";
+            return STR_IT_proxy_type;
         case 1:
-            return "Index";
+            return STR_IT_index;
         default:
             return NULL;
         }
     case 6661: /* module 26 call 5 */
         switch (itemIdx) {
         case 0:
-            return "Spawner";
+            return STR_IT_spawner;
         case 1:
-            return "Proxy type";
+            return STR_IT_proxy_type;
         case 2:
-            return "Index";
+            return STR_IT_index;
         case 3:
-            return "Height";
+            return STR_IT_height;
         case 4:
-            return "Ext index";
+            return STR_IT_ext_index;
         default:
             return NULL;
         }
     case 6912: /* module 27 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Other signatories";
+            return STR_IT_other_signatories;
         case 1:
-            return "Call";
+            return STR_IT_call;
         default:
             return NULL;
         }
     case 6913: /* module 27 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Threshold";
+            return STR_IT_threshold;
         case 1:
-            return "Other signatories";
+            return STR_IT_other_signatories;
         case 2:
-            return "Maybe timepoint";
+            return STR_IT_maybe_timepoint;
         case 3:
-            return "Call";
+            return STR_IT_call;
         case 4:
-            return "Store call";
+            return STR_IT_store_call;
         case 5:
-            return "Max weight";
+            return STR_IT_max_weight;
         default:
             return NULL;
         }
     case 6914: /* module 27 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Threshold";
+            return STR_IT_threshold;
         case 1:
-            return "Other signatories";
+            return STR_IT_other_signatories;
         case 2:
-            return "Maybe timepoint";
+            return STR_IT_maybe_timepoint;
         case 3:
-            return "Call hash";
+            return STR_IT_call_hash;
         case 4:
-            return "Max weight";
+            return STR_IT_max_weight;
         default:
             return NULL;
         }
     case 6915: /* module 27 call 3 */
         switch (itemIdx) {
         case 0:
-            return "Threshold";
+            return STR_IT_threshold;
         case 1:
-            return "Other signatories";
+            return STR_IT_other_signatories;
         case 2:
-            return "Timepoint";
+            return STR_IT_timepoint;
         case 3:
-            return "Call hash";
+            return STR_IT_call_hash;
         default:
             return NULL;
         }
     case 7168: /* module 28 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Account id";
+            return STR_IT_account_id;
         case 1:
-            return "Amount";
+            return STR_IT_amount;
         case 2:
-            return "Sorted hashes";
+            return STR_IT_sorted_hashes;
         default:
             return NULL;
         }
     case 7169: /* module 28 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Account id";
+            return STR_IT_account_id;
         default:
             return NULL;
         }
     case 7170: /* module 28 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Root hash";
+            return STR_IT_root_hash;
         default:
             return NULL;
         }
@@ -3845,76 +3848,76 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 7425: /* module 29 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Target";
+            return STR_IT_target;
         default:
             return NULL;
         }
     case 7426: /* module 29 call 2 */
         switch (itemIdx) {
         case 0:
-            return "Target";
+            return STR_IT_target;
         case 1:
-            return "Schedule";
+            return STR_IT_schedule;
         default:
             return NULL;
         }
     case 7427: /* module 29 call 3 */
         switch (itemIdx) {
         case 0:
-            return "Source";
+            return STR_IT_source;
         case 1:
-            return "Target";
+            return STR_IT_target;
         case 2:
-            return "Schedule";
+            return STR_IT_schedule;
         default:
             return NULL;
         }
     case 7680: /* module 30 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Info";
+            return STR_IT_info;
         default:
             return NULL;
         }
     case 7681: /* module 30 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Owner account";
+            return STR_IT_owner_account;
         case 1:
-            return "Registry id";
+            return STR_IT_registry_id;
         case 2:
-            return "Token id";
+            return STR_IT_token_id;
         case 3:
-            return "Asset info";
+            return STR_IT_asset_info;
         case 4:
-            return "Mint info";
+            return STR_IT_mint_info;
         default:
             return NULL;
         }
     case 7936: /* module 31 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Dest account";
+            return STR_IT_dest_account;
         case 1:
-            return "Registry id";
+            return STR_IT_registry_id;
         case 2:
-            return "Token id";
+            return STR_IT_token_id;
         default:
             return NULL;
         }
     case 8192: /* module 32 call 0 */
         switch (itemIdx) {
         case 0:
-            return "Rid";
+            return STR_IT_rid;
         case 1:
-            return "Local addr";
+            return STR_IT_local_addr;
         default:
             return NULL;
         }
     case 8193: /* module 32 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Rid";
+            return STR_IT_rid;
         default:
             return NULL;
         }
