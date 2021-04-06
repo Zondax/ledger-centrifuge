@@ -180,7 +180,7 @@ describe('SR25519', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", "s-sign_basic_expert_sr25519", 11);
+            await sim.compareSnapshotsAndAccept(".", "s-sign_basic_expert_sr25519", 10);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
@@ -224,7 +224,7 @@ describe('SR25519', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", "s-sign_large_nomination_sr25519", 34);
+            await sim.compareSnapshotsAndAccept(".", "s-sign_large_nomination_sr25519", 35);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
