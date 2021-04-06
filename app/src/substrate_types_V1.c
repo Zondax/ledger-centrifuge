@@ -68,7 +68,7 @@ parser_error_t _readCompactWeight_V1(parser_context_t* c, pd_CompactWeight_V1_t*
     return _readCompactInt(c, v);
 }
 
-parser_error_t _readAccountId_V1(parser_context_t* c, pd_AccountId_V1_t* v) {
+parser_error_t _readAccountId_V1(parser_context_t* c, pd_AccountId_V1_t* v){
     GEN_DEF_READARRAY(32)
 }
 
@@ -254,7 +254,7 @@ parser_error_t _readGrandpaEquivocationProof_V1(parser_context_t* c, pd_GrandpaE
     return parser_not_supported;
 }
 
-parser_error_t _readH256_array_3_V1(parser_context_t* c, pd_H256_array_3_V1_t* v) {
+parser_error_t _readH256_array_3_V1(parser_context_t* c, pd_H256_array_3_V1_t* v){
     GEN_DEF_READARRAY(96)
 }
 
@@ -287,11 +287,11 @@ parser_error_t _readKeyOwnerProof_V1(parser_context_t* c, pd_KeyOwnerProof_V1_t*
     return parser_not_supported;
 }
 
-parser_error_t _readKeyValue_V1(parser_context_t* c, pd_KeyValue_V1_t* v) {
+parser_error_t _readKeyValue_V1(parser_context_t* c, pd_KeyValue_V1_t* v){
     GEN_DEF_READARRAY(32)
 }
 
-parser_error_t _readKey_V1(parser_context_t* c, pd_Key_V1_t* v) {
+parser_error_t _readKey_V1(parser_context_t* c, pd_Key_V1_t* v){
     GEN_DEF_READARRAY(32)
 }
 
@@ -456,7 +456,7 @@ parser_error_t _readRenouncing_V1(parser_context_t* c, pd_Renouncing_V1_t* v)
     return parser_ok;
 }
 
-parser_error_t _readResourceId_V1(parser_context_t* c, pd_ResourceId_V1_t* v) {
+parser_error_t _readResourceId_V1(parser_context_t* c, pd_ResourceId_V1_t* v){
     GEN_DEF_READARRAY(32)
 }
 
@@ -472,7 +472,7 @@ parser_error_t _readRewardDestination_V1(parser_context_t* c, pd_RewardDestinati
     return parser_ok;
 }
 
-parser_error_t _readSignature_V1(parser_context_t* c, pd_Signature_V1_t* v) {
+parser_error_t _readSignature_V1(parser_context_t* c, pd_Signature_V1_t* v){
     GEN_DEF_READARRAY(64)
 }
 
@@ -549,39 +549,39 @@ parser_error_t _readWeight_V1(parser_context_t* c, pd_Weight_V1_t* v)
     return _readUInt64(c, &v->value);
 }
 
-parser_error_t _readu8_array_32_V1(parser_context_t* c, pd_u8_array_32_V1_t* v) {
+parser_error_t _readu8_array_32_V1(parser_context_t* c, pd_u8_array_32_V1_t* v){
     GEN_DEF_READARRAY(32)
 }
 
-parser_error_t _readVecAccountId_V1(parser_context_t* c, pd_VecAccountId_V1_t* v) {
+parser_error_t _readVecAccountId_V1(parser_context_t* c, pd_VecAccountId_V1_t* v){
     GEN_DEF_READVECTOR(AccountId_V1)
 }
 
-parser_error_t _readVecExtendedBalance_V1(parser_context_t* c, pd_VecExtendedBalance_V1_t* v) {
+parser_error_t _readVecExtendedBalance_V1(parser_context_t* c, pd_VecExtendedBalance_V1_t* v){
     GEN_DEF_READVECTOR(ExtendedBalance_V1)
 }
 
-parser_error_t _readVecKeyValue_V1(parser_context_t* c, pd_VecKeyValue_V1_t* v) {
+parser_error_t _readVecKeyValue_V1(parser_context_t* c, pd_VecKeyValue_V1_t* v){
     GEN_DEF_READVECTOR(KeyValue_V1)
 }
 
-parser_error_t _readVecKey_V1(parser_context_t* c, pd_VecKey_V1_t* v) {
+parser_error_t _readVecKey_V1(parser_context_t* c, pd_VecKey_V1_t* v){
     GEN_DEF_READVECTOR(Key_V1)
 }
 
-parser_error_t _readVecLookupSource_V1(parser_context_t* c, pd_VecLookupSource_V1_t* v) {
+parser_error_t _readVecLookupSource_V1(parser_context_t* c, pd_VecLookupSource_V1_t* v){
     GEN_DEF_READVECTOR(LookupSource_V1)
 }
 
-parser_error_t _readVecProof_V1(parser_context_t* c, pd_VecProof_V1_t* v) {
+parser_error_t _readVecProof_V1(parser_context_t* c, pd_VecProof_V1_t* v){
     GEN_DEF_READVECTOR(Proof_V1)
 }
 
-parser_error_t _readVecTupleAccountIdData_V1(parser_context_t* c, pd_VecTupleAccountIdData_V1_t* v) {
+parser_error_t _readVecTupleAccountIdData_V1(parser_context_t* c, pd_VecTupleAccountIdData_V1_t* v){
     GEN_DEF_READVECTOR(TupleAccountIdData_V1)
 }
 
-parser_error_t _readVecValidatorIndex_V1(parser_context_t* c, pd_VecValidatorIndex_V1_t* v) {
+parser_error_t _readVecValidatorIndex_V1(parser_context_t* c, pd_VecValidatorIndex_V1_t* v){
     GEN_DEF_READVECTOR(ValidatorIndex_V1)
 }
 
@@ -1351,7 +1351,7 @@ parser_error_t _toStringKeys_V1(
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
-    uint8_t* pageCount) {
+    uint8_t* pageCount){
     GEN_DEF_TOSTRING_ARRAY(4 * 32)
 }
 
@@ -1701,7 +1701,7 @@ parser_error_t _toStringSignature_V1(
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
-    uint8_t* pageCount) {
+    uint8_t* pageCount){
     GEN_DEF_TOSTRING_ARRAY(64)
 }
 
@@ -1946,7 +1946,7 @@ parser_error_t _toStringu8_array_32_V1(
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
-    uint8_t* pageCount) {
+    uint8_t* pageCount){
     GEN_DEF_TOSTRING_ARRAY(32)
 }
 

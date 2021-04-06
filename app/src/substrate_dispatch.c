@@ -34,11 +34,11 @@ parser_error_t _readMethod(
     }
 }
 
-uint8_t _getMethod_NumItems(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, pd_Method_t* method)
+uint8_t _getMethod_NumItems(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx)
 {
     switch (transactionVersion) {
     case 1:
-        return _getMethod_NumItems_V1(moduleIdx, callIdx, &method->V1);
+        return _getMethod_NumItems_V1(moduleIdx, callIdx);
     default:
         return parser_not_supported;
     }

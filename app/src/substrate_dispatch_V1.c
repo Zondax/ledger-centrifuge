@@ -2193,7 +2193,7 @@ const char* _getMethod_Name_V1(uint8_t moduleIdx, uint8_t callIdx)
     return NULL;
 }
 
-uint8_t _getMethod_NumItems_V1(uint8_t moduleIdx, uint8_t callIdx, pd_Method_V1_t* method)
+uint8_t _getMethod_NumItems_V1(uint8_t moduleIdx, uint8_t callIdx)
 {
     uint16_t callPrivIdx = ((uint16_t)moduleIdx << 8u) + callIdx;
 
