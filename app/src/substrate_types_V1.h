@@ -182,6 +182,7 @@ typedef struct {
 
 typedef struct {
     pd_CompactPerBill_V1_t commission;
+    pd_bool_t blocked;
 } pd_ValidatorPrefs_V1_t;
 
 typedef struct {

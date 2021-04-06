@@ -30,7 +30,7 @@ const simOptions = {
     logging: true,
     start_delay: 3000,
     custom: `-s "${APP_SEED}"`,
-    X11: true
+    X11: false
 };
 
 jest.setTimeout(60000)
@@ -171,7 +171,7 @@ describe('SR25519', function () {
 
             const txBlob = Buffer.from(txBlobStr, "hex");
 
-            const responseAddr = await app.getAddress(pathAccount, pathChange, pathIndex, false , 1);
+            const responseAddr = await app.getAddress(pathAccount, pathChange, pathIndex, false, 1);
             const pubKey = Buffer.from(responseAddr.pubKey, "hex");
 
             // do not wait here.. we need to navigate
@@ -180,7 +180,7 @@ describe('SR25519', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", "s-sign_basic_expert_sr25519", 11);
+            await sim.compareSnapshotsAndAccept(".", "s-sign_basic_expert_sr25519", 12);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
@@ -224,7 +224,7 @@ describe('SR25519', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", "s-sign_large_nomination_sr25519", 34);
+            await sim.compareSnapshotsAndAccept(".", "s-sign_large_nomination_sr25519", 35);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);

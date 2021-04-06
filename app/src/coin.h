@@ -49,13 +49,13 @@ typedef enum {
 #define SUPPORTED_TX_VERSION_PREVIOUS       (LEDGER_MAJOR_VERSION - 1)
 #define SUPPORTED_MINIMUM_SPEC_VERSION      240
 
-#define COIN_AMOUNT_DECIMAL_PLACES          12
+#define COIN_AMOUNT_DECIMAL_PLACES          18
 
-#define COIN_GENESIS_HASH                   "d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716"   // FIXME: Review
+#define COIN_GENESIS_HASH                   "67dddf2673b69e5f875f6f25277495834398eafd67f492e09f3f3345e003d1b5"
 #define COIN_NAME                           "Centrifuge"
 #define COIN_TICKER                         "CFG"
 
-#define COIN_SECRET_REQUIRED_CLICKS         10
+#define COIN_SECRET_REQUIRED_CLICKS         0
 
 #include "coin_standard.h"
 

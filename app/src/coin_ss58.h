@@ -24,7 +24,7 @@ extern "C" {
 #define COIN_ADDR_TYPE_EDGEWARE         7
 #define COIN_ADDR_TYPE_KULUPU           16
 #define COIN_ADDR_TYPE_DOTHEREUM        20
-#define COIN_ADDR_TYPE_CENTRIFUGE       36          // FIXME: Review
+#define COIN_ADDR_TYPE_CENTRIFUGE       36
 
 #ifdef __cplusplus
 }
