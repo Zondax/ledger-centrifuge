@@ -14,23 +14,23 @@
  *  limitations under the License.
  ******************************************************************************* */
 
-import jest, {expect} from "jest";
-import Zemu from "@zondax/zemu";
+import Zemu, {DEFAULT_START_OPTIONS} from "@zondax/zemu";
+import {newCentrifugeApp} from "@zondax/ledger-polkadot";
 
-const {newCentrifugeApp} = require("@zondax/ledger-polkadot");
+// @ts-ignore
 import {blake2bFinal, blake2bInit, blake2bUpdate} from "blakejs";
-var addon = require('../../tests_tools/neon/native');
+import {APP_SEED} from "./common";
+const addon = require('../../tests_tools/neon/native');
 
 const Resolve = require("path").resolve;
-
 const APP_PATH = Resolve("../app/output/app_sr25519.elf");
-const APP_SEED = "equip will roof matter pink blind book anxiety banner elbow sun young"
 
-const simOptions = {
+const defaultOptions = {
+    ...DEFAULT_START_OPTIONS,
     logging: true,
-    start_delay: 3000,
     custom: `-s "${APP_SEED}"`,
-    X11: false
+    X11: false,
+    model: 'nanos'
 };
 
 jest.setTimeout(60000)
@@ -39,7 +39,7 @@ describe('SR25519', function () {
     test('get address sr25519', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(simOptions);
+            await sim.start({...defaultOptions});
             const app = newCentrifugeApp(sim.getTransport());
 
             const resp = await app.getAddress(0x80000000, 0x80000000, 0x80000000, false, 1);
@@ -54,7 +54,6 @@ describe('SR25519', function () {
 
             expect(resp.address).toEqual(expected_address);
             expect(resp.pubKey).toEqual(expected_pk);
-
         } finally {
             await sim.close();
         }
@@ -63,7 +62,7 @@ describe('SR25519', function () {
     test('show address sr25519', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(simOptions);
+            await sim.start({...defaultOptions});
             const app = newCentrifugeApp(sim.getTransport());
 
             const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true, 1);
@@ -91,7 +90,7 @@ describe('SR25519', function () {
     test('show address - reject sr25519', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(simOptions);
+            await sim.start({...defaultOptions});
             const app = newCentrifugeApp(sim.getTransport());
 
             const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true, 1);
@@ -112,13 +111,13 @@ describe('SR25519', function () {
     test('sign basic normal', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(simOptions);
+            await sim.start({...defaultOptions});
             const app = newCentrifugeApp(sim.getTransport());
             const pathAccount = 0x80000000;
             const pathChange = 0x80000000;
             const pathIndex = 0x80000000;
 
-            let txBlobStr = "0500268ed73e0dd5030033158139ae28a3dfaac5fe1560a5e9e05cf000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
+            const txBlobStr = "0500268ed73e0dd5030033158139ae28a3dfaac5fe1560a5e9e05cf000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
 
             const txBlob = Buffer.from(txBlobStr, "hex");
 
@@ -132,7 +131,7 @@ describe('SR25519', function () {
 
             await sim.compareSnapshotsAndAccept(".", "s-sign_basic_normal_sr25519", 5);
 
-            let signatureResponse = await signatureRequest;
+            const signatureResponse = await signatureRequest;
             console.log(signatureResponse);
 
             expect(signatureResponse.return_code).toEqual(0x9000);
@@ -145,7 +144,7 @@ describe('SR25519', function () {
                 blake2bUpdate(context, txBlob);
                 prehash = Buffer.from(blake2bFinal(context));
             }
-            let signingcontext = Buffer.from([]);
+            const signingcontext = Buffer.from([]);
             const valid = addon.schnorrkel_verify(pubKey,signingcontext,prehash, signatureResponse.signature.slice(1));
             expect(valid).toEqual(true);
         } finally {
@@ -156,7 +155,7 @@ describe('SR25519', function () {
     test('sign basic expert', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(simOptions);
+            await sim.start({...defaultOptions});
             const app = newCentrifugeApp(sim.getTransport());
             const pathAccount = 0x80000000;
             const pathChange = 0x80000000;
@@ -167,7 +166,7 @@ describe('SR25519', function () {
             await sim.clickBoth();
             await sim.clickLeft();
 
-            let txBlobStr = "0500268ed73e0dd5030033158139ae28a3dfaac5fe1560a5e9e05cf000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
+            const txBlobStr = "0500268ed73e0dd5030033158139ae28a3dfaac5fe1560a5e9e05cf000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
 
             const txBlob = Buffer.from(txBlobStr, "hex");
 
@@ -182,7 +181,7 @@ describe('SR25519', function () {
 
             await sim.compareSnapshotsAndAccept(".", "s-sign_basic_expert_sr25519", 12);
 
-            let signatureResponse = await signatureRequest;
+            const signatureResponse = await signatureRequest;
             console.log(signatureResponse);
 
             expect(signatureResponse.return_code).toEqual(0x9000);
@@ -195,7 +194,7 @@ describe('SR25519', function () {
                 blake2bUpdate(context, txBlob);
                 prehash = Buffer.from(blake2bFinal(context));
             }
-            let signingcontext = Buffer.from([]);
+            const signingcontext = Buffer.from([]);
             const valid = addon.schnorrkel_verify(pubKey,signingcontext,prehash, signatureResponse.signature.slice(1));
             expect(valid).toEqual(true);
         } finally {
@@ -206,13 +205,13 @@ describe('SR25519', function () {
     test('sign large nomination', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(simOptions);
+            await sim.start({...defaultOptions});
             const app = newCentrifugeApp(sim.getTransport());
             const pathAccount = 0x80000000;
             const pathChange = 0x80000000;
             const pathIndex = 0x80000000;
 
-            let txBlobStr = "060540ff44b5d2eea05aee033e61ae3dc4b5fa5bc84c6e81a2320037f52bd1695998fe39ff4e9681fe22184b1989420ee5ef8f9ea5bf488b33e7e33c5cfba5b0ba7774a766ff1671d88131ecd52bfa3bcde246a9063a2de895878ea4dfccb5f9c91d1c14f435ffac1156362d74c9964a877ba0d2eced7f81fc1d9e72b4a28de461df92b0fa3140ff7c71020c7a19319f748a272ea8f6e1b2fbd87ebde83225a754bf2edc021c140cffecd729f00f09ff4e301de0b5aeaf717d955630dd1a5ece233755e3b0be7ebe11ff3aefdb1db2603d7ba4f259b81cd832f6f900b290a514e6f09d7b9071811e9e69ffa47bafe7cd25b6fc30523cc08f0a396895b99677ae03b54905fb5979d3538b6cffaa6f1fae766e30138c75c7cd102d45729a48ec29f0f49235f90db05d8bb0c648ff2c7d26191b827d57523585614a95b1ecd30f307a03ab5694ad7c6cf1f3845c1bffcaa3181634d3952efb925c5aaf0a8699b972864b620757347d1414d50678ec2bff82ec006b0cb4442b4ed23b0e74191e1b72e84813c32b32f1f6eb68385c215e03ffda9098e62c9d1a0bccbd74754108a6de9dcc667b8a37d836db347ea851c9642effda87dde348c26d14afade327d442a1837f902a85dbbb5276d543233c8d77346fff5ad7cc8977c23e06b3b795c6f1d652113cadaf2929484df1ec68d5cec291ef68ff223adf1784a64a4a650446dbbe9fe6553302aa19c07a7d731da0e152b0e3a07ad50391018ed73e0df000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
+            const txBlobStr = "060540ff44b5d2eea05aee033e61ae3dc4b5fa5bc84c6e81a2320037f52bd1695998fe39ff4e9681fe22184b1989420ee5ef8f9ea5bf488b33e7e33c5cfba5b0ba7774a766ff1671d88131ecd52bfa3bcde246a9063a2de895878ea4dfccb5f9c91d1c14f435ffac1156362d74c9964a877ba0d2eced7f81fc1d9e72b4a28de461df92b0fa3140ff7c71020c7a19319f748a272ea8f6e1b2fbd87ebde83225a754bf2edc021c140cffecd729f00f09ff4e301de0b5aeaf717d955630dd1a5ece233755e3b0be7ebe11ff3aefdb1db2603d7ba4f259b81cd832f6f900b290a514e6f09d7b9071811e9e69ffa47bafe7cd25b6fc30523cc08f0a396895b99677ae03b54905fb5979d3538b6cffaa6f1fae766e30138c75c7cd102d45729a48ec29f0f49235f90db05d8bb0c648ff2c7d26191b827d57523585614a95b1ecd30f307a03ab5694ad7c6cf1f3845c1bffcaa3181634d3952efb925c5aaf0a8699b972864b620757347d1414d50678ec2bff82ec006b0cb4442b4ed23b0e74191e1b72e84813c32b32f1f6eb68385c215e03ffda9098e62c9d1a0bccbd74754108a6de9dcc667b8a37d836db347ea851c9642effda87dde348c26d14afade327d442a1837f902a85dbbb5276d543233c8d77346fff5ad7cc8977c23e06b3b795c6f1d652113cadaf2929484df1ec68d5cec291ef68ff223adf1784a64a4a650446dbbe9fe6553302aa19c07a7d731da0e152b0e3a07ad50391018ed73e0df000000001000000d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716d77ea01f23717cbdf86a4ba6df00f8cec726cee71f5365a9e195e9806aaa5716";
 
             const txBlob = Buffer.from(txBlobStr, "hex");
 
@@ -226,7 +225,7 @@ describe('SR25519', function () {
 
             await sim.compareSnapshotsAndAccept(".", "s-sign_large_nomination_sr25519", 35);
 
-            let signatureResponse = await signatureRequest;
+            const signatureResponse = await signatureRequest;
             console.log(signatureResponse);
 
             expect(signatureResponse.return_code).toEqual(0x9000);
@@ -239,12 +238,11 @@ describe('SR25519', function () {
                 blake2bUpdate(context, txBlob);
                 prehash = Buffer.from(blake2bFinal(context));
             }
-            let signingcontext = Buffer.from([]);
+            const signingcontext = Buffer.from([]);
             const valid = addon.schnorrkel_verify(pubKey,signingcontext,prehash, signatureResponse.signature.slice(1));
             expect(valid).toEqual(true);
         } finally {
             await sim.close();
         }
     });
-
 });
