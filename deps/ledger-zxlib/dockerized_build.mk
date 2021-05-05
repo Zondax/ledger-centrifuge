@@ -40,7 +40,7 @@ $(info EXAMPLE_VUE_DIR       : $(EXAMPLE_VUE_DIR))
 $(info TESTS_JS_DIR          : $(TESTS_JS_DIR))
 $(info TESTS_JS_PACKAGE      : $(TESTS_JS_PACKAGE))
 
-DOCKER_IMAGE=zondax/builder-bolos@sha256:0e0097c01ef3c6c964fea8d8b6e3a584f4ff209a04ec68b6b2b4aeab64379c23
+DOCKER_IMAGE=zondax/builder-bolos@sha256:979f4893b07ab8c37cc96e70c78124a5bbcf665cc9aa510b89e0ec317527b47f
 
 ifdef INTERACTIVE
 INTERACTIVE_SETTING:="-i"
@@ -48,6 +48,14 @@ TTY_SETTING:="-t"
 else
 INTERACTIVE_SETTING:=
 TTY_SETTING:=
+endif
+
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	NPROC=$(shell nproc)
+endif
+ifeq ($(UNAME_S),Darwin)
+	NPROC=$(shell sysctl -n hw.physicalcpu)
 endif
 
 define run_docker
@@ -95,12 +103,12 @@ convert_icon:
 	@convert $(LEDGER_SRC)/nanos_icon.gif -crop 14x14+1+1 +repage -negate $(LEDGER_SRC)/nanox_icon.gif
 
 .PHONY: buildS
-buildS: clean build_rustS
-	$(call run_docker,$(DOCKER_BOLOS_SDKS),make -j `nproc` -C $(DOCKER_APP_SRC))
+buildS: build_rustS
+	$(call run_docker,$(DOCKER_BOLOS_SDKS),make -j $(NPROC) -C $(DOCKER_APP_SRC))
 
 .PHONY: buildX
-buildX: clean build_rustX
-	$(call run_docker,$(DOCKER_BOLOS_SDKX),make -j `nproc` -C $(DOCKER_APP_SRC))
+buildX: build_rustX
+	$(call run_docker,$(DOCKER_BOLOS_SDKX),make -j $(NPROC) -C $(DOCKER_APP_SRC))
 
 .PHONY: clean
 clean: cleanS cleanX

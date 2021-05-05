@@ -13,4 +13,3 @@ module.exports = async () => {
   await Zemu.checkAndPullImage()
   await Zemu.stopAllEmuContainers()
 }
-//

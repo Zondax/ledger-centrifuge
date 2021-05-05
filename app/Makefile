@@ -40,7 +40,7 @@ all: bin/app.elf
 
 include $(BOLOS_SDK)/Makefile.defines
 
-#DEFINES = APP_SECRET_MODE_ENABLED
+#DEFINES += APP_SECRET_MODE_ENABLED
 
 ifeq ($(APP_TESTING),1)
 DEFINES += APP_TESTING
@@ -68,9 +68,18 @@ $(info COIN  = [$(COIN)])
 ifeq ($(COIN),CFG)
 # Main app configuration
 DEFINES += APP_STANDARD
+ifeq ($(TARGET_NAME),TARGET_NANOX)
+DEFINES += SUBSTRATE_PARSER_FULL
+endif
 APPNAME = "Centrifuge"
 APPPATH = "44'/747'"
-else
+
+else ifeq ($(COIN),DOT_XL)
+# XXL app configuration
+DEFINES += APP_STANDARD SUBSTRATE_PARSER_FULL
+APPNAME = "Centrifuge XL"
+APPPATH = "44'/747'"
+
 define error_message
 
 
@@ -233,4 +242,8 @@ dep/%.d: %.c Makefile
 
 .PHONY: listvariants
 listvariants:
-	@echo VARIANTS COIN CFG
+ifeq ($(TARGET_NAME),TARGET_NANOS)
+	@echo VARIANTS COIN CFG CFG_XL
+else ifeq ($(TARGET_NAME),TARGET_NANOX)
+	@echo VARIANTS COIN CFG Ledgeracio
+endif
