@@ -73,7 +73,9 @@ define run_docker
 endef
 
 all:
+	@$(MAKE) clean
 	@$(MAKE) buildS
+	@$(MAKE) clean
 	@$(MAKE) buildX
 
 .PHONY: check_python
