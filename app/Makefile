@@ -40,7 +40,7 @@ all: bin/app.elf
 
 include $(BOLOS_SDK)/Makefile.defines
 
-#DEFINES = APP_SECRET_MODE_ENABLED
+#DEFINES += APP_SECRET_MODE_ENABLED
 
 ifeq ($(APP_TESTING),1)
 DEFINES += APP_TESTING
@@ -68,9 +68,18 @@ $(info COIN  = [$(COIN)])
 ifeq ($(COIN),CFG)
 # Main app configuration
 DEFINES += APP_STANDARD
+ifeq ($(TARGET_NAME),TARGET_NANOX)
+DEFINES += SUBSTRATE_PARSER_FULL
+endif
 APPNAME = "Centrifuge"
 APPPATH = "44'/747'"
-else
+
+else ifeq ($(COIN),DOT_XL)
+# XXL app configuration
+DEFINES += APP_STANDARD SUBSTRATE_PARSER_FULL
+APPNAME = "Centrifuge XL"
+APPPATH = "44'/747'"
+
 define error_message
 
 
@@ -84,7 +93,7 @@ endif
 APP_LOAD_PARAMS = --appFlags 0x200 --delete $(COMMON_LOAD_PARAMS) --path $(APPPATH)
 
 ifeq ($(TARGET_NAME),TARGET_NANOS)
-SCRIPT_LD:=$(CURDIR)/script.ld
+APP_STACK_SIZE:=2820
 ICONNAME:=$(CURDIR)/nanos_icon.gif
 OUTPUT_ELF:= $(CURDIR)/output/app_s.elf
 OUTPUT_INSTALLER:= $(CURDIR)/pkg/installer_s.sh
@@ -204,6 +213,12 @@ rust:
 # Before linking, we need to be sure rust lib is there
 bin/app.elf: rust
 
+build_full_parser_s: SUBSTRATE_PARSER_FULL=1
+build_full_parser_s: buildS
+
+build_full_parser_x: SUBSTRATE_PARSER_FULL=1
+build_full_parser_x: buildX
+
 .PHONY: rust_clean
 rust_clean:
 	cd rust && CARGO_HOME="$(CURDIR)/rust/.cargo" cargo clean
@@ -227,4 +242,8 @@ dep/%.d: %.c Makefile
 
 .PHONY: listvariants
 listvariants:
-	@echo VARIANTS COIN CFG
+ifeq ($(TARGET_NAME),TARGET_NANOS)
+	@echo VARIANTS COIN CFG CFG_XL
+else ifeq ($(TARGET_NAME),TARGET_NANOX)
+	@echo VARIANTS COIN CFG Ledgeracio
+endif

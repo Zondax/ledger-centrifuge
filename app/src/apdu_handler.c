@@ -30,6 +30,7 @@
 #include "coin.h"
 #include "zxmacros.h"
 #include "secret.h"
+#include "app_mode.h"
 
 void extractHDPath(uint32_t rx, uint32_t offset) {
     if ((rx - offset) < sizeof(uint32_t) * HDPATH_LEN_DEFAULT) {
@@ -128,7 +129,6 @@ __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, u
     zxerr_t zxerr = app_fill_address(key_type);
     if(zxerr != zxerr_ok){
         *tx = 0;
-        zemu_log("Hi1!");
         THROW(APDU_CODE_DATA_INVALID);
     }
     if (requireConfirmation) {

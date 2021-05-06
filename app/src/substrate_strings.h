@@ -200,6 +200,7 @@ static const char* STR_ME_VESTED_TRANSFER = "Vested transfer";
 static const char* STR_ME_FORCE_VESTED_TRANSFER = "Force vested transfer";
 static const char* STR_ME_CREATE_REGISTRY = "Create registry";
 static const char* STR_ME_MINT = "Mint";
+static const char* STR_ME_SET_TOKEN_TRANSFER_FEE = "Set token transfer fee";
 
 // Items names
 static const char* STR_IT__ratio = "Ratio";

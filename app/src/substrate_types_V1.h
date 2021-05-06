@@ -73,6 +73,7 @@ typedef struct {
 typedef struct {
     uint8_t value;
     union {
+
         pd_AccountId_V1_t id;
         uint64_t index;
     };
@@ -182,7 +183,6 @@ typedef struct {
 
 typedef struct {
     pd_CompactPerBill_V1_t commission;
-    pd_bool_t blocked;
 } pd_ValidatorPrefs_V1_t;
 
 typedef struct {

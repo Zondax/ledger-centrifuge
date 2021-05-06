@@ -921,6 +921,13 @@ __Z_INLINE parser_error_t _readMethod_palletbridge_remark_V1(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_palletbridge_set_token_transfer_fee_V1(
+    parser_context_t* c, pd_palletbridge_set_token_transfer_fee_V1_t* m)
+{
+    CHECK_ERROR(_readBalance(c, &m->fee))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_chainbridge_set_threshold_V1(
     parser_context_t* c, pd_chainbridge_set_threshold_V1_t* m)
 {
@@ -1642,6 +1649,9 @@ parser_error_t _readMethod_V1(
     case 5636: /* module 22 call 4 */
         CHECK_ERROR(_readMethod_palletbridge_remark_V1(c, &method->basic.palletbridge_remark_V1))
         break;
+    case 5637: /* module 22 call 5 */
+        CHECK_ERROR(_readMethod_palletbridge_set_token_transfer_fee_V1(c, &method->basic.palletbridge_set_token_transfer_fee_V1))
+        break;
     case 5888: /* module 23 call 0 */
         CHECK_ERROR(_readMethod_chainbridge_set_threshold_V1(c, &method->basic.chainbridge_set_threshold_V1))
         break;
@@ -2101,6 +2111,8 @@ const char* _getMethod_Name_V1(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_RECEIVE_NONFUNGIBLE;
     case 5636: /* module 22 call 4 */
         return STR_ME_REMARK;
+    case 5637: /* module 22 call 5 */
+        return STR_ME_SET_TOKEN_TRANSFER_FEE;
     case 5888: /* module 23 call 0 */
         return STR_ME_SET_THRESHOLD;
     case 5889: /* module 23 call 1 */
@@ -2435,6 +2447,8 @@ uint8_t _getMethod_NumItems_V1(uint8_t moduleIdx, uint8_t callIdx)
         return 4;
     case 5636: /* module 22 call 4 */
         return 2;
+    case 5637: /* module 22 call 5 */
+        return 1;
     case 5888: /* module 23 call 0 */
         return 1;
     case 5889: /* module 23 call 1 */
@@ -3506,6 +3520,13 @@ const char* _getMethod_ItemName_V1(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
             return STR_IT_hash;
         case 1:
             return STR_IT_r_id;
+        default:
+            return NULL;
+        }
+    case 5637: /* module 22 call 5 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_fee;
         default:
             return NULL;
         }
@@ -5494,6 +5515,16 @@ parser_error_t _getMethod_ItemValue_V1(
         default:
             return parser_no_data;
         }
+    case 5637: /* module 22 call 5 */
+        switch (itemIdx) {
+        case 0: /* palletbridge_set_token_transfer_fee_V1 - fee */;
+            return _toStringBalance(
+                &m->basic.palletbridge_set_token_transfer_fee_V1.fee,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
     case 5888: /* module 23 call 0 */
         switch (itemIdx) {
         case 0: /* chainbridge_set_threshold_V1 - threshold */;
@@ -6390,6 +6421,7 @@ bool _getMethod_IsNestingSupported_V1(uint8_t moduleIdx, uint8_t callIdx)
     case 5634: // PalletBridge:Transfer
     case 5635: // PalletBridge:Receive nonfungible
     case 5636: // PalletBridge:Remark
+    case 5637: // PalletBridge:Set token transfer fee
     case 5888: // ChainBridge:Set threshold
     case 5889: // ChainBridge:Set resource
     case 5890: // ChainBridge:Remove resource

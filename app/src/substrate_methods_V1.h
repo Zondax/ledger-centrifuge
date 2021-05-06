@@ -709,6 +709,11 @@ typedef struct {
     pd_ResourceId_V1_t r_id;
 } pd_palletbridge_remark_V1_t;
 
+#define PD_CALL_PALLETBRIDGE_SET_TOKEN_TRANSFER_FEE_V1 5
+typedef struct {
+    pd_Balance_t fee;
+} pd_palletbridge_set_token_transfer_fee_V1_t;
+
 #define PD_CALL_CHAINBRIDGE_SET_THRESHOLD_V1 0
 typedef struct {
     pd_u32_t threshold;
@@ -1097,6 +1102,7 @@ typedef union {
     pd_palletbridge_transfer_V1_t palletbridge_transfer_V1;
     pd_palletbridge_receive_nonfungible_V1_t palletbridge_receive_nonfungible_V1;
     pd_palletbridge_remark_V1_t palletbridge_remark_V1;
+    pd_palletbridge_set_token_transfer_fee_V1_t palletbridge_set_token_transfer_fee_V1;
     pd_chainbridge_set_threshold_V1_t chainbridge_set_threshold_V1;
     pd_chainbridge_set_resource_V1_t chainbridge_set_resource_V1;
     pd_chainbridge_remove_resource_V1_t chainbridge_remove_resource_V1;
