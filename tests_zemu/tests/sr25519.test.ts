@@ -62,7 +62,7 @@ describe('SR25519', function () {
   test('show address sr25519', async function () {
     const sim = new Zemu(APP_PATH)
     try {
-      await sim.start({ ...defaultOptions })
+      await sim.start({ ...defaultOptions, model: 'nanos' })
       const app = newCentrifugeApp(sim.getTransport())
 
       const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true, 1)
