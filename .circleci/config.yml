@@ -60,7 +60,7 @@ jobs:
           name: Build Standard full parser app
           command: |
             source /home/zondax/.cargo/env
-            SUBSTRATE_PARSER_FULL=1 make
+            SUPPORT_SR25519=1 SUBSTRATE_PARSER_FULL=1 make
       - run:
           name: Build SR25519 app
           command: |
