@@ -1,15 +1,22 @@
 # Ledger Centrifuge app
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![CircleCI](https://circleci.com/gh/Zondax/ledger-centrifuge.svg?style=shield&circle-token=758e00f3c11b1f8eda2ff48159a858580bc8fd9a)](https://circleci.com/gh/Zondax/ledger-centrifuge)
+[![CircleCI](https://circleci.com/gh/Zondax/ledger-centrifuge.svg?style=shield)](https://circleci.com/gh/Zondax/ledger-centrifuge)
 
->NOTE: The minor value in the version number indicates runtime compatibility. For instance: 0.1042.1, Indicates that the app is compatible with runtime 1042*
+-------------------
 
+![zondax](docs/zondax.jpg)
+
+_Please visit our website at [zondax.ch](zondax.ch)_
+
+------------------
 This project contains the Centrifuge app (https://centrifuge.io/) for Ledger Nano S and X.
 
 - Ledger Nano S/X BOLOS app
 - Specs / Documentation
 - C++ unit tests
 - Zemu tests
+
+For more information: [How to build](docs/build.md)
 
 ## ATTENTION
 
@@ -19,249 +26,339 @@ Please:
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
 
-Tip:
+# Centrifuge  1.242.x
+
+## System
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|fill_block |    | :heavy_check_mark: | :heavy_check_mark: | `Perbill` _ratio <br/> |
+|remark |    | :heavy_check_mark: |   | `Bytes` _remark <br/> |
+|set_heap_pages |    | :heavy_check_mark: |   | `u64` pages <br/> |
+|set_code |    | :heavy_check_mark: |   | `Bytes` code <br/> |
+|set_code_without_checks |    | :heavy_check_mark: |   | `Bytes` code <br/> |
+|set_changes_trie_config |    |   |   | `Option<ChangesTrieConfiguration>` changes_trie_config <br/> |
+|set_storage |    |   |   | `Vec<KeyValue>` items <br/> |
+|kill_storage |    |   |   | `Vec<Key>` keys <br/> |
+|kill_prefix |    |   |   | `Key` prefix <br/>`u32` _subkeys <br/> |
+|suicide |    | :heavy_check_mark: |   |  |
+
+## Utility
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|batch | :heavy_check_mark:  | :heavy_check_mark: |   | `Vec<Call>` calls <br/> |
+|as_derivative |    |   |   | `u16` index <br/>`Call` call <br/> |
+
+## Babe
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|report_equivocation |    |   |   | `BabeEquivocationProof` equivocation_proof <br/>`KeyOwnerProof` key_owner_proof <br/> |
+|report_equivocation_unsigned |    |   |   | `BabeEquivocationProof` equivocation_proof <br/>`KeyOwnerProof` key_owner_proof <br/> |
+
+## Timestamp
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|set |    | :heavy_check_mark: |   | `Compact<Moment>` now <br/> |
+
+## Authorship
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|set_uncles |    |   |   | `Vec<Header>` new_uncles <br/> |
+
+## Balances
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|transfer | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `LookupSource` dest <br/>`Compact<Balance>` value <br/> |
+|set_balance |    | :heavy_check_mark: |   | `LookupSource` who <br/>`Compact<Balance>` new_free <br/>`Compact<Balance>` new_reserved <br/> |
+|force_transfer |    | :heavy_check_mark: |   | `LookupSource` source <br/>`LookupSource` dest <br/>`Compact<Balance>` value <br/> |
+|transfer_keep_alive | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `LookupSource` dest <br/>`Compact<Balance>` value <br/> |
+
+## TransactionPayment
+
+Empty
+
+## Staking
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|bond | :heavy_check_mark:  | :heavy_check_mark: |   | `LookupSource` controller <br/>`Compact<BalanceOf>` value <br/>`RewardDestination` payee <br/> |
+|bond_extra | :heavy_check_mark:  | :heavy_check_mark: |   | `Compact<BalanceOf>` max_additional <br/> |
+|unbond | :heavy_check_mark:  | :heavy_check_mark: |   | `Compact<BalanceOf>` value <br/> |
+|withdraw_unbonded |    | :heavy_check_mark: |   | `u32` num_slashing_spans <br/> |
+|validate | :heavy_check_mark:  | :heavy_check_mark: |   | `ValidatorPrefs` prefs <br/> |
+|nominate | :heavy_check_mark:  | :heavy_check_mark: |   | `Vec<LookupSource>` targets <br/> |
+|chill | :heavy_check_mark:  | :heavy_check_mark: |   |  |
+|set_payee | :heavy_check_mark:  | :heavy_check_mark: |   | `RewardDestination` payee <br/> |
+|set_controller | :heavy_check_mark:  | :heavy_check_mark: |   | `LookupSource` controller <br/> |
+|set_validator_count |    | :heavy_check_mark: |   | `Compact<u32>` new <br/> |
+|increase_validator_count |    | :heavy_check_mark: |   | `Compact<u32>` additional <br/> |
+|scale_validator_count |    |   |   | `Percent` factor <br/> |
+|force_no_eras |    | :heavy_check_mark: |   |  |
+|force_new_era |    | :heavy_check_mark: |   |  |
+|set_invulnerables |    | :heavy_check_mark: |   | `Vec<AccountId>` validators <br/> |
+|force_unstake |    | :heavy_check_mark: |   | `AccountId` stash <br/>`u32` num_slashing_spans <br/> |
+|force_new_era_always |    | :heavy_check_mark: |   |  |
+|cancel_deferred_slash |    | :heavy_check_mark: |   | `EraIndex` era <br/>`Vec<u32>` slash_indices <br/> |
+|payout_stakers |    | :heavy_check_mark: |   | `AccountId` validator_stash <br/>`EraIndex` era <br/> |
+|rebond |    | :heavy_check_mark: |   | `Compact<BalanceOf>` value <br/> |
+|set_history_depth |    | :heavy_check_mark: |   | `Compact<EraIndex>` new_history_depth <br/>`Compact<u32>` _era_items_deleted <br/> |
+|reap_stash |    | :heavy_check_mark: |   | `AccountId` stash <br/>`u32` num_slashing_spans <br/> |
+|submit_election_solution |    |   |   | `Vec<ValidatorIndex>` winners <br/>`CompactAssignments` compact <br/>`ElectionScore` score <br/>`EraIndex` era <br/>`ElectionSize` size <br/> |
+|submit_election_solution_unsigned |    |   |   | `Vec<ValidatorIndex>` winners <br/>`CompactAssignments` compact <br/>`ElectionScore` score <br/>`EraIndex` era <br/>`ElectionSize` size <br/> |
+
+## Session
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|set_keys | :heavy_check_mark:  | :heavy_check_mark: |   | `Keys` keys <br/>`Bytes` proof <br/> |
+|purge_keys | :heavy_check_mark:  | :heavy_check_mark: |   |  |
+
+## Democracy
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|propose | :heavy_check_mark:  | :heavy_check_mark: |   | `Hash` proposal_hash <br/>`Compact<BalanceOf>` value <br/> |
+|second | :heavy_check_mark:  | :heavy_check_mark: |   | `Compact<PropIndex>` proposal <br/>`Compact<u32>` seconds_upper_bound <br/> |
+|vote | :heavy_check_mark:  | :heavy_check_mark: |   | `Compact<ReferendumIndex>` ref_index <br/>`AccountVote` vote <br/> |
+|emergency_cancel |    | :heavy_check_mark: |   | `ReferendumIndex` ref_index <br/> |
+|external_propose | :heavy_check_mark:  | :heavy_check_mark: |   | `Hash` proposal_hash <br/> |
+|external_propose_majority | :heavy_check_mark:  | :heavy_check_mark: |   | `Hash` proposal_hash <br/> |
+|external_propose_default | :heavy_check_mark:  | :heavy_check_mark: |   | `Hash` proposal_hash <br/> |
+|fast_track | :heavy_check_mark:  | :heavy_check_mark: |   | `Hash` proposal_hash <br/>`BlockNumber` voting_period <br/>`BlockNumber` delay <br/> |
+|veto_external |    | :heavy_check_mark: |   | `Hash` proposal_hash <br/> |
+|cancel_referendum |    | :heavy_check_mark: |   | `Compact<ReferendumIndex>` ref_index <br/> |
+|cancel_queued |    | :heavy_check_mark: |   | `ReferendumIndex` which <br/> |
+|delegate |    | :heavy_check_mark: |   | `AccountId` to <br/>`Conviction` conviction <br/>`BalanceOf` balance <br/> |
+|undelegate |    | :heavy_check_mark: |   |  |
+|clear_public_proposals |    | :heavy_check_mark: |   |  |
+|note_preimage |    | :heavy_check_mark: |   | `Bytes` encoded_proposal <br/> |
+|note_preimage_operational |    | :heavy_check_mark: |   | `Bytes` encoded_proposal <br/> |
+|note_imminent_preimage |    | :heavy_check_mark: |   | `Bytes` encoded_proposal <br/> |
+|note_imminent_preimage_operational |    | :heavy_check_mark: |   | `Bytes` encoded_proposal <br/> |
+|reap_preimage |    | :heavy_check_mark: |   | `Hash` proposal_hash <br/>`Compact<u32>` proposal_len_upper_bound <br/> |
+|unlock | :heavy_check_mark:  | :heavy_check_mark: |   | `AccountId` target <br/> |
+|remove_vote |    | :heavy_check_mark: |   | `ReferendumIndex` index <br/> |
+|remove_other_vote |    | :heavy_check_mark: |   | `AccountId` target <br/>`ReferendumIndex` index <br/> |
+|enact_proposal |    | :heavy_check_mark: |   | `Hash` proposal_hash <br/>`ReferendumIndex` index <br/> |
+
+## Council
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|set_members |    | :heavy_check_mark: |   | `Vec<AccountId>` new_members <br/>`Option<AccountId>` prime <br/>`MemberCount` old_count <br/> |
+|execute | :heavy_check_mark:  | :heavy_check_mark: |   | `Proposal` proposal <br/>`Compact<u32>` length_bound <br/> |
+|propose | :heavy_check_mark:  | :heavy_check_mark: |   | `Compact<MemberCount>` threshold <br/>`Proposal` proposal <br/>`Compact<u32>` length_bound <br/> |
+|vote | :heavy_check_mark:  | :heavy_check_mark: |   | `Hash` proposal <br/>`Compact<ProposalIndex>` index <br/>`bool` approve <br/> |
+|close | :heavy_check_mark:  | :heavy_check_mark: |   | `Hash` proposal_hash <br/>`Compact<ProposalIndex>` index <br/>`Compact<Weight>` proposal_weight_bound <br/>`Compact<u32>` length_bound <br/> |
+|disapprove_proposal | :heavy_check_mark:  | :heavy_check_mark: |   | `Hash` proposal_hash <br/> |
+
+## Elections
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|vote | :heavy_check_mark:  | :heavy_check_mark: |   | `Vec<AccountId>` votes <br/>`Compact<BalanceOf>` value <br/> |
+|remove_voter |    | :heavy_check_mark: |   |  |
+|report_defunct_voter |    | :heavy_check_mark: |   | `DefunctVoter` defunct <br/> |
+|submit_candidacy | :heavy_check_mark:  | :heavy_check_mark: |   | `Compact<u32>` candidate_count <br/> |
+|renounce_candidacy | :heavy_check_mark:  | :heavy_check_mark: |   | `Renouncing` renouncing <br/> |
+|remove_member |    | :heavy_check_mark: |   | `LookupSource` who <br/>`bool` has_replacement <br/> |
+
+## FinalityTracker
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|final_hint |    | :heavy_check_mark: |   | `Compact<BlockNumber>` hint <br/> |
+
+## Grandpa
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|report_equivocation |    |   |   | `GrandpaEquivocationProof` equivocation_proof <br/>`KeyOwnerProof` key_owner_proof <br/> |
+|report_equivocation_unsigned |    |   |   | `GrandpaEquivocationProof` equivocation_proof <br/>`KeyOwnerProof` key_owner_proof <br/> |
+|note_stalled |    | :heavy_check_mark: |   | `BlockNumber` delay <br/>`BlockNumber` best_finalized_block_number <br/> |
+
+## ImOnline
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|heartbeat |    |   |   | `Heartbeat` heartbeat <br/>`Signature` _signature <br/> |
+
+## AuthorityDiscovery
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+
+## Offences
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+
+## RandomnessCollectiveFlip
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+
+## Anchor
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|pre_commit |    | :heavy_check_mark: |   | `Hash` anchor_id <br/>`Hash` signing_root <br/> |
+|commit |    | :heavy_check_mark: |   | `Hash` anchor_id_preimage <br/>`Hash` doc_root <br/>`Hash` proof <br/>`Moment` stored_until_date <br/> |
+|evict_pre_commits |    | :heavy_check_mark: |   | `BlockNumber` evict_bucket <br/> |
+|evict_anchors |    | :heavy_check_mark: |   |  |
+
+## Fees
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|set_fee |    | :heavy_check_mark: |   | `Hash` key <br/>`Balance` new_price <br/> |
+
+## Nfts
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|validate_mint |    |   |   | `Hash` anchor_id <br/>`[u8;20]` deposit_address <br/>`Vec<Proof>` pfs <br/>`[H256;3]` static_proofs <br/>`ChainId` dest_id <br/> |
+
+## MultiAccount
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|create |    |   |   | `u16` threshold <br/>`Vec<AccountId>` other_signatories <br/> |
+|update |    |   |   | `u16` threshold <br/>`Vec<AccountId>` signatories <br/> |
+|remove |    |   |   |  |
+|call |    |   |   | `AccountId` multi_account_id <br/>`Option<Timepoint>` maybe_timepoint <br/>`Call` call <br/> |
+|approve |    |   |   | `AccountId` multi_account_id <br/>`Option<Timepoint>` maybe_timepoint <br/>`[u8;32]` call_hash <br/> |
+|cancel |    |   |   | `AccountId` multi_account_id <br/>`Timepoint` timepoint <br/>`[u8;32]` call_hash <br/> |
+
+## Identity
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|add_registrar |    | :heavy_check_mark: |   | `AccountId` account <br/> |
+|set_identity |    |   |   | `IdentityInfo` info <br/> |
+|set_subs |    |   |   | `Vec<(AccountId,Data)>` subs <br/> |
+|clear_identity |    | :heavy_check_mark: |   |  |
+|request_judgement |    | :heavy_check_mark: |   | `Compact<RegistrarIndex>` reg_index <br/>`Compact<BalanceOf>` max_fee <br/> |
+|cancel_request |    | :heavy_check_mark: |   | `RegistrarIndex` reg_index <br/> |
+|set_fee |    | :heavy_check_mark: |   | `Compact<RegistrarIndex>` index <br/>`Compact<BalanceOf>` fee <br/> |
+|set_account_id |    | :heavy_check_mark: |   | `Compact<RegistrarIndex>` index <br/>`AccountId` new <br/> |
+|set_fields |    |   |   | `Compact<RegistrarIndex>` index <br/>`IdentityFields` fields <br/> |
+|provide_judgement |    |   |   | `Compact<RegistrarIndex>` reg_index <br/>`LookupSource` target <br/>`IdentityJudgement` judgement <br/> |
+|kill_identity |    | :heavy_check_mark: |   | `LookupSource` target <br/> |
+|add_sub |    |   |   | `LookupSource` sub <br/>`Data` data <br/> |
+|rename_sub |    |   |   | `LookupSource` sub <br/>`Data` data <br/> |
+|remove_sub |    | :heavy_check_mark: |   | `LookupSource` sub <br/> |
+|quit_sub |    | :heavy_check_mark: |   |  |
+
+## PalletBridge
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|transfer_native |    |   |   | `BalanceOf` amount <br/>`Bytes` recipient <br/>`ChainId` dest_id <br/> |
+|transfer_asset |    |   |   | `Bytes` recipient <br/>`RegistryId` from_registry <br/>`TokenId` token_id <br/>`ChainId` dest_id <br/> |
+|transfer |    |   |   | `AccountId` to <br/>`BalanceOf` amount <br/>`ResourceId` r_id <br/> |
+|receive_nonfungible |    |   |   | `AccountId` to <br/>`TokenId` token_id <br/>`Bytes` _metadata <br/>`ResourceId` resource_id <br/> |
+|remark |    |   |   | `Hash` hash <br/>`ResourceId` r_id <br/> |
+|set_token_transfer_fee |    | :heavy_check_mark: |   | `Balance` fee <br/> |
+
+## ChainBridge
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|set_threshold |    |   |   | `u32` threshold <br/> |
+|set_resource |    |   |   | `ResourceId` id <br/>`Bytes` method <br/> |
+|remove_resource |    |   |   | `ResourceId` id <br/> |
+|whitelist_chain |    |   |   | `ChainId` id <br/> |
+|add_relayer |    |   |   | `AccountId` v <br/> |
+|remove_relayer |    |   |   | `AccountId` v <br/> |
+|acknowledge_proposal |    |   |   | `DepositNonce` nonce <br/>`ChainId` src_id <br/>`ResourceId` r_id <br/>`Proposal` call <br/> |
+|reject_proposal |    |   |   | `DepositNonce` nonce <br/>`ChainId` src_id <br/>`ResourceId` r_id <br/>`Proposal` call <br/> |
+|eval_vote_state |    |   |   | `DepositNonce` nonce <br/>`ChainId` src_id <br/>`Proposal` prop <br/> |
+
+## Indices
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|claim |    | :heavy_check_mark: |   | `AccountIndex` index <br/> |
+|transfer |    | :heavy_check_mark: |   | `AccountId` new <br/>`AccountIndex` index <br/> |
+|free |    | :heavy_check_mark: |   | `AccountIndex` index <br/> |
+|force_transfer |    | :heavy_check_mark: |   | `AccountId` new <br/>`AccountIndex` index <br/>`bool` freeze <br/> |
+|freeze |    | :heavy_check_mark: |   | `AccountIndex` index <br/> |
+
+## Historical
+
+Empty
+
+## Scheduler
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|schedule |    |   |   | `BlockNumber` when <br/>`Option<Period>` maybe_periodic <br/>`Priority` priority <br/>`Call` call <br/> |
+|cancel |    |   |   | `BlockNumber` when <br/>`u32` index <br/> |
+|schedule_named |    |   |   | `Bytes` id <br/>`BlockNumber` when <br/>`Option<Period>` maybe_periodic <br/>`Priority` priority <br/>`Call` call <br/> |
+|cancel_named |    |   |   | `Bytes` id <br/> |
+|schedule_after |    |   |   | `BlockNumber` after <br/>`Option<Period>` maybe_periodic <br/>`Priority` priority <br/>`Call` call <br/> |
+|schedule_named_after |    |   |   | `Bytes` id <br/>`BlockNumber` after <br/>`Option<Period>` maybe_periodic <br/>`Priority` priority <br/>`Call` call <br/> |
+
+## Proxy
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|proxy |    |   |   | `AccountId` real <br/>`Option<ProxyType>` force_proxy_type <br/>`Call` call <br/> |
+|add_proxy |    |   |   | `AccountId` proxy <br/>`ProxyType` proxy_type <br/> |
+|remove_proxy |    |   |   | `AccountId` proxy <br/>`ProxyType` proxy_type <br/> |
+|remove_proxies |    |   |   |  |
+|anonymous |    |   |   | `ProxyType` proxy_type <br/>`u16` index <br/> |
+|kill_anonymous |    |   |   | `AccountId` spawner <br/>`ProxyType` proxy_type <br/>`u16` index <br/>`Compact<BlockNumber>` height <br/>`Compact<u32>` ext_index <br/> |
+
+## Multisig
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|as_multi_threshold_1 |    |   |   | `Vec<AccountId>` other_signatories <br/>`Call` call <br/> |
+|as_multi |    |   |   | `u16` threshold <br/>`Vec<AccountId>` other_signatories <br/>`Option<Timepoint>` maybe_timepoint <br/>`OpaqueCall` call <br/>`bool` store_call <br/>`Weight` max_weight <br/> |
+|approve_as_multi |    |   |   | `u16` threshold <br/>`Vec<AccountId>` other_signatories <br/>`Option<Timepoint>` maybe_timepoint <br/>`[u8;32]` call_hash <br/>`Weight` max_weight <br/> |
+|cancel_as_multi |    |   |   | `u16` threshold <br/>`Vec<AccountId>` other_signatories <br/>`Timepoint` timepoint <br/>`[u8;32]` call_hash <br/> |
+
+## RadClaims
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|claim |    |   |   | `AccountId` account_id <br/>`Balance` amount <br/>`Vec<Hash>` sorted_hashes <br/> |
+|set_upload_account |    | :heavy_check_mark: |   | `AccountId` account_id <br/> |
+|store_root_hash |    | :heavy_check_mark: |   | `Hash` root_hash <br/> |
+
+## Vesting
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|vest |    | :heavy_check_mark: |   |  |
+|vest_other |    | :heavy_check_mark: |   | `LookupSource` target <br/> |
+|vested_transfer |    | :heavy_check_mark: |   | `LookupSource` target <br/>`VestingInfo` schedule <br/> |
+|force_vested_transfer |    | :heavy_check_mark: |   | `LookupSource` source <br/>`LookupSource` target <br/>`VestingInfo` schedule <br/> |
+
+## Registry
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|create_registry |    |   |   | `RegistryInfo` info <br/> |
+|mint |    |   |   | `AccountId` owner_account <br/>`RegistryId` registry_id <br/>`TokenId` token_id <br/>`AssetInfo` asset_info <br/>`MintInfo` mint_info <br/> |
+
+## Nft
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|transfer |    |   |   | `AccountId` dest_account <br/>`RegistryId` registry_id <br/>`TokenId` token_id <br/> |
+
+## BridgeMapping
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|set |    |   |   | `ResourceId` rid <br/>`Address` local_addr <br/> |
+|remove |    |   |   | `ResourceId` rid <br/> |
 
-- In releases, you will find a precompiled test app. If you are just curious, you can run `install_app.sh` and avoid building.
-
-## Download and install
-
-*Once the app is approved by Ledger, it will be available in their app store (Ledger Live).
-You can get builds generated by CircleCI from the release tab. THESE ARE UNVETTED DEVELOPMENT RELEASES*
-
-Download a release from here (https://github.com/Zondax/ledger-centrifuge/releases). You only need `installer_s.sh`
-
-If the file is not executable, run
-```sh
-chmod +x ./installer_s.sh
-```
-
-then run:
-
-```sh
-./installer_s.sh load
-```
-
-# Development
-
-## Preconditions
-
-- Be sure you checkout submodules too:
-
-    ```
-    git submodule update --init --recursive
-    ```
-
-- Install Docker CE
-    - Instructions can be found here: https://docs.docker.com/install/
-
-- We only officially support Ubuntu. Install the following packages:
-   ```
-   sudo apt update && apt-get -y install build-essential git wget cmake \
-  libssl-dev libgmp-dev autoconf libtool
-   ```
-
-- Install `node > v14.0`. We typically recommend using `n`
-
-- You will need python 3 and then run
-    - `make deps`
-
-- This project requires Ledger firmware 1.6.1
-    - The current repository keeps track of Ledger's SDK but it is possible to override it by changing the git submodule.
-
-*Warning*: Some IDEs may not use the same python interpreter or virtual enviroment as the one you used when running `pip`.
-If you see conan is not found, check that you installed the package in the same interpreter as the one that launches `cmake`.
-
-## How to build ?
-
-> We like clion or vscode but let's have some reproducible command line steps
->
-
-- Building the app itself
-
-    If you installed the what is described above, just run:
-    ```bash
-    make
-    ```
-
-## Running tests
-
-- Running rust tests (x64)
-
-    If you installed the what is described above, just run:
-    ```bash
-    make rust_test
-    ```
-
-- Running C/C++ tests (x64)
-
-    If you installed the what is described above, just run:
-    ```bash
-    make cpp_test
-    ```
-
-- Running device emulation+integration tests!!
-
-   ```bash
-    Use Zemu! Explained below!
-    ```
-
-## How to test with Zemu?
-
-> What is Zemu?? Great you asked!!
-> As part of this project, we are making public a beta version of our internal testing+emulation framework for Ledger apps.
->
-> Npm Package here: https://www.npmjs.com/package/@zondax/zemu
->
-> Repo here: https://github.com/Zondax/zemu
-
-Let's go! First install everything:
-> At this moment, if you change the app you will need to run `make` before running the test again.
-
-```bash
-make zemu_install
-```
-
-Then you can run JS tests:
-
-```bash
-make zemu_test
-```
-
-To run a single specific test:
-
-> At the moment, the recommendation is to run from the IDE. Remember to run `make` if you change the app.
-
-## How to debug a Ledger app?
-
-You can use vscode or clion to debug the app. We recommend using CLion but we provide a vscode (unsupported) configuration too.
-
-### Preconditions
-
-If you are using CLion, you need to a configuration file in your home directory: `$HOME/.gdbinit` with the following content:
-
-```
-set auto-load local-gdbinit on
-add-auto-load-safe-path /
-```
-
-### Warnings
-
-There are a few things to take into account when enabling Ledger App debugging:
-
-- Once you enable the local .gdbinit that is located in your project workspace. You **will break** local Rust debugging in your host. The reason is that debugging unit tests will use the same `.gdbinit` configuration that sets the environment to ARM. We are looking at some possible fixes. For now, if you want to debug unit tests instead of the ledger app, you need to comment out the lines in `.gdbinit`
-
-### Debugging
-
-1. Build your app
-
-    ```bash
-    make
-    ```
-
-2. Define your debug scenario
-
-    Open `tests/zemu/tools/debug.mjs` and look for the line:
-
-    ```bash
-    /// TIP you can use zemu commands here to take the app ...
-    ```
-
-    You can adjust this code to get the emulator to trigger a breakpoint in your app:
-    - send clicks
-    - send APDUs, etc
-
-3. Launch the emulator in debug mode
-
-    > If you didnt install Zemu yet (previous section), then run `make zemu_install`
-
-    ```bash
-    make zemu_debug
-    ```
-
-    The emulator will launch and immediately stop. You should see a black window
-
-4. Configure Clion debugger
-
-    Your configuration should look similar to this:
-
-     ![image](docs/img/clion_debugging.png)
-
-    Check that the path mappings are correct
-
-5. Start CLion debugger
-
-    You will hit a breakpoint in main.
-    Add breakpoints in other places and continue.
-
-    Enjoy :)
-
-## Using a real device
-
-### How to prepare your DEVELOPMENT! device:
-
->  You can use an emulated device for development. This is only required if you are using a physical device
->
->    **Please do not use a Ledger device with funds for development purposes.**
->>
->    **Have a separate and marked device that is used ONLY for development and testing**
-
-   There are a few additional steps that increase reproducibility and simplify development:
-
-**1 - Ensure your device works in your OS**
-- In Linux hosts it might be necessary to adjust udev rules, etc.
-
-  Refer to Ledger documentation: https://support.ledger.com/hc/en-us/articles/115005165269-Fix-connection-issues
-
-**2 - Set a test mnemonic**
-
-Many of our integration tests expect the device to be configured with a known test mnemonic.
-
-- Plug your device while pressing the right button
-
-- Your device will show "Recovery" in the screen
-
-- Double click
-
-- Run `make dev_init`. This will take about 2 minutes. The device will be initialized to:
-
-   ```
-   PIN: 5555
-   Mnemonic: equip will roof matter pink blind book anxiety banner elbow sun young
-   ```
-
-**3 - Add a development certificate**
-
-- Plug your device while pressing the right button
-
-- Your device will show "Recovery" in the screen
-
-- Click both buttons at the same time
-
-- Enter your pin if necessary
-
-- Run `make dev_ca`. The device will receive a development certificate to avoid constant manual confirmations.
-
-## Building the Ledger App
-
-### Loading into your development device
-
-The Makefile will build the firmware in a docker container and leave the binary in the correct directory.
-
-- Build
-
-   ```
-   make                # Builds the app
-   ```
-
-- Upload to a device
-
-   The following command will upload the application to the ledger:
-
-   _Warning: The application will be deleted before uploading._
-   ```
-   make load          # Builds and loads the app to the device
-   ```
-
-## APDU Specifications
-
-- [APDU Protocol](docs/APDUSPEC.md)

@@ -40,7 +40,7 @@ $(info EXAMPLE_VUE_DIR       : $(EXAMPLE_VUE_DIR))
 $(info TESTS_JS_DIR          : $(TESTS_JS_DIR))
 $(info TESTS_JS_PACKAGE      : $(TESTS_JS_PACKAGE))
 
-DOCKER_IMAGE=zondax/builder-bolos@sha256:979f4893b07ab8c37cc96e70c78124a5bbcf665cc9aa510b89e0ec317527b47f
+DOCKER_IMAGE=zondax/builder-bolos@sha256:e43b2ece1e42ca09cb9ccf90466982d95d3f1842e1b9aac18cd8d5762b308eeb
 
 ifdef INTERACTIVE
 INTERACTIVE_SETTING:="-i"
@@ -73,9 +73,10 @@ define run_docker
 endef
 
 all:
-	@$(MAKE) clean
+	@$(MAKE) clean_output
+	@$(MAKE) clean_build
 	@$(MAKE) buildS
-	@$(MAKE) clean
+	@$(MAKE) clean_build
 	@$(MAKE) buildX
 
 .PHONY: check_python
@@ -112,24 +113,17 @@ buildS: build_rustS
 buildX: build_rustX
 	$(call run_docker,$(DOCKER_BOLOS_SDKX),make -j $(NPROC) -C $(DOCKER_APP_SRC))
 
-.PHONY: clean
-clean: cleanS cleanX
+.PHONY: clean_output
+clean_output:
+	@echo "Removing output files"
+	@rm -f app/output/app* || true
 
-.PHONY: cleanS
-cleanS:
+.PHONY: clean
+clean_build:
 	$(call run_docker,$(DOCKER_BOLOS_SDKS),make -C $(DOCKER_APP_SRC) clean)
 
-.PHONY: cleanX
-cleanX:
-	$(call run_docker,$(DOCKER_BOLOS_SDKX),make -C $(DOCKER_APP_SRC) clean)
-
-.PHONY: clean_rustS
-clean_rustS:
-	$(call run_docker,$(DOCKER_BOLOS_SDKS),make -C $(DOCKER_APP_SRC) rust_clean)
-
-.PHONY: clean_rustX
-clean_rustX:
-	$(call run_docker,$(DOCKER_BOLOS_SDKX),make -C $(DOCKER_APP_SRC) rust_clean)
+.PHONY: clean
+clean: clean_output clean_build
 
 .PHONY: listvariants
 listvariants:
@@ -284,7 +278,7 @@ cpp_test:
 
 .PHONY: fuzz_build
 fuzz_build:
-	cmake -B build -DCMAKE_C_COMPILER=clang-10 -DCMAKE_CXX_COMPILER=clang++-10 -DCMAKE_BUILD_TYPE=Debug -DENABLE_FUZZING=1 -DENABLE_SANITIZERS=1 -DFUZZ_LOGGING=1 .
+	cmake -B build -DCMAKE_C_COMPILER=clang-11 -DCMAKE_CXX_COMPILER=clang++-11 -DCMAKE_BUILD_TYPE=Debug -DENABLE_FUZZING=1 -DENABLE_SANITIZERS=1 .
 	make -C build
 
 .PHONY: fuzz
