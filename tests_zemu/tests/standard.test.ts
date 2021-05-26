@@ -14,14 +14,14 @@
  *  limitations under the License.
  ******************************************************************************* */
 
-import Zemu, { DEFAULT_START_OPTIONS } from '@zondax/zemu'
-import { newCentrifugeApp } from '@zondax/ledger-polkadot'
-import { APP_SEED, models } from './common'
+import Zemu, {DEFAULT_START_OPTIONS} from '@zondax/zemu'
+import {APP_SEED, models} from './common'
+import {newCentrifugeApp} from '@zondax/ledger-polkadot'
 
 // @ts-ignore
 import ed25519 from 'ed25519-supercop'
 // @ts-ignore
-import { blake2bFinal, blake2bInit, blake2bUpdate } from 'blakejs'
+import {blake2bFinal, blake2bInit, blake2bUpdate} from 'blakejs'
 
 const defaultOptions = {
   ...DEFAULT_START_OPTIONS,
@@ -36,7 +36,7 @@ describe('Standard', function () {
   test.each(models)('can start and stop container', async function (m) {
     const sim = new Zemu(m.path)
     try {
-      await sim.start({ ...defaultOptions, model: m.name })
+      await sim.start({...defaultOptions, model: m.name})
     } finally {
       await sim.close()
     }
@@ -45,7 +45,7 @@ describe('Standard', function () {
   test.each(models)('main menu', async function (m) {
     const sim = new Zemu(m.path)
     try {
-      await sim.start({ ...defaultOptions, model: m.name })
+      await sim.start({...defaultOptions, model: m.name})
       await sim.navigateAndCompareSnapshots('.', `${m.prefix.toLowerCase()}-mainmenu`, [1, 0, 0, 5, -5])
     } finally {
       await sim.close()
@@ -55,7 +55,7 @@ describe('Standard', function () {
   test.each(models)('get app version', async function (m) {
     const sim = new Zemu(m.path)
     try {
-      await sim.start({ ...defaultOptions, model: m.name })
+      await sim.start({...defaultOptions, model: m.name})
       const app = newCentrifugeApp(sim.getTransport())
       const resp = await app.getVersion()
 
@@ -75,7 +75,7 @@ describe('Standard', function () {
   test.each(models)('get address', async function (m) {
     const sim = new Zemu(m.path)
     try {
-      await sim.start({ ...defaultOptions, model: m.name })
+      await sim.start({...defaultOptions, model: m.name})
       const app = newCentrifugeApp(sim.getTransport())
 
       const resp = await app.getAddress(0x80000000, 0x80000000, 0x80000000)
@@ -98,7 +98,7 @@ describe('Standard', function () {
   test.each(models)('show address', async function (m) {
     const sim = new Zemu(m.path)
     try {
-      await sim.start({ ...defaultOptions, model: m.name })
+      await sim.start({...defaultOptions, model: m.name})
       const app = newCentrifugeApp(sim.getTransport())
 
       const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true)
@@ -127,7 +127,7 @@ describe('Standard', function () {
   test.each(models)('show address - reject', async function (m) {
     const sim = new Zemu(m.path)
     try {
-      await sim.start({ ...defaultOptions, model: m.name })
+      await sim.start({...defaultOptions, model: m.name})
       const app = newCentrifugeApp(sim.getTransport())
 
       const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true)
@@ -149,7 +149,7 @@ describe('Standard', function () {
   test.each(models)('sign basic normal', async function (m) {
     const sim = new Zemu(m.path)
     try {
-      await sim.start({ ...defaultOptions, model: m.name })
+      await sim.start({...defaultOptions, model: m.name})
       const app = newCentrifugeApp(sim.getTransport())
       const pathAccount = 0x80000000
       const pathChange = 0x80000000
@@ -168,7 +168,7 @@ describe('Standard', function () {
       // Wait until we are not in the main menu
       await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot())
 
-      await sim.compareSnapshotsAndAccept('.', `${m.prefix.toLowerCase()}-sign_basic_normal`, m.name === 'nanos' ? 5 : 6)
+      await sim.compareSnapshotsAndAccept('.', `${m.prefix.toLowerCase()}-sign_basic_normal`, m.name == "nanos" ? 5 : 6)
 
       const signatureResponse = await signatureRequest
       console.log(signatureResponse)
@@ -193,7 +193,7 @@ describe('Standard', function () {
   test.each(models)('sign basic expert', async function (m) {
     const sim = new Zemu(m.path)
     try {
-      await sim.start({ ...defaultOptions, model: m.name })
+      await sim.start({...defaultOptions, model: m.name})
       const app = newCentrifugeApp(sim.getTransport())
       const pathAccount = 0x80000000
       const pathChange = 0x80000000
@@ -218,7 +218,7 @@ describe('Standard', function () {
       // Wait until we are not in the main menu
       await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot())
 
-      await sim.compareSnapshotsAndAccept('.', `${m.prefix.toLowerCase()}-sign_basic_expert`, m.name === 'nanos' ? 11 : 12)
+      await sim.compareSnapshotsAndAccept('.', `${m.prefix.toLowerCase()}-sign_basic_expert`, m.name == "nanos" ? 11 : 12)
 
       const signatureResponse = await signatureRequest
       console.log(signatureResponse)
@@ -243,7 +243,7 @@ describe('Standard', function () {
   test.each(models)('sign large nomination', async function (m) {
     const sim = new Zemu(m.path)
     try {
-      await sim.start({ ...defaultOptions, model: m.name })
+      await sim.start({...defaultOptions, model: m.name})
       const app = newCentrifugeApp(sim.getTransport())
       const pathAccount = 0x80000000
       const pathChange = 0x80000000
