@@ -78,7 +78,7 @@ endif
 APPNAME = "Centrifuge"
 APPPATH = "44'/747'"
 
-else ifeq ($(COIN),DOT_XL)
+else ifeq ($(COIN),CFG_XL)
 # XXL app configuration
 DEFINES += APP_STANDARD SUBSTRATE_PARSER_FULL
 APPNAME = "Centrifuge XL"
