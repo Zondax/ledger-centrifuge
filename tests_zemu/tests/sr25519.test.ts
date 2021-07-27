@@ -15,8 +15,8 @@
  ******************************************************************************* */
 
 import Zemu, { DEFAULT_START_OPTIONS } from '@zondax/zemu'
-import { newCentrifugeApp } from '@zondax/ledger-polkadot'
-import { APP_SEED } from './common'
+import { newCentrifugeApp } from '@zondax/ledger-substrate'
+import {APP_SEED, txBasic, txNomination} from './common'
 
 // @ts-ignore
 import { blake2bFinal, blake2bInit, blake2bUpdate } from 'blakejs'
@@ -34,6 +34,10 @@ const defaultOptions = {
 }
 
 jest.setTimeout(60000)
+
+beforeAll(async () => {
+  await Zemu.checkAndPullImage()
+})
 
 describe('SR25519', function () {
   test('get address sr25519', async function () {
