@@ -65,47 +65,6 @@ typedef struct {
     pd_VecCall_t calls;
 } pd_utility_batch_V1_t;
 
-#define PD_CALL_STAKING_BOND_V1 0
-typedef struct {
-    pd_LookupSource_V1_t controller;
-    pd_CompactBalanceOf_t value;
-    pd_RewardDestination_V1_t payee;
-} pd_staking_bond_V1_t;
-
-#define PD_CALL_STAKING_BOND_EXTRA_V1 1
-typedef struct {
-    pd_CompactBalanceOf_t max_additional;
-} pd_staking_bond_extra_V1_t;
-
-#define PD_CALL_STAKING_UNBOND_V1 2
-typedef struct {
-    pd_CompactBalanceOf_t value;
-} pd_staking_unbond_V1_t;
-
-#define PD_CALL_STAKING_VALIDATE_V1 4
-typedef struct {
-    pd_ValidatorPrefs_V1_t prefs;
-} pd_staking_validate_V1_t;
-
-#define PD_CALL_STAKING_NOMINATE_V1 5
-typedef struct {
-    pd_VecLookupSource_V1_t targets;
-} pd_staking_nominate_V1_t;
-
-#define PD_CALL_STAKING_CHILL_V1 6
-typedef struct {
-} pd_staking_chill_V1_t;
-
-#define PD_CALL_STAKING_SET_PAYEE_V1 7
-typedef struct {
-    pd_RewardDestination_V1_t payee;
-} pd_staking_set_payee_V1_t;
-
-#define PD_CALL_STAKING_SET_CONTROLLER_V1 8
-typedef struct {
-    pd_LookupSource_V1_t controller;
-} pd_staking_set_controller_V1_t;
-
 #define PD_CALL_SESSION_SET_KEYS_V1 0
 typedef struct {
     pd_Keys_V1_t keys;
@@ -352,11 +311,6 @@ typedef struct {
     pd_AccountId_V1_t validator_stash;
     pd_EraIndex_V1_t era;
 } pd_staking_payout_stakers_V1_t;
-
-#define PD_CALL_STAKING_REBOND_V1 19
-typedef struct {
-    pd_CompactBalanceOf_t value;
-} pd_staking_rebond_V1_t;
 
 #define PD_CALL_STAKING_SET_HISTORY_DEPTH_V1 20
 typedef struct {
@@ -987,14 +941,6 @@ typedef struct {
 
 typedef union {
     pd_utility_batch_V1_t utility_batch_V1;
-    pd_staking_bond_V1_t staking_bond_V1;
-    pd_staking_bond_extra_V1_t staking_bond_extra_V1;
-    pd_staking_unbond_V1_t staking_unbond_V1;
-    pd_staking_validate_V1_t staking_validate_V1;
-    pd_staking_nominate_V1_t staking_nominate_V1;
-    pd_staking_chill_V1_t staking_chill_V1;
-    pd_staking_set_payee_V1_t staking_set_payee_V1;
-    pd_staking_set_controller_V1_t staking_set_controller_V1;
     pd_session_set_keys_V1_t session_set_keys_V1;
     pd_session_purge_keys_V1_t session_purge_keys_V1;
     pd_democracy_propose_V1_t democracy_propose_V1;
@@ -1041,7 +987,6 @@ typedef union {
     pd_staking_force_new_era_always_V1_t staking_force_new_era_always_V1;
     pd_staking_cancel_deferred_slash_V1_t staking_cancel_deferred_slash_V1;
     pd_staking_payout_stakers_V1_t staking_payout_stakers_V1;
-    pd_staking_rebond_V1_t staking_rebond_V1;
     pd_staking_set_history_depth_V1_t staking_set_history_depth_V1;
     pd_staking_reap_stash_V1_t staking_reap_stash_V1;
     pd_staking_submit_election_solution_V1_t staking_submit_election_solution_V1;
@@ -1160,19 +1105,74 @@ typedef struct {
     pd_CompactBalance_t value;
 } pd_balances_transfer_keep_alive_V1_t;
 
+#define PD_CALL_STAKING_BOND_V1 0
+typedef struct {
+    pd_LookupSource_V1_t controller;
+    pd_CompactBalanceOf_t value;
+    pd_RewardDestination_V1_t payee;
+} pd_staking_bond_V1_t;
+
+#define PD_CALL_STAKING_BOND_EXTRA_V1 1
+typedef struct {
+    pd_CompactBalanceOf_t max_additional;
+} pd_staking_bond_extra_V1_t;
+
+#define PD_CALL_STAKING_UNBOND_V1 2
+typedef struct {
+    pd_CompactBalanceOf_t value;
+} pd_staking_unbond_V1_t;
+
+#define PD_CALL_STAKING_VALIDATE_V1 4
+typedef struct {
+    pd_ValidatorPrefs_V1_t prefs;
+} pd_staking_validate_V1_t;
+
+#define PD_CALL_STAKING_NOMINATE_V1 5
+typedef struct {
+    pd_VecLookupSource_V1_t targets;
+} pd_staking_nominate_V1_t;
+
+#define PD_CALL_STAKING_CHILL_V1 6
+typedef struct {
+} pd_staking_chill_V1_t;
+
+#define PD_CALL_STAKING_SET_PAYEE_V1 7
+typedef struct {
+    pd_RewardDestination_V1_t payee;
+} pd_staking_set_payee_V1_t;
+
+#define PD_CALL_STAKING_SET_CONTROLLER_V1 8
+typedef struct {
+    pd_LookupSource_V1_t controller;
+} pd_staking_set_controller_V1_t;
+
 #ifdef SUBSTRATE_PARSER_FULL
 #define PD_CALL_SYSTEM_FILL_BLOCK_V1 0
 typedef struct {
     pd_Perbill_V1_t _ratio;
 } pd_system_fill_block_V1_t;
 
+#define PD_CALL_STAKING_REBOND_V1 19
+typedef struct {
+    pd_CompactBalanceOf_t value;
+} pd_staking_rebond_V1_t;
+
 #endif
 
 typedef union {
     pd_balances_transfer_V1_t balances_transfer_V1;
     pd_balances_transfer_keep_alive_V1_t balances_transfer_keep_alive_V1;
+    pd_staking_bond_V1_t staking_bond_V1;
+    pd_staking_bond_extra_V1_t staking_bond_extra_V1;
+    pd_staking_unbond_V1_t staking_unbond_V1;
+    pd_staking_validate_V1_t staking_validate_V1;
+    pd_staking_nominate_V1_t staking_nominate_V1;
+    pd_staking_chill_V1_t staking_chill_V1;
+    pd_staking_set_payee_V1_t staking_set_payee_V1;
+    pd_staking_set_controller_V1_t staking_set_controller_V1;
 #ifdef SUBSTRATE_PARSER_FULL
     pd_system_fill_block_V1_t system_fill_block_V1;
+    pd_staking_rebond_V1_t staking_rebond_V1;
 #endif
 } pd_MethodNested_V1_t;
 

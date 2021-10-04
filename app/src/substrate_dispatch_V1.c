@@ -1303,28 +1303,28 @@ parser_error_t _readMethod_V1(
         CHECK_ERROR(_readMethod_balances_transfer_keep_alive_V1(c, &method->nested.balances_transfer_keep_alive_V1))
         break;
     case 1536: /* module 6 call 0 */
-        CHECK_ERROR(_readMethod_staking_bond_V1(c, &method->basic.staking_bond_V1))
+        CHECK_ERROR(_readMethod_staking_bond_V1(c, &method->nested.staking_bond_V1))
         break;
     case 1537: /* module 6 call 1 */
-        CHECK_ERROR(_readMethod_staking_bond_extra_V1(c, &method->basic.staking_bond_extra_V1))
+        CHECK_ERROR(_readMethod_staking_bond_extra_V1(c, &method->nested.staking_bond_extra_V1))
         break;
     case 1538: /* module 6 call 2 */
-        CHECK_ERROR(_readMethod_staking_unbond_V1(c, &method->basic.staking_unbond_V1))
+        CHECK_ERROR(_readMethod_staking_unbond_V1(c, &method->nested.staking_unbond_V1))
         break;
     case 1540: /* module 6 call 4 */
-        CHECK_ERROR(_readMethod_staking_validate_V1(c, &method->basic.staking_validate_V1))
+        CHECK_ERROR(_readMethod_staking_validate_V1(c, &method->nested.staking_validate_V1))
         break;
     case 1541: /* module 6 call 5 */
-        CHECK_ERROR(_readMethod_staking_nominate_V1(c, &method->basic.staking_nominate_V1))
+        CHECK_ERROR(_readMethod_staking_nominate_V1(c, &method->nested.staking_nominate_V1))
         break;
     case 1542: /* module 6 call 6 */
-        CHECK_ERROR(_readMethod_staking_chill_V1(c, &method->basic.staking_chill_V1))
+        CHECK_ERROR(_readMethod_staking_chill_V1(c, &method->nested.staking_chill_V1))
         break;
     case 1543: /* module 6 call 7 */
-        CHECK_ERROR(_readMethod_staking_set_payee_V1(c, &method->basic.staking_set_payee_V1))
+        CHECK_ERROR(_readMethod_staking_set_payee_V1(c, &method->nested.staking_set_payee_V1))
         break;
     case 1544: /* module 6 call 8 */
-        CHECK_ERROR(_readMethod_staking_set_controller_V1(c, &method->basic.staking_set_controller_V1))
+        CHECK_ERROR(_readMethod_staking_set_controller_V1(c, &method->nested.staking_set_controller_V1))
         break;
     case 1792: /* module 7 call 0 */
         CHECK_ERROR(_readMethod_session_set_keys_V1(c, &method->basic.session_set_keys_V1))
@@ -1467,7 +1467,7 @@ parser_error_t _readMethod_V1(
         CHECK_ERROR(_readMethod_staking_payout_stakers_V1(c, &method->basic.staking_payout_stakers_V1))
         break;
     case 1555: /* module 6 call 19 */
-        CHECK_ERROR(_readMethod_staking_rebond_V1(c, &method->basic.staking_rebond_V1))
+        CHECK_ERROR(_readMethod_staking_rebond_V1(c, &method->nested.staking_rebond_V1))
         break;
     case 1556: /* module 6 call 20 */
         CHECK_ERROR(_readMethod_staking_set_history_depth_V1(c, &method->basic.staking_set_history_depth_V1))
@@ -4003,17 +4003,17 @@ parser_error_t _getMethod_ItemValue_V1(
         switch (itemIdx) {
         case 0: /* staking_bond_V1 - controller */;
             return _toStringLookupSource_V1(
-                &m->basic.staking_bond_V1.controller,
+                &m->nested.staking_bond_V1.controller,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* staking_bond_V1 - value */;
             return _toStringCompactBalanceOf(
-                &m->basic.staking_bond_V1.value,
+                &m->nested.staking_bond_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* staking_bond_V1 - payee */;
             return _toStringRewardDestination_V1(
-                &m->basic.staking_bond_V1.payee,
+                &m->nested.staking_bond_V1.payee,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -4023,7 +4023,7 @@ parser_error_t _getMethod_ItemValue_V1(
         switch (itemIdx) {
         case 0: /* staking_bond_extra_V1 - max_additional */;
             return _toStringCompactBalanceOf(
-                &m->basic.staking_bond_extra_V1.max_additional,
+                &m->nested.staking_bond_extra_V1.max_additional,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -4033,7 +4033,7 @@ parser_error_t _getMethod_ItemValue_V1(
         switch (itemIdx) {
         case 0: /* staking_unbond_V1 - value */;
             return _toStringCompactBalanceOf(
-                &m->basic.staking_unbond_V1.value,
+                &m->nested.staking_unbond_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -4043,7 +4043,7 @@ parser_error_t _getMethod_ItemValue_V1(
         switch (itemIdx) {
         case 0: /* staking_validate_V1 - prefs */;
             return _toStringValidatorPrefs_V1(
-                &m->basic.staking_validate_V1.prefs,
+                &m->nested.staking_validate_V1.prefs,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -4053,7 +4053,7 @@ parser_error_t _getMethod_ItemValue_V1(
         switch (itemIdx) {
         case 0: /* staking_nominate_V1 - targets */;
             return _toStringVecLookupSource_V1(
-                &m->basic.staking_nominate_V1.targets,
+                &m->nested.staking_nominate_V1.targets,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -4068,7 +4068,7 @@ parser_error_t _getMethod_ItemValue_V1(
         switch (itemIdx) {
         case 0: /* staking_set_payee_V1 - payee */;
             return _toStringRewardDestination_V1(
-                &m->basic.staking_set_payee_V1.payee,
+                &m->nested.staking_set_payee_V1.payee,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -4078,7 +4078,7 @@ parser_error_t _getMethod_ItemValue_V1(
         switch (itemIdx) {
         case 0: /* staking_set_controller_V1 - controller */;
             return _toStringLookupSource_V1(
-                &m->basic.staking_set_controller_V1.controller,
+                &m->nested.staking_set_controller_V1.controller,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -4654,7 +4654,7 @@ parser_error_t _getMethod_ItemValue_V1(
         switch (itemIdx) {
         case 0: /* staking_rebond_V1 - value */;
             return _toStringCompactBalanceOf(
-                &m->basic.staking_rebond_V1.value,
+                &m->nested.staking_rebond_V1.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6323,15 +6323,7 @@ bool _getMethod_IsNestingSupported_V1(uint8_t moduleIdx, uint8_t callIdx)
     case 1024: // Authorship:Set uncles
     case 1281: // Balances:Set balance
     case 1282: // Balances:Force transfer
-    case 1536: // Staking:Bond
-    case 1537: // Staking:Bond extra
-    case 1538: // Staking:Unbond
     case 1539: // Staking:Withdraw Unbonded
-    case 1540: // Staking:Validate
-    case 1541: // Staking:Nominate
-    case 1542: // Staking:Chill
-    case 1543: // Staking:Set payee
-    case 1544: // Staking:Set controller
     case 1545: // Staking:Set validator count
     case 1546: // Staking:Increase validator count
     case 1547: // Staking:Scale validator count
@@ -6342,7 +6334,6 @@ bool _getMethod_IsNestingSupported_V1(uint8_t moduleIdx, uint8_t callIdx)
     case 1552: // Staking:Force new era always
     case 1553: // Staking:Cancel deferred slash
     case 1554: // Staking:Payout stakers
-    case 1555: // Staking:Rebond
     case 1556: // Staking:Set history depth
     case 1557: // Staking:Reap stash
     case 1558: // Staking:Submit election solution

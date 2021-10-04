@@ -7,19 +7,19 @@
   "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Zondax/ledger-polymesh"
+    "url": "git+https://github.com/Zondax/ledger-centrifuge"
   },
   "keywords": [
     "Zondax",
     "Ledger"
   ],
   "scripts": {
-    "test": "jest --detectOpenHandles -t 'Standard'",
-    "testSR25519": "jest --detectOpenHandles --runInBand tests/sr25519.test.ts"
+    "test": "jest -t 'Standard'",
+    "testSR25519": "jest tests/sr25519.test.ts"
   },
   "dependencies": {
-    "@zondax/ledger-polkadot": "^0.14.0",
-    "@zondax/zemu": "^0.14.5"
+    "@zondax/ledger-substrate": "^0.17.3",
+    "@zondax/zemu": "^0.16.5"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
