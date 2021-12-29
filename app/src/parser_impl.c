@@ -188,7 +188,7 @@ parser_error_t _getValue(const compactInt_t *c, uint64_t *v) {
 
 parser_error_t _toStringCompactInt(const compactInt_t *c,
                                    uint8_t decimalPlaces,
-                                   char postfix,
+                                   char postfix[],
                                    char prefix[],
                                    char *outValue, uint16_t outValueLen,
                                    uint8_t pageIdx, uint8_t *pageCount) {
@@ -219,22 +219,8 @@ parser_error_t _toStringCompactInt(const compactInt_t *c,
     }
 
     // Add prefix
-    if (strlen(prefix) > 0) {
-        size_t size = strlen(bufferUI) + strlen(prefix) + 2;
-        char _tmpBuffer[200];
-        MEMZERO(_tmpBuffer, sizeof(_tmpBuffer));
-        strcat(_tmpBuffer, prefix);
-        strcat(_tmpBuffer, " ");
-        strcat(_tmpBuffer, bufferUI);
-        // print length: strlen(value) + strlen(prefix) + strlen(" ") + strlen("\0")
-        MEMZERO(bufferUI, sizeof(bufferUI));
-        snprintf(bufferUI, size, "%s", _tmpBuffer);
-    }
-
-    // Add postfix
-    if (postfix > 32 && postfix < 127) {
-        const uint16_t p = strlen(bufferUI);
-        bufferUI[p] = postfix;
+    if (z_str3join(bufferUI, sizeof(bufferUI), prefix, postfix) != zxerr_ok) {
+        return parser_unexpected_buffer_end;
     }
 
     pageString(outValue, outValueLen, bufferUI, pageIdx, pageCount);
