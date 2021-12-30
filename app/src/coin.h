@@ -53,7 +53,7 @@ typedef enum {
 
 #define COIN_GENESIS_HASH                   "67dddf2673b69e5f875f6f25277495834398eafd67f492e09f3f3345e003d1b5"
 #define COIN_NAME                           "Centrifuge"
-#define COIN_TICKER                         "CFG"
+#define COIN_TICKER                         "CFG "
 
 #define COIN_SECRET_REQUIRED_CLICKS         0
 
