@@ -103,7 +103,6 @@ parser_error_t _readVecValidatorIndex_V1(parser_context_t* c, pd_VecValidatorInd
 parser_error_t _readVestingInfo_V1(parser_context_t* c, pd_VestingInfo_V1_t* v);
 parser_error_t _readVote_V1(parser_context_t* c, pd_Vote_V1_t* v);
 parser_error_t _readWeight_V1(parser_context_t* c, pd_Weight_V1_t* v);
-parser_error_t _readu8_array_32_V1(parser_context_t* c, pd_u8_array_32_V1_t* v);
 
 // toString functions
 parser_error_t _toStringAccountId_V1(
@@ -640,13 +639,6 @@ parser_error_t _toStringVote_V1(
 
 parser_error_t _toStringWeight_V1(
     const pd_Weight_V1_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
-parser_error_t _toStringu8_array_32_V1(
-    const pd_u8_array_32_V1_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

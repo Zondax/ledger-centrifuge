@@ -1,14 +1,16 @@
 # Ledger Centrifuge app
+
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![CircleCI](https://circleci.com/gh/Zondax/ledger-centrifuge.svg?style=shield)](https://circleci.com/gh/Zondax/ledger-centrifuge)
 
--------------------
+---
 
 ![zondax](docs/zondax.jpg)
 
 _Please visit our website at [zondax.ch](zondax.ch)_
 
-------------------
+---
+
 This project contains the Centrifuge app (https://centrifuge.io/) for Ledger Nano S and X.
 
 - Ledger Nano S/X BOLOS app
@@ -25,23 +27,29 @@ Please:
 - **Do not use in production**
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
--------------------
-# Centrifuge  1.242.x
+  <<<<<<< Updated upstream
+
+---
+
+=======
+
+> > > > > > > Stashed changes
+# Centrifuge  1.245.x
 
 ## System
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |fill_block |    | :heavy_check_mark: | :heavy_check_mark: | `Perbill` _ratio <br/> | 
-|remark |    | :heavy_check_mark: |   | `Bytes` _remark <br/> | 
-|set_heap_pages |    | :heavy_check_mark: |   | `u64` pages <br/> | 
-|set_code |    | :heavy_check_mark: |   | `Bytes` code <br/> | 
-|set_code_without_checks |    | :heavy_check_mark: |   | `Bytes` code <br/> | 
+|remark |    | :heavy_check_mark: | :heavy_check_mark: | `Bytes` _remark <br/> | 
+|set_heap_pages |    | :heavy_check_mark: | :heavy_check_mark: | `u64` pages <br/> | 
+|set_code |    | :heavy_check_mark: | :heavy_check_mark: | `Bytes` code <br/> | 
+|set_code_without_checks |    | :heavy_check_mark: | :heavy_check_mark: | `Bytes` code <br/> | 
 |set_changes_trie_config |    |   |   | `Option<ChangesTrieConfiguration>` changes_trie_config <br/> | 
 |set_storage |    |   |   | `Vec<KeyValue>` items <br/> | 
 |kill_storage |    |   |   | `Vec<Key>` keys <br/> | 
 |kill_prefix |    |   |   | `Key` prefix <br/>`u32` _subkeys <br/> | 
-|suicide |    | :heavy_check_mark: |   |  | 
+|suicide |    | :heavy_check_mark: | :heavy_check_mark: |  | 
 
 ## Utility
 
@@ -74,8 +82,8 @@ Please:
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |transfer | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `LookupSource` dest <br/>`Compact<Balance>` value <br/> | 
-|set_balance |    | :heavy_check_mark: |   | `LookupSource` who <br/>`Compact<Balance>` new_free <br/>`Compact<Balance>` new_reserved <br/> | 
-|force_transfer |    | :heavy_check_mark: |   | `LookupSource` source <br/>`LookupSource` dest <br/>`Compact<Balance>` value <br/> | 
+|set_balance |    | :heavy_check_mark: | :heavy_check_mark: | `LookupSource` who <br/>`Compact<Balance>` new_free <br/>`Compact<Balance>` new_reserved <br/> | 
+|force_transfer | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `LookupSource` source <br/>`LookupSource` dest <br/>`Compact<Balance>` value <br/> | 
 |transfer_keep_alive | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `LookupSource` dest <br/>`Compact<Balance>` value <br/> | 
 
 ## TransactionPayment
@@ -89,7 +97,7 @@ Empty
 |bond | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `LookupSource` controller <br/>`Compact<BalanceOf>` value <br/>`RewardDestination` payee <br/> | 
 |bond_extra | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `Compact<BalanceOf>` max_additional <br/> | 
 |unbond | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `Compact<BalanceOf>` value <br/> | 
-|withdraw_unbonded |    | :heavy_check_mark: |   | `u32` num_slashing_spans <br/> | 
+|withdraw_unbonded | :heavy_check_mark:  | :heavy_check_mark: |   | `u32` num_slashing_spans <br/> | 
 |validate | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `ValidatorPrefs` prefs <br/> | 
 |nominate | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `Vec<LookupSource>` targets <br/> | 
 |chill | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: |  | 
@@ -104,8 +112,8 @@ Empty
 |force_unstake |    | :heavy_check_mark: |   | `AccountId` stash <br/>`u32` num_slashing_spans <br/> | 
 |force_new_era_always |    | :heavy_check_mark: |   |  | 
 |cancel_deferred_slash |    | :heavy_check_mark: |   | `EraIndex` era <br/>`Vec<u32>` slash_indices <br/> | 
-|payout_stakers |    | :heavy_check_mark: |   | `AccountId` validator_stash <br/>`EraIndex` era <br/> | 
-|rebond |    | :heavy_check_mark: | :heavy_check_mark: | `Compact<BalanceOf>` value <br/> | 
+|payout_stakers | :heavy_check_mark:  | :heavy_check_mark: |   | `AccountId` validator_stash <br/>`EraIndex` era <br/> | 
+|rebond | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `Compact<BalanceOf>` value <br/> | 
 |set_history_depth |    | :heavy_check_mark: |   | `Compact<EraIndex>` new_history_depth <br/>`Compact<u32>` _era_items_deleted <br/> | 
 |reap_stash |    | :heavy_check_mark: |   | `AccountId` stash <br/>`u32` num_slashing_spans <br/> | 
 |submit_election_solution |    |   |   | `Vec<ValidatorIndex>` winners <br/>`CompactAssignments` compact <br/>`ElectionScore` score <br/>`EraIndex` era <br/>`ElectionSize` size <br/> | 
@@ -309,21 +317,21 @@ Empty
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|proxy |    |   |   | `AccountId` real <br/>`Option<ProxyType>` force_proxy_type <br/>`Call` call <br/> | 
-|add_proxy |    |   |   | `AccountId` proxy <br/>`ProxyType` proxy_type <br/> | 
-|remove_proxy |    |   |   | `AccountId` proxy <br/>`ProxyType` proxy_type <br/> | 
-|remove_proxies |    |   |   |  | 
-|anonymous |    |   |   | `ProxyType` proxy_type <br/>`u16` index <br/> | 
-|kill_anonymous |    |   |   | `AccountId` spawner <br/>`ProxyType` proxy_type <br/>`u16` index <br/>`Compact<BlockNumber>` height <br/>`Compact<u32>` ext_index <br/> | 
+|proxy |    | :heavy_check_mark: | :heavy_check_mark: | `AccountId` real <br/>`Option<ProxyType>` force_proxy_type <br/>`Call` call <br/> | 
+|add_proxy |    | :heavy_check_mark: |   | `AccountId` proxy <br/>`ProxyType` proxy_type <br/> | 
+|remove_proxy |    | :heavy_check_mark: |   | `AccountId` proxy <br/>`ProxyType` proxy_type <br/> | 
+|remove_proxies |    | :heavy_check_mark: |   |  | 
+|anonymous |    | :heavy_check_mark: |   | `ProxyType` proxy_type <br/>`u16` index <br/> | 
+|kill_anonymous |    | :heavy_check_mark: |   | `AccountId` spawner <br/>`ProxyType` proxy_type <br/>`u16` index <br/>`Compact<BlockNumber>` height <br/>`Compact<u32>` ext_index <br/> | 
 
 ## Multisig
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|as_multi_threshold_1 |    |   |   | `Vec<AccountId>` other_signatories <br/>`Call` call <br/> | 
-|as_multi |    |   |   | `u16` threshold <br/>`Vec<AccountId>` other_signatories <br/>`Option<Timepoint>` maybe_timepoint <br/>`OpaqueCall` call <br/>`bool` store_call <br/>`Weight` max_weight <br/> | 
-|approve_as_multi |    |   |   | `u16` threshold <br/>`Vec<AccountId>` other_signatories <br/>`Option<Timepoint>` maybe_timepoint <br/>`[u8;32]` call_hash <br/>`Weight` max_weight <br/> | 
-|cancel_as_multi |    |   |   | `u16` threshold <br/>`Vec<AccountId>` other_signatories <br/>`Timepoint` timepoint <br/>`[u8;32]` call_hash <br/> | 
+|as_multi_threshold_1 |    | :heavy_check_mark: | :heavy_check_mark: | `Vec<AccountId>` other_signatories <br/>`Call` call <br/> | 
+|as_multi |    | :heavy_check_mark: | :heavy_check_mark: | `u16` threshold <br/>`Vec<AccountId>` other_signatories <br/>`Option<Timepoint>` maybe_timepoint <br/>`OpaqueCall` call <br/>`bool` store_call <br/>`Weight` max_weight <br/> | 
+|approve_as_multi |    | :heavy_check_mark: | :heavy_check_mark: | `u16` threshold <br/>`Vec<AccountId>` other_signatories <br/>`Option<Timepoint>` maybe_timepoint <br/>`[u8;32]` call_hash <br/>`Weight` max_weight <br/> | 
+|cancel_as_multi |    | :heavy_check_mark: | :heavy_check_mark: | `u16` threshold <br/>`Vec<AccountId>` other_signatories <br/>`Timepoint` timepoint <br/>`[u8;32]` call_hash <br/> | 
 
 ## RadClaims
 
@@ -359,6 +367,6 @@ Empty
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|set |    |   |   | `ResourceId` rid <br/>`Address` local_addr <br/> | 
-|remove |    |   |   | `ResourceId` rid <br/> | 
+|set |    | :heavy_check_mark: |   | `ResourceId` rid <br/>`Address` local_addr <br/> | 
+|remove |    | :heavy_check_mark: |   | `ResourceId` rid <br/> | 
 
