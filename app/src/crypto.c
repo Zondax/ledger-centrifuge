@@ -67,10 +67,10 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
                     break;
                 }
 #ifdef SUPPORT_SR25519
-                    case key_sr25519:
-                            get_sr25519_sk(privateKeyData);
-                            crypto_scalarmult_ristretto255_base_sdk(pubKey, privateKeyData);
-                        break;
+                case key_sr25519:
+                    get_sr25519_sk(privateKeyData);
+                    crypto_scalarmult_ristretto255_base_sdk(pubKey, privateKeyData);
+                    break;
 #endif
                 default:
                     err = zxerr_invalid_crypto_settings;
@@ -101,8 +101,8 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
     if (messageLen > MAX_SIGN_SIZE) {
         // Hash it
         cx_blake2b_t ctx;
-        cx_blake2b_init(&ctx, 256);
-        cx_hash(&ctx.header, CX_LAST, message, messageLen, messageDigest, BLAKE2B_DIGEST_SIZE);
+        cx_blake2b_init_no_throw(&ctx, 256);
+        cx_hash_no_throw(&ctx.header, CX_LAST, message, messageLen, messageDigest, BLAKE2B_DIGEST_SIZE);
         toSign = messageDigest;
         messageLen = BLAKE2B_DIGEST_SIZE;
     }
@@ -166,8 +166,8 @@ zxerr_t crypto_sign_sr25519_prephase(uint8_t *buffer, uint16_t bufferLen,
     if (messageLen > MAX_SIGN_SIZE) {
         uint8_t messageDigest[BLAKE2B_DIGEST_SIZE];
         cx_blake2b_t *ctx = (cx_blake2b_t *) buffer;
-        cx_blake2b_init(ctx, 256);
-        cx_hash(&ctx->header, CX_LAST, message, messageLen, messageDigest, BLAKE2B_DIGEST_SIZE);
+        cx_blake2b_init_no_throw(ctx, 256);
+        cx_hash_no_throw(&ctx->header, CX_LAST, message, messageLen, messageDigest, BLAKE2B_DIGEST_SIZE);
         MEMCPY_NV((void *) &N_sr25519_signdata.signdata, messageDigest, BLAKE2B_DIGEST_SIZE);
         sr25519_signdataLen = BLAKE2B_DIGEST_SIZE;
     } else {
@@ -195,6 +195,7 @@ zxerr_t crypto_sign_sr25519_prephase(uint8_t *buffer, uint16_t bufferLen,
     MEMCPY_NV((void *) &N_sr25519_signdata.sk, privateKeyData, SK_LEN_25519);
     MEMCPY_NV((void *) &N_sr25519_signdata.pk, pubkey, PK_LEN_25519);
     MEMZERO(buffer, bufferLen);
+    MEMZERO(privateKeyData, SK_LEN_25519);
     return zxerr_ok;
 }
 
