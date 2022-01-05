@@ -379,10 +379,6 @@ typedef struct {
     uint64_t value;
 } pd_Weight_V1_t;
 
-typedef struct {
-    const uint8_t* _ptr;
-} pd_u8_array_32_V1_t;
-
 #ifdef __cplusplus
 }
 #endif
