@@ -172,6 +172,10 @@ typedef struct {
 typedef compactInt_t pd_CompactBlockNumber_t;
 
 typedef struct {
+    const uint8_t* _ptr;
+} pd_H256_t;
+
+typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_Heartbeat_t;
