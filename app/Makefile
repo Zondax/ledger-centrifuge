@@ -258,7 +258,7 @@ dep/%.d: %.c Makefile
 listvariants:
 ifeq ($(TARGET_NAME),TARGET_NANOS)
 	@echo VARIANTS COIN CFG CFG_XL
-else ifeq ($(TARGET_NAME),TARGET_NANOX)
+else
 	@echo VARIANTS COIN CFG
 endif
 
