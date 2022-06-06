@@ -40,6 +40,7 @@ all: bin/app.elf
 
 include $(BOLOS_SDK)/Makefile.defines
 
+DEFINES += APP_ACCOUNT_MODE_ENABLED
 
 $(info ************ TARGET_NAME  = [$(TARGET_NAME)])
 
@@ -75,13 +76,13 @@ ifeq ($(TARGET_NAME),TARGET_NANOX)
 DEFINES += SUBSTRATE_PARSER_FULL
 endif
 APPNAME = "Centrifuge"
-APPPATH = "44'/747'"
+APPPATH = "44'/747'" --path "44'/354'"
 
 else ifeq ($(COIN),CFG_XL)
 # XXL app configuration
 DEFINES += APP_STANDARD SUBSTRATE_PARSER_FULL
 APPNAME = "Centrifuge XL"
-APPPATH = "44'/747'"
+APPPATH = "44'/747'" --path "44'/354'"
 
 else
 define error_message
