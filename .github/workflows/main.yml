@@ -103,7 +103,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v2
         with:
-          node-version: '14.4.0'
+          node-version: "14.4.0"
       - name: Install yarn
         run: |
           npm install -g yarn
@@ -135,7 +135,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v2
         with:
-          node-version: '14.4.0'
+          node-version: "14.4.0"
       - name: Install yarn
         run: |
           npm install -g yarn
@@ -152,8 +152,8 @@ jobs:
           cd tests_zemu && yarn testSR25519
 
   build_package_0:
-    needs: [ configure, build, build_ledger, test_zemu, test_zemu_sr25519 ]
-    if: ${{ github.ref == 'refs/heads/master' }}
+    needs: [configure, build, build_ledger, test_zemu, test_zemu_sr25519]
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     container:
       image: zondax/builder-bolos:latest
@@ -191,8 +191,8 @@ jobs:
           prerelease: false
 
   build_package_1:
-    needs: [ configure, build, build_ledger, test_zemu, test_zemu_sr25519 ]
-    if: ${{ github.ref == 'refs/heads/master' }}
+    needs: [configure, build, build_ledger, test_zemu, test_zemu_sr25519]
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     container:
       image: zondax/builder-bolos:latest
@@ -230,8 +230,8 @@ jobs:
           prerelease: false
 
   build_package_2:
-    needs: [ configure, build, build_ledger, test_zemu, test_zemu_sr25519 ]
-    if: ${{ github.ref == 'refs/heads/master' }}
+    needs: [configure, build, build_ledger, test_zemu, test_zemu_sr25519]
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     container:
       image: zondax/builder-bolos:latest
@@ -267,3 +267,5 @@ jobs:
           tag_name: ${{ steps.nanosp_xl.outputs.tag_name }}
           draft: false
           prerelease: false
+
+          
