@@ -13,26 +13,29 @@
 *  See the License for the specific language governing permissions and
 *  limitations under the License.
 ********************************************************************************/
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wextern-c-compat"
 #pragma once
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <stdint.h>
 #include <stddef.h>
-#include "coin_ss58.h"
+#include <stdint.h>
 
+#define GET_PD_CALL(CALL, VERSION) (PD_CALL_##CALL##_V##VERSION)
 
-#define HDPATH_2_DEFAULT     (0x80000000u | 0u)
-#define HDPATH_3_DEFAULT     (0u)
-#define HDPATH_4_DEFAULT     (0u)
+#include "substrate_methods_V1.h"
+#include "substrate_types_V1.h"
 
-#define MENU_MAIN_APP_LINE1                 "Centrifuge"
-#define MENU_MAIN_APP_LINE2                 "Ready"
-#define MENU_MAIN_APP_LINE2_SECRET          "RECOVERY"
-#define APPVERSION_LINE1                    "Centrifuge"
-#define APPVERSION_LINE2                    "v" APPVERSION
+typedef union {
+    pd_Method_V1_t V1;
+} pd_Method_t;
+
+typedef union {
+    pd_MethodNested_V1_t V1;
+} pd_MethodNested_t;
 
 #ifdef __cplusplus
 }
