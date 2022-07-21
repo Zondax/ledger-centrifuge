@@ -28,7 +28,7 @@ Please:
 - **Do not use in production**
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
-# Centrifuge  1.1005.x
+# Centrifuge  1.1007.x
 
 ## System
 
@@ -115,6 +115,7 @@ Please:
 |As derivative |    |   |   | `u16` index <br/>`Call` call <br/> |
 |Batch all |    |   |   | `VecCall` calls <br/> |
 |Dispatch as |    |   |   | `BoxPalletsOrigin` as_origin <br/>`Call` call <br/> |
+|Force batch |    |   |   | `VecCall` calls <br/> |
 
 ## Scheduler
 
@@ -217,6 +218,15 @@ Please:
 |Unnote preimage |    |   |   | `Hash` hash <br/> |
 |Request preimage |    |   |   | `Hash` hash <br/> |
 |Unrequest preimage |    |   |   | `Hash` hash <br/> |
+
+## Treasury
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|Propose spend |    |   |   | `CompactBalance` amount <br/>`LookupasStaticLookupSource` beneficiary <br/> |
+|Reject proposal |    |   |   | `Compactu32` proposal_id <br/> |
+|Approve proposal |    |   |   | `Compactu32` proposal_id <br/> |
+|Remove approval |    |   |   | `Compactu32` proposal_id <br/> |
 
 ## Fees
 
