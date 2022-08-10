@@ -29,7 +29,6 @@
 #include "crypto.h"
 #include "coin.h"
 #include "zxmacros.h"
-#include "secret.h"
 #include "app_mode.h"
 
 static bool tx_initialized = false;
@@ -41,7 +40,7 @@ void extractHDPath(uint32_t rx, uint32_t offset) {
         THROW(APDU_CODE_WRONG_LENGTH);
     }
 
-    MEMCPY(hdPath, G_io_apdu_buffer + offset, sizeof(uint32_t) * HDPATH_LEN_DEFAULT);
+    memcpy(hdPath, G_io_apdu_buffer + offset, sizeof(uint32_t) * HDPATH_LEN_DEFAULT);
 
     const bool mainnet = hdPath[0] == HDPATH_0_DEFAULT &&
                          hdPath[1] == HDPATH_1_DEFAULT;
@@ -50,15 +49,14 @@ void extractHDPath(uint32_t rx, uint32_t offset) {
         THROW(APDU_CODE_DATA_INVALID);
     }
 
-#ifdef APP_SECRET_MODE_ENABLED
-    if (app_mode_secret()) {
+#ifdef APP_ACCOUNT_MODE_ENABLED
+    if (app_mode_account()) {
         hdPath[1] = HDPATH_1_RECOVERY;
     }
 #endif
 }
 
-__Z_INLINE bool process_chunk(uint32_t rx) {
-
+__Z_INLINE bool process_chunk(__Z_UNUSED volatile uint32_t *tx, uint32_t rx) {
     const uint8_t payloadType = G_io_apdu_buffer[OFFSET_PAYLOAD_TYPE];
 #ifndef SUPPORT_SR25519
     if (G_io_apdu_buffer[OFFSET_P2] != 0) {
@@ -94,8 +92,10 @@ __Z_INLINE bool process_chunk(uint32_t rx) {
             added = tx_append(&(G_io_apdu_buffer[OFFSET_DATA]), rx - OFFSET_DATA);
             tx_initialized = false;
             if (added != rx - OFFSET_DATA) {
+                tx_initialized = false;
                 THROW(APDU_CODE_OUTPUT_BUFFER_TOO_SMALL);
             }
+            tx_initialized = false;
             return true;
     }
 
@@ -143,7 +143,7 @@ __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, u
     }
     if (requireConfirmation) {
         view_review_init(addr_getItem, addr_getNumItems, app_reply_address);
-        view_review_show();
+        view_review_show(0x03);
         *flags |= IO_ASYNCH_REPLY;
         return;
     }
@@ -166,13 +166,13 @@ __Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *t
 
     if (error_msg != NULL) {
         int error_msg_length = strlen(error_msg);
-        MEMCPY(G_io_apdu_buffer, error_msg, error_msg_length);
+        memcpy(G_io_apdu_buffer, error_msg, error_msg_length);
         *tx += (error_msg_length);
         THROW(APDU_CODE_DATA_INVALID);
     }
 
     view_review_init(tx_getItem, tx_getNumItems, app_return_sr25519);
-    view_review_show();
+    view_review_show(0x03);
     *flags |= IO_ASYNCH_REPLY;
 }
 #endif
@@ -182,19 +182,19 @@ __Z_INLINE void handleSignEd25519(volatile uint32_t *flags, volatile uint32_t *t
     CHECK_APP_CANARY()
     if (error_msg != NULL) {
         int error_msg_length = strlen(error_msg);
-        MEMCPY(G_io_apdu_buffer, error_msg, error_msg_length);
+        memcpy(G_io_apdu_buffer, error_msg, error_msg_length);
         *tx += (error_msg_length);
         THROW(APDU_CODE_DATA_INVALID);
     }
 
     view_review_init(tx_getItem, tx_getNumItems, app_sign_ed25519);
-    view_review_show();
+    view_review_show(0x03);
     *flags |= IO_ASYNCH_REPLY;
 }
 
 __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     zemu_log("handleSign\n");
-    if (!process_chunk(rx)) {
+    if (!process_chunk(tx, rx)) {
         THROW(APDU_CODE_OK);
     }
     if (app_mode_secret()) {

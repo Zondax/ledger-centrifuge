@@ -32,7 +32,6 @@
 #define P1_ADD                          1  //< P1
 #define P1_LAST                         2  //< P1
 
-
 #define OFFSET_PAYLOAD_TYPE             OFFSET_P1
 
 #define INS_GET_VERSION                 0x00
